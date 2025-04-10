@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Globe } from 'lucide-react';
-import { useLanguage } from '@/contexts/language';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const LanguageToggle: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();

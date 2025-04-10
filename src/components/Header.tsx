@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Bell, MessageSquare, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,7 @@ import {
 } from '@/components/ui/popover';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import LanguageToggle from './LanguageToggle';
-import { useLanguage } from '@/contexts/language';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Header = () => {
   const isMobile = useIsMobile();

@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { useLanguage } from '@/contexts/language';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface CalendarNavigationProps {
   displayMonth: Date;

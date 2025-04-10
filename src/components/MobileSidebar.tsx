@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -15,7 +16,7 @@ import {
   X
 } from 'lucide-react';
 import { Button } from './ui/button';
-import { useLanguage } from '@/contexts/language';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface MobileSidebarProps {
   onClose: () => void;

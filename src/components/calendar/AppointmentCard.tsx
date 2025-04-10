@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { Clock, MapPin, User } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Appointment } from "@/types/calendar";
-import { useLanguage } from '@/contexts/language';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AppointmentCardProps {
   appointment: Appointment;
