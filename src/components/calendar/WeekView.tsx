@@ -3,6 +3,7 @@ import React from 'react';
 import { format, addDays, subDays } from 'date-fns';
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface WeekViewProps {
   date: Date;
@@ -10,10 +11,12 @@ interface WeekViewProps {
 }
 
 const WeekView: React.FC<WeekViewProps> = ({ date, onSelectDay }) => {
+  const { t } = useLanguage();
+  
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Weekly Schedule</CardTitle>
+        <CardTitle>{t('calendar.weekly')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-7 gap-2 mb-2">
@@ -37,7 +40,7 @@ const WeekView: React.FC<WeekViewProps> = ({ date, onSelectDay }) => {
           })}
         </div>
         <div className="space-y-4 mt-6">
-          <p className="text-center text-secondary-500 py-8">Select a day to view appointments</p>
+          <p className="text-center text-secondary-500 py-8">{t('calendar.select_day')}</p>
         </div>
       </CardContent>
     </Card>

@@ -3,6 +3,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface Job {
   id: string;
@@ -18,6 +19,8 @@ interface JobItemProps {
 }
 
 const JobItem = ({ job }: JobItemProps) => {
+  const { t } = useLanguage();
+  
   const statusColors = {
     'new': 'bg-blue-100 text-blue-800',
     'en-route': 'bg-amber-100 text-amber-800',
@@ -27,11 +30,11 @@ const JobItem = ({ job }: JobItemProps) => {
   };
 
   const statusText = {
-    'new': 'New',
-    'en-route': 'En Route',
-    'on-site': 'On Site',
-    'completed': 'Completed',
-    'cancelled': 'Cancelled',
+    'new': t('jobs.new'),
+    'en-route': t('jobs.en_route'),
+    'on-site': t('jobs.on_site'),
+    'completed': t('jobs.completed'),
+    'cancelled': t('jobs.cancelled'),
   };
 
   return (

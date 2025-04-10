@@ -4,12 +4,15 @@ import { format } from 'date-fns';
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import AppointmentCard from './AppointmentCard';
 import { Appointment } from "@/types/calendar";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TodaysAppointmentsProps {
   appointments: Appointment[];
 }
 
 const TodaysAppointments: React.FC<TodaysAppointmentsProps> = ({ appointments }) => {
+  const { t } = useLanguage();
+  
   const todaysAppointments = appointments.filter(
     (appointment) => appointment.date === format(new Date(), 'yyyy-MM-dd')
   );
@@ -17,12 +20,12 @@ const TodaysAppointments: React.FC<TodaysAppointmentsProps> = ({ appointments })
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Today's Appointments</CardTitle>
+        <CardTitle>{t('calendar.appointments')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {todaysAppointments.length === 0 ? (
-            <p className="text-center text-secondary-500 py-8">No appointments scheduled for today</p>
+            <p className="text-center text-secondary-500 py-8">{t('calendar.no_appointments')}</p>
           ) : (
             todaysAppointments.map((appointment) => (
               <AppointmentCard key={appointment.id} appointment={appointment} />

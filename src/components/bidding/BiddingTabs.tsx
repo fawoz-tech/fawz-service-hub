@@ -5,6 +5,7 @@ import OpenMarketplace from './OpenMarketplace';
 import MyBids from './MyBids';
 import PostJob from './PostJob';
 import WinAnalytics from './WinAnalytics';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BiddingTabsProps {
   activeTab: string;
@@ -12,13 +13,15 @@ interface BiddingTabsProps {
 }
 
 const BiddingTabs = ({ activeTab, setActiveTab }: BiddingTabsProps) => {
+  const { t } = useLanguage();
+  
   return (
     <>
       <TabsList className="grid grid-cols-4 md:w-[600px]">
-        <TabsTrigger value="marketplace" onClick={() => setActiveTab('marketplace')}>Marketplace</TabsTrigger>
-        <TabsTrigger value="my-bids" onClick={() => setActiveTab('my-bids')}>My Bids</TabsTrigger>
-        <TabsTrigger value="post-job" onClick={() => setActiveTab('post-job')}>Post Job</TabsTrigger>
-        <TabsTrigger value="analytics" onClick={() => setActiveTab('analytics')}>Win %</TabsTrigger>
+        <TabsTrigger value="marketplace" onClick={() => setActiveTab('marketplace')}>{t('bidding.marketplace')}</TabsTrigger>
+        <TabsTrigger value="my-bids" onClick={() => setActiveTab('my-bids')}>{t('bidding.my_bids')}</TabsTrigger>
+        <TabsTrigger value="post-job" onClick={() => setActiveTab('post-job')}>{t('bidding.post')}</TabsTrigger>
+        <TabsTrigger value="analytics" onClick={() => setActiveTab('analytics')}>{t('bidding.analytics')}</TabsTrigger>
       </TabsList>
       
       <TabsContent value="marketplace" className="mt-6">

@@ -1,12 +1,15 @@
 
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const SettingsHeader = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="flex justify-between items-center">
-      <h1 className="text-2xl font-bold text-secondary-900">Settings</h1>
+      <h1 className="text-2xl font-bold text-secondary-900">{t('settings.title')}</h1>
       <div className="text-sm text-secondary-500">
-        Last updated: April 10, 2025
+        {t('settings.last_updated')} April 10, 2025
       </div>
     </div>
   );

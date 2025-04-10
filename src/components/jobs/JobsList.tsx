@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { JobCard, Job } from './JobCard';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface JobsListProps {
   jobs: Job[];
@@ -8,6 +9,8 @@ interface JobsListProps {
 }
 
 const JobsList = ({ jobs, filter }: JobsListProps) => {
+  const { t } = useLanguage();
+  
   const filteredJobs = filter 
     ? jobs.filter(job => {
         switch(filter) {
@@ -33,7 +36,7 @@ const JobsList = ({ jobs, filter }: JobsListProps) => {
       ))}
       {filteredJobs.length === 0 && (
         <div className="text-center py-8 bg-secondary-50 rounded-lg border border-dashed border-secondary-200">
-          <p className="text-secondary-500">No jobs found matching your criteria</p>
+          <p className="text-secondary-500">{t('jobs.no_jobs')}</p>
         </div>
       )}
     </div>
