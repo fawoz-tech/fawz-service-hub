@@ -7,12 +7,14 @@ import JobCard from '@/components/bidding/JobCard';
 import { Badge } from '@/components/ui/badge';
 import { Search, Filter } from 'lucide-react';
 import { mockOpenJobs } from '@/data/mockOpenJobs';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const OpenMarketplace = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [locationFilter, setLocationFilter] = useState('all');
   const [serviceFilter, setServiceFilter] = useState('all');
   const [priceFilter, setPriceFilter] = useState('all');
+  const { t } = useLanguage();
 
   return (
     <div className="space-y-6">
@@ -20,7 +22,7 @@ const OpenMarketplace = () => {
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400" size={18} />
           <Input
-            placeholder="Search jobs..."
+            placeholder={t('jobs.search')}
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -29,10 +31,10 @@ const OpenMarketplace = () => {
         <div className="flex gap-2">
           <Select value={locationFilter} onValueChange={setLocationFilter}>
             <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Location" />
+              <SelectValue placeholder={t('financial.all_locations')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Locations</SelectItem>
+              <SelectItem value="all">{t('financial.all_locations')}</SelectItem>
               <SelectItem value="san-francisco">San Francisco</SelectItem>
               <SelectItem value="los-angeles">Los Angeles</SelectItem>
               <SelectItem value="new-york">New York</SelectItem>
@@ -41,10 +43,10 @@ const OpenMarketplace = () => {
           
           <Select value={serviceFilter} onValueChange={setServiceFilter}>
             <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Service" />
+              <SelectValue placeholder={t('financial.all_services')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Services</SelectItem>
+              <SelectItem value="all">{t('financial.all_services')}</SelectItem>
               <SelectItem value="plumbing">Plumbing</SelectItem>
               <SelectItem value="electrical">Electrical</SelectItem>
               <SelectItem value="hvac">HVAC</SelectItem>
@@ -54,10 +56,10 @@ const OpenMarketplace = () => {
           
           <Select value={priceFilter} onValueChange={setPriceFilter}>
             <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Price Range" />
+              <SelectValue placeholder={t('financial.all_prices')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Prices</SelectItem>
+              <SelectItem value="all">{t('financial.all_prices')}</SelectItem>
               <SelectItem value="under-100">Under $100</SelectItem>
               <SelectItem value="100-500">$100 - $500</SelectItem>
               <SelectItem value="over-500">Over $500</SelectItem>
@@ -72,7 +74,7 @@ const OpenMarketplace = () => {
       
       <div className="flex gap-2 flex-wrap">
         <Badge variant="outline" className="bg-secondary-100">
-          {mockOpenJobs.length} jobs available
+          {mockOpenJobs.length} {t('bidding.jobs_available')}
         </Badge>
         {locationFilter !== 'all' && (
           <Badge variant="secondary" className="cursor-pointer" onClick={() => setLocationFilter('all')}>
