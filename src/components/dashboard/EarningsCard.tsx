@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const EarningsCard = () => {
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   
   return (
     <Card className="col-span-1">
@@ -20,10 +20,14 @@ const EarningsCard = () => {
         <div className="text-sm text-emerald-600 font-medium flex items-center mb-6">
           +12.5% {t('dashboard.from_last')}
         </div>
-        <Button variant="outline" className="w-full" asChild>
+        <Button 
+          variant="outline" 
+          className={`w-full flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} 
+          asChild
+        >
           <Link to="/payments">
-            <DollarSign size={16} className="mr-2" />
-            {t('dashboard.view_details')}
+            <DollarSign size={16} />
+            <span className="whitespace-nowrap">{t('dashboard.view_details')}</span>
           </Link>
         </Button>
       </CardContent>
