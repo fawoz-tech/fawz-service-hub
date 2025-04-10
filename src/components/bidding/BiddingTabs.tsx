@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import OpenMarketplace from './OpenMarketplace';
 import MyBids from './MyBids';
 import PostJob from './PostJob';
@@ -16,12 +16,12 @@ const BiddingTabs = ({ activeTab, setActiveTab }: BiddingTabsProps) => {
   const { t } = useLanguage();
   
   return (
-    <>
+    <Tabs value={activeTab} onValueChange={setActiveTab}>
       <TabsList className="grid grid-cols-4 md:w-[600px]">
-        <TabsTrigger value="marketplace" onClick={() => setActiveTab('marketplace')}>{t('bidding.marketplace')}</TabsTrigger>
-        <TabsTrigger value="my-bids" onClick={() => setActiveTab('my-bids')}>{t('bidding.my_bids')}</TabsTrigger>
-        <TabsTrigger value="post-job" onClick={() => setActiveTab('post-job')}>{t('bidding.post')}</TabsTrigger>
-        <TabsTrigger value="analytics" onClick={() => setActiveTab('analytics')}>{t('bidding.analytics')}</TabsTrigger>
+        <TabsTrigger value="marketplace">{t('bidding.marketplace')}</TabsTrigger>
+        <TabsTrigger value="my-bids">{t('bidding.my_bids')}</TabsTrigger>
+        <TabsTrigger value="post-job">{t('bidding.post')}</TabsTrigger>
+        <TabsTrigger value="analytics">{t('bidding.analytics')}</TabsTrigger>
       </TabsList>
       
       <TabsContent value="marketplace" className="mt-6">
@@ -39,7 +39,7 @@ const BiddingTabs = ({ activeTab, setActiveTab }: BiddingTabsProps) => {
       <TabsContent value="analytics" className="mt-6">
         <WinAnalytics />
       </TabsContent>
-    </>
+    </Tabs>
   );
 };
 

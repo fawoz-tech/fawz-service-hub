@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { JobCard, Job } from './JobCard';
 
 interface JobTabsProps {
@@ -11,13 +11,13 @@ interface JobTabsProps {
 
 const JobTabs = ({ jobs, activeTab, setActiveTab }: JobTabsProps) => {
   return (
-    <>
+    <Tabs value={activeTab} onValueChange={setActiveTab}>
       <TabsList className="grid grid-cols-5 md:w-[600px]">
-        <TabsTrigger value="all" onClick={() => setActiveTab('all')}>All</TabsTrigger>
-        <TabsTrigger value="new" onClick={() => setActiveTab('new')}>New</TabsTrigger>
-        <TabsTrigger value="in-progress" onClick={() => setActiveTab('in-progress')}>In Progress</TabsTrigger>
-        <TabsTrigger value="completed" onClick={() => setActiveTab('completed')}>Completed</TabsTrigger>
-        <TabsTrigger value="urgent" onClick={() => setActiveTab('urgent')}>Urgent</TabsTrigger>
+        <TabsTrigger value="all">All</TabsTrigger>
+        <TabsTrigger value="new">New</TabsTrigger>
+        <TabsTrigger value="in-progress">In Progress</TabsTrigger>
+        <TabsTrigger value="completed">Completed</TabsTrigger>
+        <TabsTrigger value="urgent">Urgent</TabsTrigger>
       </TabsList>
       
       <div className="mt-6">
@@ -59,7 +59,7 @@ const JobTabs = ({ jobs, activeTab, setActiveTab }: JobTabsProps) => {
             ))}
         </TabsContent>
       </div>
-    </>
+    </Tabs>
   );
 };
 
