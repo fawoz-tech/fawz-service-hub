@@ -12,7 +12,7 @@ const Index = () => {
       <div className="space-y-6">
         <DashboardHeader />
         <StatCards />
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <TodayJobs />
           <EarningsCard />
         </div>

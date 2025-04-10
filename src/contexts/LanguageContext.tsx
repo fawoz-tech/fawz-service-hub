@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Define available languages
@@ -68,17 +67,26 @@ export const translations = {
     'nav.bidding': 'Open Bidding',
     'nav.settings': 'Settings',
     
-    // Team
-    'team.title': 'Team Management',
-    'team.add_member': 'Add Team Member',
-    'team.search': 'Search technicians...',
-    'team.all': 'All',
-    'team.available': 'Available',
-    'team.busy': 'Busy',
-    'team.on_job': 'On Job',
-    'team.on_break': 'On Break',
-    'team.jobs': 'jobs',
-
+    // Dashboard
+    'dashboard.title': 'Dashboard',
+    'dashboard.new_requests': 'New Requests',
+    'dashboard.today': 'Today',
+    'dashboard.pending_review': 'Pending Review',
+    'dashboard.jobs_active': 'Jobs Active',
+    'dashboard.emergency_requests': 'Emergency Requests',
+    'dashboard.view_requests': 'View Requests',
+    'dashboard.view_jobs': 'View Jobs',
+    'dashboard.view_urgent': 'View Urgent',
+    'dashboard.earnings': 'Earnings',
+    'dashboard.this_month': 'This Month',
+    'dashboard.from_last': 'from last month',
+    'dashboard.view_details': 'View Details',
+    'dashboard.view_calendar': 'View Calendar',
+    'dashboard.todays_jobs': 'Today\'s Jobs',
+    'dashboard.no_jobs': 'No jobs scheduled for today',
+    'dashboard.urgent_jobs': 'Urgent Jobs',
+    'dashboard.in_progress': 'In Progress',
+    
     // Calendar
     'calendar.title': 'Calendar & Scheduling',
     'calendar.today': 'Today',
@@ -217,17 +225,26 @@ export const translations = {
     'nav.bidding': 'المناقصات',
     'nav.settings': 'الإعدادات',
     
-    // Team
-    'team.title': 'إدارة الفريق',
-    'team.add_member': 'إضافة عضو للفريق',
-    'team.search': 'البحث عن الفنيين...',
-    'team.all': 'الكل',
-    'team.available': 'متاح',
-    'team.busy': 'مشغول',
-    'team.on_job': 'في مهمة',
-    'team.on_break': 'في استراحة',
-    'team.jobs': 'مهام',
-
+    // Dashboard
+    'dashboard.title': 'لوحة التحكم',
+    'dashboard.new_requests': 'الطلبات الجديدة',
+    'dashboard.today': 'اليوم',
+    'dashboard.pending_review': 'بانتظار المراجعة',
+    'dashboard.jobs_active': 'مهام نشطة',
+    'dashboard.emergency_requests': 'طلبات طارئة',
+    'dashboard.view_requests': 'عرض الطلبات',
+    'dashboard.view_jobs': 'عرض المهام',
+    'dashboard.view_urgent': 'عرض العاجل',
+    'dashboard.earnings': 'الأرباح',
+    'dashboard.this_month': 'هذا الشهر',
+    'dashboard.from_last': 'منذ الشهر الماضي',
+    'dashboard.view_details': 'عرض التفاصيل',
+    'dashboard.view_calendar': 'عرض التقويم',
+    'dashboard.todays_jobs': 'مهام اليوم',
+    'dashboard.no_jobs': 'لا توجد مهام مجدولة لليوم',
+    'dashboard.urgent_jobs': 'المهام العاجلة',
+    'dashboard.in_progress': 'قيد التنفيذ',
+    
     // Calendar
     'calendar.title': 'التقويم والجدولة',
     'calendar.today': 'اليوم',
