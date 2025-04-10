@@ -11,11 +11,15 @@ const DashboardHeader = () => {
     navigate('/jobs', { state: { activeTab: 'new' } });
   };
 
+  const handleTodayClick = () => {
+    navigate('/calendar', { state: { view: 'day' } });
+  };
+
   return (
     <div className="flex items-center justify-between">
       <h1 className="text-2xl font-bold text-secondary-900">Dashboard</h1>
       <div className="flex items-center gap-2">
-        <Button variant="outline" className="hidden md:flex">
+        <Button variant="outline" className="hidden md:flex" onClick={handleTodayClick}>
           <Calendar size={16} className="mr-2" />
           Today
         </Button>
