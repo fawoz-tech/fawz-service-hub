@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
   LayoutDashboard, 
@@ -11,10 +11,13 @@ import {
   CreditCard, 
   Settings,
   Wrench,
-  MapPin
+  MapPin,
+  TagIcon
 } from 'lucide-react';
 
 const Sidebar = () => {
+  const location = useLocation();
+  
   return (
     <div className="w-64 bg-white border-r border-secondary-200 p-4 flex flex-col h-screen">
       <div className="flex items-center justify-center mb-8 mt-4">
@@ -24,19 +27,75 @@ const Sidebar = () => {
       </div>
 
       <nav className="space-y-1 flex-1">
-        <SidebarItem href="/" icon={<LayoutDashboard size={20} />} title="Dashboard" />
-        <SidebarItem href="/jobs" icon={<Clock size={20} />} title="Job Management" />
-        <SidebarItem href="/calendar" icon={<CalendarDays size={20} />} title="Calendar" />
-        <SidebarItem href="/team" icon={<Users size={20} />} title="Team" />
-        <SidebarItem href="/messages" icon={<MessageSquare size={20} />} title="Messages" />
-        <SidebarItem href="/payments" icon={<CreditCard size={20} />} title="Payments" />
-        <SidebarItem href="/services" icon={<Wrench size={20} />} title="Services" />
-        <SidebarItem href="/locations" icon={<MapPin size={20} />} title="Locations" />
-        <SidebarItem href="/financials" icon={<CreditCard size={20} />} title="Financial Dashboard" />
+        <SidebarItem 
+          href="/" 
+          icon={<LayoutDashboard size={20} />} 
+          title="Dashboard" 
+          active={location.pathname === '/'}
+        />
+        <SidebarItem 
+          href="/jobs" 
+          icon={<Clock size={20} />} 
+          title="Job Management" 
+          active={location.pathname === '/jobs'}
+        />
+        <SidebarItem 
+          href="/calendar" 
+          icon={<CalendarDays size={20} />} 
+          title="Calendar" 
+          active={location.pathname === '/calendar'}
+        />
+        <SidebarItem 
+          href="/team" 
+          icon={<Users size={20} />} 
+          title="Team" 
+          active={location.pathname === '/team'}
+        />
+        <SidebarItem 
+          href="/messages" 
+          icon={<MessageSquare size={20} />} 
+          title="Messages" 
+          active={location.pathname === '/messages'}
+        />
+        <SidebarItem 
+          href="/payments" 
+          icon={<CreditCard size={20} />} 
+          title="Payments" 
+          active={location.pathname === '/payments'}
+        />
+        <SidebarItem 
+          href="/services" 
+          icon={<Wrench size={20} />} 
+          title="Services" 
+          active={location.pathname === '/services'}
+        />
+        <SidebarItem 
+          href="/locations" 
+          icon={<MapPin size={20} />} 
+          title="Locations" 
+          active={location.pathname === '/locations'}
+        />
+        <SidebarItem 
+          href="/financials" 
+          icon={<CreditCard size={20} />} 
+          title="Financial Dashboard" 
+          active={location.pathname === '/financials'}
+        />
+        <SidebarItem 
+          href="/bidding" 
+          icon={<TagIcon size={20} />} 
+          title="Open Bidding" 
+          active={location.pathname === '/bidding'}
+        />
       </nav>
 
       <div className="pt-2 mt-2 border-t border-secondary-200">
-        <SidebarItem href="/settings" icon={<Settings size={20} />} title="Settings" />
+        <SidebarItem 
+          href="/settings" 
+          icon={<Settings size={20} />} 
+          title="Settings" 
+          active={location.pathname === '/settings'}
+        />
       </div>
     </div>
   );
