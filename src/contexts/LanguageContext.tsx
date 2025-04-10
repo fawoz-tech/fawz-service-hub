@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Define available languages
@@ -85,6 +84,9 @@ export const translations = {
     'jobs.on_site': 'On Site',
     'jobs.completed': 'Completed',
     'jobs.cancelled': 'Cancelled',
+    'jobs.all': 'All',
+    'jobs.in_progress': 'In Progress',
+    'jobs.urgent': 'Urgent',
     
     // Messages
     'messages.title': 'Messages',
@@ -191,6 +193,9 @@ export const translations = {
     'jobs.on_site': 'في الموقع',
     'jobs.completed': 'مكتملة',
     'jobs.cancelled': 'ملغاة',
+    'jobs.all': 'الكل',
+    'jobs.in_progress': 'قيد التنفيذ',
+    'jobs.urgent': 'عاجل',
     
     // Messages
     'messages.title': 'الرسائل',

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { JobCard, Job } from './JobCard';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface JobTabsProps {
   jobs: Job[];
@@ -10,14 +11,16 @@ interface JobTabsProps {
 }
 
 const JobTabs = ({ jobs, activeTab, setActiveTab }: JobTabsProps) => {
+  const { t } = useLanguage();
+  
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab}>
       <TabsList className="grid grid-cols-5 md:w-[600px]">
-        <TabsTrigger value="all">All</TabsTrigger>
-        <TabsTrigger value="new">New</TabsTrigger>
-        <TabsTrigger value="in-progress">In Progress</TabsTrigger>
-        <TabsTrigger value="completed">Completed</TabsTrigger>
-        <TabsTrigger value="urgent">Urgent</TabsTrigger>
+        <TabsTrigger value="all">{t('jobs.all')}</TabsTrigger>
+        <TabsTrigger value="new">{t('jobs.new')}</TabsTrigger>
+        <TabsTrigger value="in-progress">{t('jobs.in_progress')}</TabsTrigger>
+        <TabsTrigger value="completed">{t('jobs.completed')}</TabsTrigger>
+        <TabsTrigger value="urgent">{t('jobs.urgent')}</TabsTrigger>
       </TabsList>
       
       <div className="mt-6">
