@@ -51,7 +51,7 @@ export const translations = {
   },
   ar: {
     // Common
-    'app.name': 'فوز للمزودين',
+    'app.name': 'فوز للعماله',
     'app.switch_language': 'English',
     'app.sign_out': 'تسجيل الخروج',
     'app.help_support': 'المساعدة والدعم',
