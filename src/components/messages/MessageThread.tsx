@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { User, Phone, Send, Paperclip, MessageSquare } from 'lucide-react';
+import { User, Phone, Send, Paperclip, MessageSquare, CheckCheck } from 'lucide-react';
 import { Conversation, Message } from '@/types/message';
 
 interface MessageThreadProps {
@@ -123,12 +123,15 @@ const MessageBubble = ({ message, formatTime }: MessageBubbleProps) => {
         }`}
       >
         <p>{message.text}</p>
-        <div className={`text-xs mt-1 ${
+        <div className={`flex items-center justify-end gap-1 mt-1 ${
           message.sender === 'user' 
             ? 'text-primary-foreground/70' 
             : 'text-secondary-foreground/70'
         }`}>
-          {formatTime(message.timestamp)}
+          <span className="text-xs">{formatTime(message.timestamp)}</span>
+          {message.sender === 'user' && (
+            <CheckCheck className={`h-3.5 w-3.5 ml-0.5 ${message.read ? 'text-blue-400' : 'text-primary-foreground/50'}`} />
+          )}
         </div>
       </div>
     </div>
