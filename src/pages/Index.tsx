@@ -5,9 +5,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Clock, CheckCircle, AlertTriangle, Calendar, DollarSign } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  const handleNewRequestsClick = () => {
+    navigate('/jobs', { state: { activeTab: 'new' } });
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -18,7 +24,7 @@ const Index = () => {
               <Calendar size={16} className="mr-2" />
               Today
             </Button>
-            <Button>
+            <Button onClick={handleNewRequestsClick}>
               <Clock size={16} className="mr-2" />
               New Requests
             </Button>

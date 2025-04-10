@@ -1,15 +1,24 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { Tabs } from '@/components/ui/tabs';
 import JobFilters from '@/components/jobs/JobFilters';
 import JobTabs from '@/components/jobs/JobTabs';
 import { mockJobs } from '@/data/mockJobs';
+import { useLocation } from 'react-router-dom';
 
 const JobManagement = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [jobs] = useState(mockJobs);
+
+  // Set the active tab from navigation state if provided
+  useEffect(() => {
+    if (location.state && location.state.activeTab) {
+      setActiveTab(location.state.activeTab);
+    }
+  }, [location.state]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -30,7 +39,7 @@ const JobManagement = () => {
           <JobFilters onSearch={handleSearch} onFilter={handleFilter} />
         </div>
 
-        <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab}>
+        <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
           <JobTabs jobs={jobs} activeTab={activeTab} setActiveTab={setActiveTab} />
         </Tabs>
       </div>
