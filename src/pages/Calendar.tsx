@@ -181,7 +181,7 @@ const CalendarPage = () => {
                   onSelect={(newDate) => newDate && setDate(newDate)}
                   className="pointer-events-auto"
                   components={{
-                    day: ({ date: dayDate, ...props }) => {
+                    Day: ({ date: dayDate, ...props }) => {
                       const dayAppointments = getDayAppointments(dayDate);
                       const hasAppointments = dayAppointments.length > 0;
                       const isCurrentMonth = isSameMonth(dayDate, date);
