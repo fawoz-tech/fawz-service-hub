@@ -118,11 +118,13 @@ export const translations = {
     'bidding.analytics': 'Win %',
     
     // Calendar
-    'calendar.title': 'Calendar',
+    'calendar.title': 'Calendar & Scheduling',
     'calendar.appointments': 'Today\'s Appointments',
     'calendar.no_appointments': 'No appointments scheduled for today',
     'calendar.weekly': 'Weekly Schedule',
     'calendar.select_day': 'Select a day to view appointments',
+    'calendar.day': 'Day',
+    'calendar.month': 'Month',
     
     // Team
     'team.title': 'Team',
@@ -227,11 +229,13 @@ export const translations = {
     'bidding.analytics': 'نسبة الفوز',
     
     // Calendar
-    'calendar.title': 'التقويم',
+    'calendar.title': 'التقويم والجدولة',
     'calendar.appointments': 'مواعيد اليوم',
     'calendar.no_appointments': 'لا توجد مواعيد مجدولة لليوم',
     'calendar.weekly': 'الجدول الأسبوعي',
     'calendar.select_day': 'اختر يومًا لعرض المواعيد',
+    'calendar.day': 'اليوم',
+    'calendar.month': 'الشهر',
     
     // Team
     'team.title': 'الفريق',

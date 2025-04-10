@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { format, addDays, subDays, addMonths, subMonths } from 'date-fns';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Layout from '@/components/Layout';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Import our new components
 import CalendarNavigation from '@/components/calendar/CalendarNavigation';
@@ -18,6 +19,7 @@ const Calendar = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [view, setView] = useState<'day' | 'week' | 'month'>('month');
   const [displayMonth, setDisplayMonth] = useState<Date>(new Date());
+  const { t, isRTL } = useLanguage();
 
   // Function to navigate between days
   const navigateDay = (direction: 'next' | 'prev') => {
@@ -65,9 +67,9 @@ const Calendar = () => {
         <Tabs value={view} onValueChange={(v) => setView(v as 'day' | 'week' | 'month')}>
           <div className="flex justify-between items-center">
             <TabsList>
-              <TabsTrigger value="day">Day</TabsTrigger>
-              <TabsTrigger value="week">Week</TabsTrigger>
-              <TabsTrigger value="month">Month</TabsTrigger>
+              <TabsTrigger value="day">{t('calendar.day') || 'Day'}</TabsTrigger>
+              <TabsTrigger value="week">{t('calendar.weekly')?.split(' ')[0] || 'Week'}</TabsTrigger>
+              <TabsTrigger value="month">{t('calendar.month') || 'Month'}</TabsTrigger>
             </TabsList>
           </div>
 
