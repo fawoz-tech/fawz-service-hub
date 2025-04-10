@@ -32,7 +32,10 @@ const MonthView: React.FC<MonthViewProps> = ({
           onMonthChange={onMonthChange}
           className="rounded-md border"
           components={{
-            Day: ({ date: day, ...props }) => {
+            Day: (props: any) => {
+              // Extract day from props
+              const day = props.date;
+              
               // Make sure day exists before trying to get appointments
               if (!day) return null;
               
