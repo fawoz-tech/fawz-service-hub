@@ -37,7 +37,7 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
         </div>
         
         <nav className="space-y-1 flex-1">
-          <SidebarItem href="/" icon={<LayoutDashboard size={20} />} title="Dashboard" active onClick={onClose} />
+          <SidebarItem href="/" icon={<LayoutDashboard size={20} />} title="Dashboard" onClick={onClose} />
           <SidebarItem href="/jobs" icon={<Clock size={20} />} title="Job Management" onClick={onClose} />
           <SidebarItem href="/calendar" icon={<CalendarDays size={20} />} title="Calendar" onClick={onClose} />
           <SidebarItem href="/team" icon={<Users size={20} />} title="Team" onClick={onClose} />
@@ -45,6 +45,7 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
           <SidebarItem href="/payments" icon={<CreditCard size={20} />} title="Payments" onClick={onClose} />
           <SidebarItem href="/services" icon={<Wrench size={20} />} title="Services" onClick={onClose} />
           <SidebarItem href="/locations" icon={<MapPin size={20} />} title="Locations" onClick={onClose} />
+          <SidebarItem href="/financials" icon={<CreditCard size={20} />} title="Financial Dashboard" onClick={onClose} />
         </nav>
 
         <div className="pt-2 mt-2 border-t border-secondary-200">
