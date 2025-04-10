@@ -181,18 +181,19 @@ const CalendarPage = () => {
                   onSelect={(newDate) => newDate && setDate(newDate)}
                   className="pointer-events-auto"
                   components={{
-                    Day: ({ date: dayDate, ...props }) => {
-                      const dayAppointments = getDayAppointments(dayDate);
+                    Day: ({ day, ...props }) => {
+                      // Fix: Accessing props correctly instead of className directly
+                      const dayAppointments = getDayAppointments(day);
                       const hasAppointments = dayAppointments.length > 0;
-                      const isCurrentMonth = isSameMonth(dayDate, date);
+                      const isCurrentMonth = isSameMonth(day, date);
                       
                       return (
                         <div
                           {...props}
                           className={`relative ${props.className} ${!isCurrentMonth ? 'opacity-50' : ''}`}
                         >
-                          <time dateTime={format(dayDate, 'yyyy-MM-dd')}>
-                            {format(dayDate, 'd')}
+                          <time dateTime={format(day, 'yyyy-MM-dd')}>
+                            {format(day, 'd')}
                           </time>
                           {isCurrentMonth && hasAppointments && (
                             <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />
