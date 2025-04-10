@@ -22,12 +22,15 @@ const EarningsCard = () => {
         </div>
         <Button 
           variant="outline" 
-          className={`w-full flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} 
+          className="w-full"
           asChild
         >
-          <Link to="/payments">
+          <Link 
+            to="/payments" 
+            className={`w-full flex items-center justify-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}
+          >
             <DollarSign size={16} />
-            <span className="whitespace-nowrap">{t('dashboard.view_details')}</span>
+            <span>{t('dashboard.view_details')}</span>
           </Link>
         </Button>
       </CardContent>
