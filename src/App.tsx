@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import JobManagement from "./pages/JobManagement";
 import ServiceManagement from "./pages/ServiceManagement";
 import TeamManagement from "./pages/TeamManagement";
+import Calendar from "./pages/Calendar";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/jobs" element={<JobManagement />} />
           <Route path="/services" element={<ServiceManagement />} />
           <Route path="/team" element={<TeamManagement />} />
+          <Route path="/calendar" element={<Calendar />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
