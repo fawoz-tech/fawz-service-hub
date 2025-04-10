@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 interface LayoutProps {
   children: React.ReactNode;

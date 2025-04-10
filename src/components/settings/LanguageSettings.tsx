@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { useLanguage, Language } from '@/contexts/LanguageContext';
+import { useLanguage, Language } from '@/contexts/language';
 
 const LanguageSettings = () => {
   const { language, setLanguage, t } = useLanguage();
