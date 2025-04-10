@@ -13,6 +13,7 @@ import Messages from "./pages/Messages";
 import Locations from "./pages/Locations";
 import FinancialDashboard from "./pages/FinancialDashboard";
 import Payments from "./pages/Payments";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/locations" element={<Locations />} />
           <Route path="/financials" element={<FinancialDashboard />} />
           <Route path="/payments" element={<Payments />} />
+          <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
