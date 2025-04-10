@@ -107,7 +107,7 @@ export const translations = {
     'financial.date_range': 'Date Range',
     
     // Bidding
-    'bidding.title': 'Open Bidding Marketplace',
+    'bidding.title': 'Open Bidding',
     'bidding.subtitle': 'Find and bid on available jobs in your area',
     'bidding.post_job': 'Post a New Job',
     'bidding.marketplace': 'Marketplace',
@@ -116,10 +116,17 @@ export const translations = {
     'bidding.analytics': 'Win %',
     
     // Calendar
+    'calendar.title': 'Calendar',
     'calendar.appointments': 'Today\'s Appointments',
     'calendar.no_appointments': 'No appointments scheduled for today',
     'calendar.weekly': 'Weekly Schedule',
     'calendar.select_day': 'Select a day to view appointments',
+    
+    // Team
+    'team.title': 'Team',
+    
+    // Services
+    'services.title': 'Services',
   },
   ar: {
     // Common
@@ -206,7 +213,7 @@ export const translations = {
     'financial.date_range': 'النطاق الزمني',
     
     // Bidding
-    'bidding.title': 'سوق المزادات المفتوح',
+    'bidding.title': 'المزايدة المفتوحة',
     'bidding.subtitle': 'ابحث وقدم عطاءات على الوظائف المتاحة في منطقتك',
     'bidding.post_job': 'نشر وظيفة جديدة',
     'bidding.marketplace': 'السوق',
@@ -215,10 +222,17 @@ export const translations = {
     'bidding.analytics': 'نسبة الفوز',
     
     // Calendar
+    'calendar.title': 'التقويم',
     'calendar.appointments': 'مواعيد اليوم',
     'calendar.no_appointments': 'لا توجد مواعيد مجدولة لليوم',
     'calendar.weekly': 'الجدول الأسبوعي',
     'calendar.select_day': 'اختر يومًا لعرض المواعيد',
+    
+    // Team
+    'team.title': 'الفريق',
+    
+    // Services
+    'services.title': 'الخدمات',
   }
 };
 
