@@ -10,13 +10,13 @@ const StatCards = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <DashboardCard 
-        title={t('dashboard.urgent_jobs')}
-        value="2" 
-        description={t('dashboard.emergency_requests')}
-        icon={<AlertTriangle className="h-5 w-5 text-amber-600" />}
-        linkText={t('dashboard.view_urgent')}
+        title={t('dashboard.new_requests')}
+        value="5" 
+        description={t('dashboard.pending_review')}
+        icon={<Clock className="h-5 w-5 text-primary-600" />}
+        linkText={t('dashboard.view_requests')}
         linkHref="/jobs"
-        color="bg-amber-50"
+        color="bg-primary-50"
       />
       <DashboardCard 
         title={t('dashboard.in_progress')}
@@ -28,13 +28,13 @@ const StatCards = () => {
         color="bg-emerald-50"
       />
       <DashboardCard 
-        title={t('dashboard.new_requests')}
-        value="5" 
-        description={t('dashboard.pending_review')}
-        icon={<Clock className="h-5 w-5 text-primary-600" />}
-        linkText={t('dashboard.view_requests')}
+        title={t('dashboard.urgent_jobs')}
+        value="2" 
+        description={t('dashboard.emergency_requests')}
+        icon={<AlertTriangle className="h-5 w-5 text-accent-600" />}
+        linkText={t('dashboard.view_urgent')}
         linkHref="/jobs"
-        color="bg-primary-50"
+        color="bg-accent-50"
       />
     </div>
   );

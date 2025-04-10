@@ -8,7 +8,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { AlertCircle, Clock, MapPin, Sparkles, Users } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface OpenJob {
   id: string;
@@ -33,7 +32,6 @@ const JobCard = ({ job }: JobCardProps) => {
   const [bidAmount, setBidAmount] = useState(job.maxBudget.toString());
   const [eta, setEta] = useState('');
   const [comments, setComments] = useState('');
-  const { t } = useLanguage();
 
   const handleSubmitBid = () => {
     // In a real app, this would send the bid to the backend
@@ -62,7 +60,7 @@ const JobCard = ({ job }: JobCardProps) => {
               </div>
               <div className="flex gap-1">
                 {job.urgent && (
-                  <Badge variant="destructive" className="text-xs">{t('jobs.urgent')}</Badge>
+                  <Badge variant="destructive" className="text-xs">Urgent</Badge>
                 )}
                 {job.sameDay && (
                   <Badge variant="default" className="bg-purple-500 text-xs">Same Day</Badge>
@@ -76,15 +74,15 @@ const JobCard = ({ job }: JobCardProps) => {
           <div className="flex justify-between items-center mt-4">
             <div className="flex gap-3 text-sm text-secondary-500">
               <span className="flex items-center gap-1"><Clock size={14} /> {formatDistanceToNow(job.postedAt, { addSuffix: true })}</span>
-              <span className="flex items-center gap-1"><Users size={14} /> {job.bidsCount} {t('bidding.bids')}</span>
+              <span className="flex items-center gap-1"><Users size={14} /> {job.bidsCount} bids</span>
             </div>
             <Badge variant="outline">{job.serviceType}</Badge>
           </div>
         </CardContent>
         <CardFooter className="border-t pt-4">
           <div className="flex justify-between items-center w-full">
-            <Button variant="outline" className="text-sm">{t('jobs.view_details')}</Button>
-            <Button onClick={() => setBidDialogOpen(true)}>{t('bidding.place_bid')}</Button>
+            <Button variant="outline" className="text-sm">View Details</Button>
+            <Button onClick={() => setBidDialogOpen(true)}>Place Bid</Button>
           </div>
         </CardFooter>
       </Card>

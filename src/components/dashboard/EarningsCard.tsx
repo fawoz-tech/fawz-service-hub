@@ -1,16 +1,16 @@
 
 import React from 'react';
-import { DollarSign, ArrowRight } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const EarningsCard = () => {
-  const { t, isRTL } = useLanguage();
+  const { t } = useLanguage();
   
   return (
-    <Card className="col-span-1 h-full">
+    <Card className="col-span-1">
       <CardHeader>
         <CardTitle className="text-lg">{t('dashboard.earnings')}</CardTitle>
         <CardDescription>{t('dashboard.this_month')}</CardDescription>
@@ -21,8 +21,8 @@ const EarningsCard = () => {
           +12.5% {t('dashboard.from_last')}
         </div>
         <Button variant="outline" className="w-full" asChild>
-          <Link to="/payments" className="flex items-center justify-center">
-            <DollarSign size={16} className={isRTL ? "ml-2" : "mr-2"} />
+          <Link to="/payments">
+            <DollarSign size={16} className="mr-2" />
             {t('dashboard.view_details')}
           </Link>
         </Button>

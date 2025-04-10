@@ -32,61 +32,61 @@ const Sidebar = () => {
         <SidebarItem 
           href="/" 
           icon={<LayoutDashboard size={20} />} 
-          title={t('nav.dashboard')} 
+          title={t('dashboard.title')} 
           active={location.pathname === '/'}
         />
         <SidebarItem 
           href="/jobs" 
           icon={<Clock size={20} />} 
-          title={t('nav.jobs')} 
+          title={t('jobs.title')} 
           active={location.pathname === '/jobs'}
         />
         <SidebarItem 
           href="/calendar" 
           icon={<CalendarDays size={20} />} 
-          title={t('nav.calendar')} 
+          title={t('calendar.title')} 
           active={location.pathname === '/calendar'}
         />
         <SidebarItem 
           href="/team" 
           icon={<Users size={20} />} 
-          title={t('nav.team')} 
+          title={t('team.title')} 
           active={location.pathname === '/team'}
         />
         <SidebarItem 
           href="/messages" 
           icon={<MessageSquare size={20} />} 
-          title={t('nav.messages')} 
+          title={t('messages.title')} 
           active={location.pathname === '/messages'}
         />
         <SidebarItem 
           href="/payments" 
           icon={<CreditCard size={20} />} 
-          title={t('nav.payments')} 
+          title={t('payments.title')} 
           active={location.pathname === '/payments'}
         />
         <SidebarItem 
           href="/services" 
           icon={<Wrench size={20} />} 
-          title={t('nav.services')} 
+          title={t('services.title')} 
           active={location.pathname === '/services'}
         />
         <SidebarItem 
           href="/locations" 
           icon={<MapPin size={20} />} 
-          title={t('nav.locations')} 
+          title={t('locations.title')} 
           active={location.pathname === '/locations'}
         />
         <SidebarItem 
           href="/financials" 
           icon={<CreditCard size={20} />} 
-          title={t('nav.financials')} 
+          title={t('financial.title')} 
           active={location.pathname === '/financials'}
         />
         <SidebarItem 
           href="/bidding" 
           icon={<TagIcon size={20} />} 
-          title={t('nav.bidding')} 
+          title={t('bidding.title')} 
           active={location.pathname === '/bidding'}
         />
       </nav>
@@ -95,7 +95,7 @@ const Sidebar = () => {
         <SidebarItem 
           href="/settings" 
           icon={<Settings size={20} />} 
-          title={t('nav.settings')} 
+          title={t('settings.title')} 
           active={location.pathname === '/settings'}
         />
       </div>

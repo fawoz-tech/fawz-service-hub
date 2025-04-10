@@ -41,20 +41,20 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
         </div>
         
         <nav className="space-y-1 flex-1">
-          <SidebarItem href="/" icon={<LayoutDashboard size={20} />} title={t('nav.dashboard')} onClick={onClose} />
-          <SidebarItem href="/jobs" icon={<Clock size={20} />} title={t('nav.jobs')} onClick={onClose} />
-          <SidebarItem href="/calendar" icon={<CalendarDays size={20} />} title={t('nav.calendar')} onClick={onClose} />
-          <SidebarItem href="/team" icon={<Users size={20} />} title={t('nav.team')} onClick={onClose} />
-          <SidebarItem href="/messages" icon={<MessageSquare size={20} />} title={t('nav.messages')} onClick={onClose} />
-          <SidebarItem href="/payments" icon={<CreditCard size={20} />} title={t('nav.payments')} onClick={onClose} />
-          <SidebarItem href="/services" icon={<Wrench size={20} />} title={t('nav.services')} onClick={onClose} />
-          <SidebarItem href="/locations" icon={<MapPin size={20} />} title={t('nav.locations')} onClick={onClose} />
-          <SidebarItem href="/financials" icon={<CreditCard size={20} />} title={t('nav.financials')} onClick={onClose} />
-          <SidebarItem href="/bidding" icon={<TagIcon size={20} />} title={t('nav.bidding')} onClick={onClose} />
+          <SidebarItem href="/" icon={<LayoutDashboard size={20} />} title={t('dashboard.title')} onClick={onClose} />
+          <SidebarItem href="/jobs" icon={<Clock size={20} />} title={t('jobs.title')} onClick={onClose} />
+          <SidebarItem href="/calendar" icon={<CalendarDays size={20} />} title={t('calendar.title')} onClick={onClose} />
+          <SidebarItem href="/team" icon={<Users size={20} />} title={t('team.title')} onClick={onClose} />
+          <SidebarItem href="/messages" icon={<MessageSquare size={20} />} title={t('messages.title')} onClick={onClose} />
+          <SidebarItem href="/payments" icon={<CreditCard size={20} />} title={t('payments.title')} onClick={onClose} />
+          <SidebarItem href="/services" icon={<Wrench size={20} />} title={t('services.title')} onClick={onClose} />
+          <SidebarItem href="/locations" icon={<MapPin size={20} />} title={t('locations.title')} onClick={onClose} />
+          <SidebarItem href="/financials" icon={<CreditCard size={20} />} title={t('financial.title')} onClick={onClose} />
+          <SidebarItem href="/bidding" icon={<TagIcon size={20} />} title={t('bidding.title')} onClick={onClose} />
         </nav>
 
         <div className="pt-2 mt-2 border-t border-secondary-200">
-          <SidebarItem href="/settings" icon={<Settings size={20} />} title={t('nav.settings')} onClick={onClose} />
+          <SidebarItem href="/settings" icon={<Settings size={20} />} title={t('settings.title')} onClick={onClose} />
         </div>
       </div>
     </div>

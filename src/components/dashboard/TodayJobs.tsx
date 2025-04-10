@@ -34,7 +34,7 @@ const todayJobs: Job[] = [
 ];
 
 const TodayJobs = () => {
-  const { t, language, isRTL } = useLanguage();
+  const { t } = useLanguage();
   
   return (
     <Card className="col-span-1 md:col-span-3">

@@ -19,7 +19,7 @@ interface JobItemProps {
 }
 
 const JobItem = ({ job }: JobItemProps) => {
-  const { t, isRTL } = useLanguage();
+  const { t } = useLanguage();
   
   const statusColors = {
     'new': 'bg-blue-100 text-blue-800',
@@ -39,23 +39,19 @@ const JobItem = ({ job }: JobItemProps) => {
 
   return (
     <div className="flex items-center justify-between p-4 border rounded-lg bg-white">
-      <div className="flex items-center gap-4 overflow-hidden">
-        <div className="text-sm font-medium text-secondary-600 min-w-[70px] whitespace-nowrap">{job.time}</div>
-        <div className="overflow-hidden">
-          <div className="font-medium text-secondary-900 truncate">{job.customerName}</div>
-          <div className="text-sm text-secondary-600 truncate">{job.service} · {job.location}</div>
+      <div className="flex items-center gap-4">
+        <div className="text-sm font-medium text-secondary-600 min-w-[60px]">{job.time}</div>
+        <div>
+          <div className="font-medium text-secondary-900">{job.customerName}</div>
+          <div className="text-sm text-secondary-600">{job.service} · {job.location}</div>
         </div>
       </div>
-      <div className="flex items-center gap-2 shrink-0">
-        <Badge variant="outline" className={`${statusColors[job.status]} whitespace-nowrap`}>
+      <div className="flex items-center gap-2">
+        <Badge variant="outline" className={`${statusColors[job.status]}`}>
           {statusText[job.status]}
         </Badge>
-        <Button variant="ghost" size="icon" className="shrink-0">
-          {isRTL ? (
-            <ArrowRight size={16} className="transform rotate-180" />
-          ) : (
-            <ArrowRight size={16} />
-          )}
+        <Button variant="ghost" size="icon">
+          <ArrowRight size={16} />
         </Button>
       </div>
     </div>
