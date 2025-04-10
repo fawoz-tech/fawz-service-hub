@@ -3,6 +3,7 @@ import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Filter, Plus } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface LocationsFilterProps {
   onSearch: (query: string) => void;
@@ -15,6 +16,8 @@ const LocationsFilter = ({
   onFilter, 
   onAddLocation 
 }: LocationsFilterProps) => {
+  const { t } = useLanguage();
+  
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(e.target.value);
   };
@@ -24,7 +27,7 @@ const LocationsFilter = ({
       <div className="relative flex-1 md:flex-initial">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-secondary-500" />
         <Input
-          placeholder="Search locations..."
+          placeholder={t('locations.search')}
           className="pl-9 w-full md:w-[250px]"
           onChange={handleSearchChange}
         />
@@ -34,7 +37,7 @@ const LocationsFilter = ({
       </Button>
       <Button className="gap-1" onClick={onAddLocation}>
         <Plus size={16} />
-        Add Location
+        {t('locations.add')}
       </Button>
     </div>
   );

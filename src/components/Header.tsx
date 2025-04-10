@@ -11,10 +11,13 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import LanguageToggle from './LanguageToggle';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Header = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const { t, isRTL } = useLanguage();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -34,10 +37,12 @@ const Header = () => {
             {showMobileMenu ? <X size={20} /> : <Menu size={20} />}
           </Button>
         )}
-        <h1 className="font-semibold text-lg text-secondary-800">FAWOZ Provider</h1>
+        <h1 className="font-semibold text-lg text-secondary-800">{t('app.name')}</h1>
       </div>
       
       <div className="flex items-center gap-2">
+        <LanguageToggle />
+        
         <Popover open={showNotifications} onOpenChange={setShowNotifications}>
           <PopoverTrigger asChild>
             <Button variant="outline" size="icon" className="relative">
@@ -45,9 +50,9 @@ const Header = () => {
               <span className="absolute top-0 right-0 w-2 h-2 bg-accent rounded-full"></span>
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-80 p-0">
+          <PopoverContent className="w-80 p-0" align={isRTL ? "start" : "end"}>
             <div className="px-4 py-3 border-b border-secondary-100">
-              <h3 className="font-medium">Notifications</h3>
+              <h3 className="font-medium">{t('app.notifications')}</h3>
             </div>
             <div className="max-h-96 overflow-auto">
               <div className="p-4 border-b border-secondary-100 hover:bg-secondary-50">
@@ -68,7 +73,7 @@ const Header = () => {
             </div>
             <div className="p-2 border-t border-secondary-100">
               <Button variant="ghost" className="w-full justify-center text-sm">
-                View all notifications
+                {t('app.view_all')}
               </Button>
             </div>
           </PopoverContent>
@@ -90,7 +95,7 @@ const Header = () => {
               </Avatar>
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56 p-0">
+          <PopoverContent className="w-56 p-0" align={isRTL ? "start" : "end"}>
             <div className="px-4 py-3 border-b border-secondary-100">
               <p className="font-medium">John Doe</p>
               <p className="text-sm text-secondary-500">john.doe@example.com</p>
@@ -101,13 +106,13 @@ const Header = () => {
                 className="w-full justify-start px-4 py-2 text-sm"
                 onClick={() => navigate('/settings')}
               >
-                Account Settings
+                {t('app.account_settings')}
               </Button>
               <Button variant="ghost" className="w-full justify-start px-4 py-2 text-sm">
-                Help & Support
+                {t('app.help_support')}
               </Button>
               <Button variant="ghost" className="w-full justify-start px-4 py-2 text-sm text-destructive">
-                Sign out
+                {t('app.sign_out')}
               </Button>
             </div>
           </PopoverContent>

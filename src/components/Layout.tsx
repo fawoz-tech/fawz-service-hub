@@ -3,6 +3,7 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,9 +11,10 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const isMobile = useIsMobile();
+  const { isRTL } = useLanguage();
 
   return (
-    <div className="flex h-screen bg-secondary-50">
+    <div className={`flex h-screen bg-secondary-50 ${isRTL ? 'rtl' : 'ltr'}`}>
       {!isMobile && <Sidebar />}
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />

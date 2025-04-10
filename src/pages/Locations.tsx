@@ -5,9 +5,11 @@ import LocationsFilter from '@/components/locations/LocationsFilter';
 import LocationsTabs from '@/components/locations/LocationsTabs';
 import CoverageSettings from '@/components/locations/CoverageSettings';
 import { locations } from '@/services/locationService';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Locations = () => {
   const [activeTab, setActiveTab] = useState('all');
+  const { t } = useLanguage();
   
   const handleSearch = (query: string) => {
     console.log('Search query:', query);
@@ -28,7 +30,7 @@ const Locations = () => {
     <Layout>
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold text-secondary-900">Locations</h1>
+          <h1 className="text-2xl font-bold text-secondary-900">{t('locations.title')}</h1>
           <LocationsFilter 
             onSearch={handleSearch}
             onFilter={handleFilter}
