@@ -9,6 +9,7 @@ type AuthContextType = {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   signUp: (email: string, password: string, fullName?: string) => Promise<{ success: boolean; message?: string }>;
   signOut: () => Promise<void>;
 };
@@ -78,20 +79,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/auth'
+        }
+      });
+      
+      if (error) {
+        console.error("Google sign in error:", error);
+        toast({
+          variant: "destructive",
+          title: "Google sign in failed",
+          description: error.message,
+        });
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+      throw error;
+    }
+  };
+
   const signUp = async (email: string, password: string, fullName?: string) => {
     try {
       console.log("Signing up with:", email, "and full name:", fullName || "not provided");
       
-      // Use a simpler approach to check for existing users
-      const { data: existingProfiles, error: checkError } = await supabase
+      // Check if user already exists with this email
+      const { count, error: countError } = await supabase
         .from('profiles')
-        .select('id')
-        .eq('username', email.split('@')[0])
-        .limit(1);
+        .select('*', { count: 'exact', head: true })
+        .eq('username', email.split('@')[0]);
         
-      if (checkError) {
-        console.error("Error checking for existing user:", checkError);
-      } else if (existingProfiles && existingProfiles.length > 0) {
+      if (countError) {
+        console.error("Error checking for existing user:", countError);
+      } else if (count && count > 0) {
         toast({
           variant: "destructive",
           title: "Sign up failed",
@@ -151,6 +175,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     user,
     loading,
     signIn,
+    signInWithGoogle,
     signUp,
     signOut,
   };
