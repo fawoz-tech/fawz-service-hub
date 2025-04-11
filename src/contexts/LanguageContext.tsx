@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Language = 'en' | 'ar';
@@ -13,7 +12,7 @@ interface Translations {
 const translations: Translations = {
   'app.name': {
     en: 'FAWOZ Dashboard',
-    ar: 'لوحة تحكم FAWOZ'
+    ar: 'لوحة تحكم فوز للخدمات'
   },
   'app.notifications': {
     en: 'Notifications',
