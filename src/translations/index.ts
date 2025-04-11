@@ -14,6 +14,7 @@ import { financialTranslations } from './categories/financial';
 import { biddingTranslations } from './categories/bidding';
 import { settingsTranslations } from './categories/settings';
 
+// Re-export types with proper syntax for isolatedModules
 export type { Language, Translation } from './types';
 export { Translations } from './types';
 

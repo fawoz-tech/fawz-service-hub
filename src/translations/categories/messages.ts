@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the Messages section of the application
+ * Includes conversation filters, labels, and search functionality
+ * @const messagesTranslations
+ */
 export const messagesTranslations: Record<string, Translation> = {
   'messages.title': {
     en: 'Messages',

@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the Jobs Management section
+ * Includes job status labels, filtering options, and action buttons
+ * @const jobsTranslations
+ */
 export const jobsTranslations: Record<string, Translation> = {
   'jobs.title': {
     en: 'Jobs',

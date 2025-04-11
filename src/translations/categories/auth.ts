@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for authentication-related UI elements and messages
+ * Includes login, registration, and account recovery flows
+ * @const authTranslations
+ */
 export const authTranslations: Record<string, Translation> = {
   'auth.welcome': {
     en: 'Welcome to FAWOZ',

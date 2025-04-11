@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the Calendar section of the application
+ * Includes different calendar views and appointment-related texts
+ * @const calendarTranslations
+ */
 export const calendarTranslations: Record<string, Translation> = {
   'calendar.title': {
     en: 'Calendar',
@@ -19,7 +24,7 @@ export const calendarTranslations: Record<string, Translation> = {
     ar: 'شهر'
   },
   'calendar.today_appointments': {
-    en: 'Today\'s Appointments',
+    en: "Today's Appointments",
     ar: 'مواعيد اليوم'
   },
   'calendar.no_appointments': {

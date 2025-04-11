@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the Payments section of the application
+ * Includes transaction details, payment methods, and balance information
+ * @const paymentsTranslations
+ */
 export const paymentsTranslations: Record<string, Translation> = {
   'payments.title': {
     en: 'Payments',

@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the Settings section of the application
+ * Includes account settings, language preferences, and security options
+ * @const settingsTranslations
+ */
 export const settingsTranslations: Record<string, Translation> = {
   'settings.title': {
     en: 'Settings',

@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the Financial Dashboard section
+ * Includes financial metrics, charts, and reporting-related texts
+ * @const financialTranslations
+ */
 export const financialTranslations: Record<string, Translation> = {
   'financial.title': {
     en: 'Financial Dashboard',

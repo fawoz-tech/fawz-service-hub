@@ -1,6 +1,10 @@
 
 import { Translation } from '../types';
 
+/**
+ * App-wide general translations for common UI elements and actions
+ * @const appTranslations
+ */
 export const appTranslations: Record<string, Translation> = {
   'app.name': {
     en: 'FAWOZ Dashboard',

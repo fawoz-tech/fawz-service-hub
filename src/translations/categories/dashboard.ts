@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the main Dashboard view
+ * Includes overview metrics, job status indicators, and action buttons
+ * @const dashboardTranslations
+ */
 export const dashboardTranslations: Record<string, Translation> = {
   'dashboard.title': {
     en: 'Dashboard',
@@ -23,7 +28,7 @@ export const dashboardTranslations: Record<string, Translation> = {
     ar: 'المهام النشطة'
   },
   'dashboard.today_jobs': {
-    en: 'Today\'s Jobs',
+    en: "Today's Jobs",
     ar: 'مهام اليوم'
   },
   'dashboard.earnings': {
@@ -75,7 +80,7 @@ export const dashboardTranslations: Record<string, Translation> = {
     ar: 'عرض التفاصيل'
   },
   'dashboard.todays_jobs': {
-    en: 'Today\'s Jobs',
+    en: "Today's Jobs",
     ar: 'مهام اليوم'
   },
   'dashboard.view_calendar': {

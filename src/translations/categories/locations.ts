@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the Locations Management section
+ * Includes location filters, actions, and coverage-related texts
+ * @const locationsTranslations
+ */
 export const locationsTranslations: Record<string, Translation> = {
   'locations.title': {
     en: 'Locations',

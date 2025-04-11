@@ -1,6 +1,11 @@
 
 import { Translation } from '../types';
 
+/**
+ * Translations for the Open Bidding section of the application
+ * Includes marketplace, job posting, and analytics related texts
+ * @const biddingTranslations
+ */
 export const biddingTranslations: Record<string, Translation> = {
   'bidding.title': {
     en: 'Open Bidding',
