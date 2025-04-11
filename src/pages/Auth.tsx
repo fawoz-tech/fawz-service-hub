@@ -1,11 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import LanguageToggle from '@/components/LanguageToggle';
 import AuthContainer from '@/components/auth/AuthContainer';
-import { useToast } from '@/hooks/use-toast';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const Auth = () => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
@@ -13,9 +11,6 @@ const Auth = () => {
   
   const { user } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const { toast } = useToast();
-  const { t } = useLanguage();
   
   useEffect(() => {
     // If user is logged in, redirect to homepage or saved redirect path
@@ -26,29 +21,27 @@ const Auth = () => {
     }
   }, [user, navigate]);
 
+  // Handle registration message passed via URL parameters
   useEffect(() => {
-    // Check for URL parameters
-    const queryParams = new URLSearchParams(location.search);
+    const handleAuthParams = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      
+      // Check for email verification success
+      if (searchParams.has('verified')) {
+        setRegistrationMessage('Your email has been verified! You can now log in.');
+        setActiveTab('login');
+      }
+      
+      // Check for other status messages
+      const message = searchParams.get('message');
+      if (message) {
+        setRegistrationMessage(message);
+      }
+    };
     
-    // Check if this is a password reset flow
-    if (queryParams.has('reset')) {
-      setActiveTab('login');
-      toast({
-        title: t('auth.password_reset_complete'),
-        description: t('auth.password_reset_success'),
-      });
-    }
-    
-    // Check if the user has verified their email
-    if (queryParams.has('email_confirmed')) {
-      setActiveTab('login');
-      toast({
-        title: t('auth.email_verified'),
-        description: t('auth.email_verification_success'),
-      });
-    }
-  }, [location, toast, t]);
-
+    handleAuthParams();
+  }, []);
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary-50 px-4">
       <div className="absolute top-4 right-4">
