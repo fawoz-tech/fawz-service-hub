@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Auth from '@/pages/Auth';
@@ -10,7 +11,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/contexts/auth';
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
@@ -22,12 +23,12 @@ function App() {
     }, 500);
 
     // Redirect to /auth if not authenticated and not already on /auth
-    if (!isAuthenticated && location.pathname !== '/auth') {
+    if (!user && location.pathname !== '/auth') {
       navigate('/auth');
-    } else if (isAuthenticated && location.pathname === '/auth') {
+    } else if (user && location.pathname === '/auth') {
       navigate('/');
     }
-  }, [isAuthenticated, navigate, location.pathname]);
+  }, [user, navigate, location.pathname]);
 
   if (isLoading) {
     return <div>Loading...</div>;
