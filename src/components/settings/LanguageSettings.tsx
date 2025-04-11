@@ -4,12 +4,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Language } from '@/contexts/types';
 
 const LanguageSettings = () => {
   const { language, setLanguage, t } = useLanguage();
 
   const handleLanguageChange = (value: string) => {
-    setLanguage(value as 'en' | 'ar');
+    setLanguage(value as Language);
   };
 
   return (
