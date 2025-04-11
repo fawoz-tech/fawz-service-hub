@@ -1,0 +1,101 @@
+
+import { TeamMember } from '@/components/team/TeamMemberCard';
+import { Assignment } from '@/components/team/AssignmentList';
+
+export const team: TeamMember[] = [
+  {
+    id: '1',
+    name: 'Ali Hassan',
+    role: 'AC Technician',
+    status: 'available',
+    services: ['AC Repair', 'AC Maintenance'],
+    rating: 4.8,
+    jobsCompleted: 124,
+    phone: '+966 55 123 4567',
+  },
+  {
+    id: '2',
+    name: 'Mohammed Abdul',
+    role: 'Master Plumber',
+    status: 'on-job',
+    services: ['Plumbing', 'Leak Repair', 'Installation'],
+    rating: 4.9,
+    jobsCompleted: 198,
+    phone: '+966 50 987 6543',
+  },
+  {
+    id: '3',
+    name: 'Khaled Ibrahim',
+    role: 'Electrician',
+    status: 'available',
+    services: ['Electrical', 'Wiring', 'Fixtures'],
+    rating: 4.7,
+    jobsCompleted: 86,
+    phone: '+966 54 456 7890',
+  },
+  {
+    id: '4',
+    name: 'Ahmed Ali',
+    role: 'AC Technician',
+    status: 'on-break',
+    services: ['AC Repair', 'AC Installation'],
+    rating: 4.5,
+    jobsCompleted: 65,
+    phone: '+966 56 234 5678',
+  },
+  {
+    id: '5',
+    name: 'Omar Farooq',
+    role: 'Handyman',
+    status: 'available',
+    services: ['General Repairs', 'Furniture Assembly', 'Painting'],
+    rating: 4.6,
+    jobsCompleted: 112,
+    phone: '+966 59 876 5432',
+  },
+  {
+    id: '6',
+    name: 'Saad Al-Qahtani',
+    role: 'Plumber',
+    status: 'off-duty',
+    services: ['Plumbing', 'Bathroom Fixtures', 'Water Heater'],
+    rating: 4.9,
+    jobsCompleted: 156,
+    phone: '+966 58 345 6789',
+  },
+];
+
+export const assignments: Assignment[] = [
+  {
+    id: '1',
+    technician: 'Ali Hassan',
+    service: 'AC Repair - Split Unit',
+    time: '09:30 AM',
+    location: 'Al Olaya, Riyadh',
+    status: 'en-route',
+  },
+  {
+    id: '2',
+    technician: 'Mohammed Abdul',
+    service: 'Plumbing - Leak Repair',
+    time: '11:45 AM',
+    location: 'Al Hamra, Jeddah',
+    status: 'on-site',
+  },
+  {
+    id: '3',
+    technician: 'Khaled Ibrahim',
+    service: 'Electrical - Wiring',
+    time: '02:15 PM',
+    location: 'Al Rashidiya, Dubai',
+    status: 'assigned',
+  },
+  {
+    id: '4',
+    technician: 'Ahmed Ali',
+    service: 'AC Maintenance',
+    time: '04:30 PM',
+    location: 'Al Muruj, Riyadh',
+    status: 'assigned',
+  },
+];
