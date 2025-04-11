@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Bell, MessageSquare, Menu, X, LogOut } from 'lucide-react';
+import { Bell, MessageSquare, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import MobileSidebar from './MobileSidebar';
@@ -13,13 +13,11 @@ import {
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import LanguageToggle from './LanguageToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useAuth } from '@/contexts/AuthContext';
 
 const Header = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { t, isRTL } = useLanguage();
-  const { user, signOut } = useAuth();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
@@ -29,16 +27,6 @@ const Header = () => {
 
   const handleMessagesClick = () => {
     navigate('/messages');
-  };
-
-  const handleLogout = async () => {
-    await signOut();
-  };
-
-  // Get user initials for avatar
-  const getUserInitials = () => {
-    if (!user || !user.email) return 'U';
-    return user.email.substring(0, 2).toUpperCase();
   };
 
   return (
@@ -103,13 +91,13 @@ const Header = () => {
           <PopoverTrigger asChild>
             <Button variant="outline" className="rounded-full h-8 w-8 p-0">
               <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary/10 text-primary">{getUserInitials()}</AvatarFallback>
+                <AvatarFallback className="bg-primary/10 text-primary">U</AvatarFallback>
               </Avatar>
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-56 p-0" align={isRTL ? "start" : "end"}>
             <div className="px-4 py-3 border-b border-secondary-100">
-              <p className="font-medium">{user?.email || 'User'}</p>
+              <p className="font-medium">User</p>
             </div>
             <div className="py-2">
               <Button 
@@ -121,14 +109,6 @@ const Header = () => {
               </Button>
               <Button variant="ghost" className="w-full justify-start px-4 py-2 text-sm">
                 {t('app.help_support')}
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start px-4 py-2 text-sm text-destructive flex items-center gap-2"
-                onClick={handleLogout}
-              >
-                <LogOut size={16} />
-                {t('app.sign_out')}
               </Button>
             </div>
           </PopoverContent>
