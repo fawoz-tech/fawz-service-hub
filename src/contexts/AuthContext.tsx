@@ -12,6 +12,8 @@ type AuthContextType = {
   signInWithGoogle: () => Promise<void>;
   signUp: (email: string, password: string, fullName?: string) => Promise<{ success: boolean; message?: string }>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
+  resendVerificationEmail: (email: string) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -130,17 +132,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         options: {
           data: {
             full_name: fullName,
-          }
+          },
+          emailRedirectTo: window.location.origin + '/auth'
         }
       });
       
       if (error) {
         console.error("Sign up error:", error);
-        toast({
-          variant: "destructive",
-          title: "Sign up failed",
-          description: error.message,
-        });
+        
+        if (error.message === 'User already registered') {
+          toast({
+            variant: "info",
+            title: "Account already exists",
+            description: "Try logging in, or reset your password if you forgot it.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Sign up failed",
+            description: error.message,
+          });
+        }
         return { success: false, message: error.message };
       } else {
         console.log("Sign up successful:", data);
@@ -161,6 +173,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const resetPassword = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/auth?reset=true',
+      });
+
+      if (error) {
+        console.error("Password reset error:", error);
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error sending reset password email:', error);
+      throw error;
+    }
+  };
+
+  const resendVerificationEmail = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+        options: {
+          emailRedirectTo: window.location.origin + '/auth'
+        }
+      });
+
+      if (error) {
+        console.error("Resend verification email error:", error);
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error resending verification email:', error);
+      throw error;
+    }
+  };
+
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
@@ -178,6 +226,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInWithGoogle,
     signUp,
     signOut,
+    resetPassword,
+    resendVerificationEmail,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

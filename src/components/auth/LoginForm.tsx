@@ -11,14 +11,19 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginFormData } from '@/schemas/auth';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const LoginForm = () => {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
+  const [resetPasswordEmail, setResetPasswordEmail] = useState<string>('');
+  const [resetPasswordDialogOpen, setResetPasswordDialogOpen] = useState<boolean>(false);
+  const [resetPasswordLoading, setResetPasswordLoading] = useState<boolean>(false);
+  const [resetPasswordSent, setResetPasswordSent] = useState<boolean>(false);
   
-  const { signIn, signInWithGoogle } = useAuth();
+  const { signIn, signInWithGoogle, resetPassword } = useAuth();
   const { toast } = useToast();
   const { t } = useLanguage();
   
@@ -39,7 +44,15 @@ const LoginForm = () => {
       // No need to handle redirect here as it will happen via the useEffect in the parent
     } catch (error: any) {
       console.error('Login error:', error);
-      setGeneralError(error?.message || t('auth.error_occurred'));
+      
+      // Check for specific error codes
+      if (error?.code === 'invalid_credentials') {
+        setGeneralError(t('auth.invalid_credentials'));
+      } else if (error?.message?.includes('Email not confirmed')) {
+        setGeneralError(t('auth.email_not_confirmed'));
+      } else {
+        setGeneralError(error?.message || t('auth.error_occurred'));
+      }
     }
   };
 
@@ -63,10 +76,45 @@ const LoginForm = () => {
 
   const handleForgotPassword = (e: React.MouseEvent) => {
     e.preventDefault();
-    toast({
-      title: t('auth.password_reset'),
-      description: t('auth.password_reset_email'),
-    });
+    // Pre-fill with the email from the form if available
+    setResetPasswordEmail(form.getValues('email'));
+    setResetPasswordDialogOpen(true);
+  };
+  
+  const handleResetPassword = async () => {
+    if (!resetPasswordEmail || !resetPasswordEmail.includes('@')) {
+      toast({
+        variant: "destructive",
+        title: t('auth.error'),
+        description: t('auth.valid_email_required'),
+      });
+      return;
+    }
+
+    try {
+      setResetPasswordLoading(true);
+      await resetPassword(resetPasswordEmail);
+      setResetPasswordSent(true);
+      
+      toast({
+        title: t('auth.password_reset'),
+        description: t('auth.password_reset_email_sent'),
+      });
+    } catch (error: any) {
+      console.error('Password reset error:', error);
+      toast({
+        variant: "destructive",
+        title: t('auth.error'),
+        description: error?.message || t('auth.error_occurred'),
+      });
+    } finally {
+      setResetPasswordLoading(false);
+    }
+  };
+
+  const closeResetDialog = () => {
+    setResetPasswordDialogOpen(false);
+    setResetPasswordSent(false);
   };
   
   return (
@@ -184,6 +232,65 @@ const LoginForm = () => {
         )}
         Google
       </Button>
+
+      {/* Password Reset Dialog */}
+      <Dialog open={resetPasswordDialogOpen} onOpenChange={setResetPasswordDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t('auth.reset_password')}</DialogTitle>
+            <DialogDescription>
+              {resetPasswordSent 
+                ? t('auth.password_reset_confirmation') 
+                : t('auth.password_reset_instructions')}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {resetPasswordSent ? (
+            <div className="flex flex-col items-center justify-center py-4">
+              <CheckCircle className="h-12 w-12 text-green-500 mb-4" />
+              <p className="text-center">{t('auth.check_email_for_link')}</p>
+            </div>
+          ) : (
+            <>
+              <div className="space-y-4 py-2">
+                <div className="space-y-2">
+                  <FormLabel htmlFor="reset-email">{t('auth.email')}</FormLabel>
+                  <Input 
+                    id="reset-email"
+                    type="email" 
+                    placeholder="name@example.com"
+                    value={resetPasswordEmail}
+                    onChange={(e) => setResetPasswordEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+              
+              <DialogFooter>
+                <Button 
+                  variant="outline" 
+                  onClick={closeResetDialog}
+                >
+                  {t('common.cancel')}
+                </Button>
+                <Button 
+                  type="submit"
+                  onClick={handleResetPassword}
+                  disabled={resetPasswordLoading}
+                >
+                  {resetPasswordLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('auth.sending')}
+                    </>
+                  ) : (
+                    t('auth.send_reset_link')
+                  )}
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
