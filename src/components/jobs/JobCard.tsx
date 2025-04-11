@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -35,7 +36,7 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ job, onStatusChange }: JobCardProps) => {
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   
   const statusColors = {
     'new': 'bg-blue-100 text-blue-800',
@@ -67,7 +68,7 @@ export const JobCard = ({ job, onStatusChange }: JobCardProps) => {
           <span className="flex items-center">
             <Clock className="h-3 w-3 mr-1" /> {t('jobs.urgent')}
           </span>
-          <span className="text-xs">Response required ASAP</span>
+          <span className="text-xs">{t('jobs.urgent_response')}</span>
         </div>
       )}
       <CardHeader className="pb-2">
@@ -280,18 +281,26 @@ export const JobActions = ({ status, jobId, onStatusChange }: JobActionsProps) =
     case 'accepted':
       return (
         <>
-          <Button size="sm" onClick={handleStartJob}>Start Job</Button>
-          <Button variant="outline" size="sm" onClick={handleViewDetails}>View Details</Button>
+          <Button size="sm" onClick={handleStartJob}>
+            {t('jobs.button.start_job')}
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleViewDetails}>
+            {t('jobs.button.view_details')}
+          </Button>
           <Button variant="ghost" size="sm" onClick={handleCall}>
-            <Phone className="h-4 w-4 mr-1" /> Call
+            <Phone className="h-4 w-4 mr-1" /> {t('jobs.button.call')}
           </Button>
         </>
       );
     case 'en-route':
       return (
         <>
-          <Button size="sm" onClick={handleOnSite}>Arrived on Site</Button>
-          <Button variant="outline" size="sm" onClick={handleViewMap}>View Map</Button>
+          <Button size="sm" onClick={handleOnSite}>
+            {t('jobs.button.arrived')}
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleViewMap}>
+            {t('jobs.button.view_map')}
+          </Button>
           <Button variant="ghost" size="sm" onClick={handleMoreOptions}>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
@@ -300,8 +309,12 @@ export const JobActions = ({ status, jobId, onStatusChange }: JobActionsProps) =
     case 'on-site':
       return (
         <>
-          <Button size="sm" onClick={handleCompleteJob}>Complete Job</Button>
-          <Button variant="outline" size="sm" onClick={handleAddMaterials}>Add Materials</Button>
+          <Button size="sm" onClick={handleCompleteJob}>
+            {t('jobs.button.complete')}
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleAddMaterials}>
+            {t('jobs.button.materials')}
+          </Button>
           <Button variant="ghost" size="sm" onClick={handleMoreOptions}>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
@@ -310,8 +323,12 @@ export const JobActions = ({ status, jobId, onStatusChange }: JobActionsProps) =
     case 'completed':
       return (
         <>
-          <Button variant="outline" size="sm" onClick={handleViewInvoice}>View Invoice</Button>
-          <Button variant="ghost" size="sm" onClick={handleJobHistory}>Job History</Button>
+          <Button variant="outline" size="sm" onClick={handleViewInvoice}>
+            {t('jobs.button.invoice')}
+          </Button>
+          <Button variant="ghost" size="sm" onClick={handleJobHistory}>
+            {t('jobs.button.history')}
+          </Button>
         </>
       );
     default:

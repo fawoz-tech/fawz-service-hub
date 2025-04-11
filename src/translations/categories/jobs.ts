@@ -51,6 +51,10 @@ export const jobsTranslations: Record<string, Translation> = {
     en: 'Urgent',
     ar: 'عاجل'
   },
+  'jobs.urgent_response': {
+    en: 'Response required ASAP',
+    ar: 'مطلوب رد فوري'
+  },
   'jobs.job_details': {
     en: 'Job Details',
     ar: 'تفاصيل المهمة'
@@ -182,6 +186,38 @@ export const jobsTranslations: Record<string, Translation> = {
   'jobs.button.call': {
     en: 'Call',
     ar: 'اتصال'
+  },
+  'jobs.button.start_job': {
+    en: 'Start Job',
+    ar: 'بدء المهمة'
+  },
+  'jobs.button.view_details': {
+    en: 'View Details',
+    ar: 'عرض التفاصيل'
+  },
+  'jobs.button.arrived': {
+    en: 'Arrived on Site',
+    ar: 'وصلت إلى الموقع'
+  },
+  'jobs.button.view_map': {
+    en: 'View Map',
+    ar: 'عرض الخريطة'
+  },
+  'jobs.button.complete': {
+    en: 'Complete Job',
+    ar: 'إنهاء المهمة'
+  },
+  'jobs.button.materials': {
+    en: 'Add Materials',
+    ar: 'إضافة مواد'
+  },
+  'jobs.button.invoice': {
+    en: 'View Invoice',
+    ar: 'عرض الفاتورة'
+  },
+  'jobs.button.history': {
+    en: 'Job History',
+    ar: 'سجل المهمة'
   },
   'jobs.back': {
     en: 'Back',

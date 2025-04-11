@@ -44,7 +44,7 @@ const JobsList = ({ jobs, filter }: JobsListProps) => {
     : jobsState;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" dir={useLanguage().isRTL ? 'rtl' : 'ltr'}>
       {filteredJobs.map((job) => (
         <JobCard 
           key={job.id} 
