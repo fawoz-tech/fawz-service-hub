@@ -18,7 +18,14 @@ export const useLanguageProvider = (): LanguageContextType => {
   }, [language, isRTL]);
 
   const t = (key: string): string => {
-    return translations[key]?.[language] || key;
+    // Check if the key exists in translations
+    if (!translations[key]) {
+      console.warn(`Translation key not found: ${key}`);
+      return key; // Return the key itself as fallback
+    }
+    
+    // Return the translation in the current language
+    return translations[key][language] || key;
   };
 
   return { language, setLanguage, isRTL, t };

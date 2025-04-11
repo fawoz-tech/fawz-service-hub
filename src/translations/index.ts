@@ -1,3 +1,4 @@
+
 type Language = 'en' | 'ar';
 
 export interface Translation {
@@ -72,6 +73,62 @@ export const translations: Translations = {
     en: 'Earnings',
     ar: 'الأرباح'
   },
+  'dashboard.pending_review': {
+    en: 'Pending Review',
+    ar: 'بانتظار المراجعة'
+  },
+  'dashboard.view_requests': {
+    en: 'View Requests',
+    ar: 'عرض الطلبات'
+  },
+  'dashboard.in_progress': {
+    en: 'In Progress',
+    ar: 'قيد التنفيذ'
+  },
+  'dashboard.jobs_active': {
+    en: 'Jobs Active',
+    ar: 'مهام نشطة'
+  },
+  'dashboard.view_jobs': {
+    en: 'View Jobs',
+    ar: 'عرض المهام'
+  },
+  'dashboard.urgent_jobs': {
+    en: 'Urgent Jobs',
+    ar: 'مهام عاجلة'
+  },
+  'dashboard.emergency_requests': {
+    en: 'Emergency Requests',
+    ar: 'طلبات طارئة'
+  },
+  'dashboard.view_urgent': {
+    en: 'View Urgent',
+    ar: 'عرض العاجل'
+  },
+  'dashboard.this_month': {
+    en: 'This Month',
+    ar: 'هذا الشهر'
+  },
+  'dashboard.from_last': {
+    en: 'from last month',
+    ar: 'من الشهر الماضي'
+  },
+  'dashboard.view_details': {
+    en: 'View Details',
+    ar: 'عرض التفاصيل'
+  },
+  'dashboard.todays_jobs': {
+    en: 'Today\'s Jobs',
+    ar: 'مهام اليوم'
+  },
+  'dashboard.view_calendar': {
+    en: 'View Calendar',
+    ar: 'عرض التقويم'
+  },
+  'dashboard.no_jobs': {
+    en: 'No jobs scheduled for today',
+    ar: 'لا توجد مهام مجدولة لهذا اليوم'
+  },
   
   // Jobs translations
   'jobs.title': {
@@ -97,6 +154,14 @@ export const translations: Translations = {
   'jobs.cancelled': {
     en: 'Cancelled',
     ar: 'ملغي'
+  },
+  'jobs.en_route': {
+    en: 'En Route',
+    ar: 'في الطريق'
+  },
+  'jobs.on_site': {
+    en: 'On Site',
+    ar: 'في الموقع'
   },
   
   // Calendar translations
@@ -186,6 +251,34 @@ export const translations: Translations = {
     en: 'Completed',
     ar: 'مكتمل'
   },
+  'payments.available': {
+    en: 'Available Balance',
+    ar: 'الرصيد المتاح'
+  },
+  'payments.withdraw': {
+    en: 'Withdraw',
+    ar: 'سحب'
+  },
+  'payments.waiting': {
+    en: 'transactions pending',
+    ar: 'معاملات معلقة'
+  },
+  'payments.last_payout': {
+    en: 'Last Payout',
+    ar: 'آخر دفعة'
+  },
+  'payments.bank_transfer': {
+    en: 'Bank Transfer',
+    ar: 'تحويل بنكي'
+  },
+  'payments.payout_settings': {
+    en: 'Payout Settings',
+    ar: 'إعدادات الدفع'
+  },
+  'payments.export': {
+    en: 'Export',
+    ar: 'تصدير'
+  },
   
   // Services translations
   'services.title': {
@@ -252,6 +345,10 @@ export const translations: Translations = {
     en: 'Payout Settings',
     ar: 'إعدادات الدفع'
   },
+  'financial.date_range': {
+    en: 'Date Range',
+    ar: 'النطاق الزمني'
+  },
   
   // Bidding translations
   'bidding.title': {
@@ -273,6 +370,10 @@ export const translations: Translations = {
   'bidding.analytics': {
     en: 'Analytics',
     ar: 'التحليلات'
+  },
+  'bidding.subtitle': {
+    en: 'Find new opportunities and submit bids',
+    ar: 'ابحث عن فرص جديدة وقدم عروض أسعار'
   },
   
   // Settings translations
@@ -431,3 +532,4 @@ export const translations: Translations = {
     ar: 'الاسم الكامل مطلوب'
   }
 };
+
