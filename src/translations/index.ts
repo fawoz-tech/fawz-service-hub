@@ -1,3 +1,4 @@
+
 export const translations = {
   en: {
     common: {
@@ -46,7 +47,9 @@ export const translations = {
       password_reset_complete: "Password Reset Complete",
       password_reset_success: "Your password has been reset successfully.",
       email_verified: "Email Verified",
-      email_verification_success: "Your email has been verified successfully."
+      email_verification_success: "Your email has been verified successfully.",
+      captcha_required: "CAPTCHA verification is required. Please try again later.",
+      captcha_error: "CAPTCHA verification failed. Please contact the administrator."
     }
   },
   // Add other language translations here

@@ -176,12 +176,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resetPassword = async (email: string) => {
     try {
+      console.log("Attempting to reset password for:", email);
+      
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: window.location.origin + '/auth?reset=true',
       });
 
       if (error) {
         console.error("Password reset error:", error);
+        
+        // Check specifically for CAPTCHA errors
+        if (error.message.includes('captcha') || error.message.includes('CAPTCHA')) {
+          throw new Error("CAPTCHA verification required. This feature is currently not supported in the app interface.");
+        }
+        
         throw error;
       }
     } catch (error) {

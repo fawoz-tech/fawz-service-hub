@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -11,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginFormData } from '@/schemas/auth';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { AlertCircle, CheckCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle, AlertTriangle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
@@ -23,6 +22,7 @@ const LoginForm = () => {
   const [resetPasswordDialogOpen, setResetPasswordDialogOpen] = useState<boolean>(false);
   const [resetPasswordLoading, setResetPasswordLoading] = useState<boolean>(false);
   const [resetPasswordSent, setResetPasswordSent] = useState<boolean>(false);
+  const [resetPasswordError, setResetPasswordError] = useState<string | null>(null);
   
   const { signIn, signInWithGoogle, resetPassword } = useAuth();
   const { toast } = useToast();
@@ -80,6 +80,7 @@ const LoginForm = () => {
     // Pre-fill with the email from the form if available
     setResetPasswordEmail(form.getValues('email'));
     setResetPasswordDialogOpen(true);
+    setResetPasswordError(null);
   };
   
   const handleResetPassword = async () => {
@@ -94,6 +95,7 @@ const LoginForm = () => {
 
     try {
       setResetPasswordLoading(true);
+      setResetPasswordError(null);
       await resetPassword(resetPasswordEmail);
       setResetPasswordSent(true);
       
@@ -103,6 +105,14 @@ const LoginForm = () => {
       });
     } catch (error: any) {
       console.error('Password reset error:', error);
+      
+      // Handle CAPTCHA error specifically
+      if (error?.message?.includes('captcha') || error?.code === 'captcha_required') {
+        setResetPasswordError("This site requires CAPTCHA verification for password reset. Please contact the site administrator.");
+      } else {
+        setResetPasswordError(error?.message || t('auth.error_occurred'));
+      }
+      
       toast({
         variant: "destructive",
         title: t('auth.error'),
@@ -116,6 +126,7 @@ const LoginForm = () => {
   const closeResetDialog = () => {
     setResetPasswordDialogOpen(false);
     setResetPasswordSent(false);
+    setResetPasswordError(null);
   };
   
   return (
@@ -253,6 +264,13 @@ const LoginForm = () => {
             </div>
           ) : (
             <>
+              {resetPasswordError && (
+                <Alert variant="destructive" className="my-2">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertDescription>{resetPasswordError}</AlertDescription>
+                </Alert>
+              )}
+              
               <div className="space-y-4 py-2">
                 <div className="space-y-2">
                   {/* Use regular Label component instead of FormLabel */}
@@ -265,6 +283,14 @@ const LoginForm = () => {
                     onChange={(e) => setResetPasswordEmail(e.target.value)}
                   />
                 </div>
+                
+                <Alert className="bg-amber-50 border-amber-200 text-sm">
+                  <AlertTriangle className="h-4 w-4 text-amber-600" />
+                  <AlertDescription className="text-amber-800">
+                    Note: Password reset may require CAPTCHA verification, which is currently not supported in this app. 
+                    If reset fails, try resetting from the Supabase authentication page directly.
+                  </AlertDescription>
+                </Alert>
               </div>
               
               <DialogFooter>
