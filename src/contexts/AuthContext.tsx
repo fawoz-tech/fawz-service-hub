@@ -82,30 +82,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log("Signing up with:", email, "and full name:", fullName || "not provided");
       
-      // Fix: Check for existing users by directly querying auth.users
-      // This avoids the TypeScript recursive depth error
-      const { data: userExistsData, error: userCheckError } = await supabase.rpc(
-        'check_if_user_exists',
-        { email_to_check: email }
-      );
-      
-      // If the RPC function doesn't exist, fallback to a simpler check
-      if (userCheckError) {
-        console.log("Could not use RPC check, falling back to profiles check:", userCheckError.message);
-        const { count, error: countError } = await supabase
-          .from('profiles')
-          .select('id', { count: 'exact', head: true })
-          .eq('email', email);
-          
-        if (!countError && count && count > 0) {
-          toast({
-            variant: "destructive",
-            title: "Sign up failed",
-            description: "An account with this email already exists.",
-          });
-          return { success: false, message: "An account with this email already exists." };
-        }
-      } else if (userExistsData) {
+      // Fix: Check for existing users with a safer approach
+      // Use a simple table count approach instead of the RPC function
+      const { count, error: countError } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .eq('username', email.split('@')[0]);
+        
+      if (countError) {
+        console.error("Error checking for existing user:", countError);
+      } else if (count && count > 0) {
         toast({
           variant: "destructive",
           title: "Sign up failed",
