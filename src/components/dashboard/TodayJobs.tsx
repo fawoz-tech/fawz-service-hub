@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import JobItem, { Job } from './JobItem';
 import { useLanguage } from '@/contexts/language';
+import { useNavigate } from 'react-router-dom';
 
 // Mock data for today's jobs
 const todayJobs: Job[] = [
@@ -34,13 +36,18 @@ const todayJobs: Job[] = [
 
 const TodayJobs = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   
+  const handleViewCalendar = () => {
+    navigate('/calendar');
+  };
+
   return (
     <Card className="col-span-1 md:col-span-3">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">{t('dashboard.todays_jobs')}</CardTitle>
-          <Button variant="link" className="text-primary-600">
+          <Button variant="link" className="text-primary-600" onClick={handleViewCalendar}>
             {t('dashboard.view_calendar')}
           </Button>
         </div>

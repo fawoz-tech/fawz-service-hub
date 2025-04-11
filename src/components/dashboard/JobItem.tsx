@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/language';
+import { useNavigate } from 'react-router-dom';
 
 export interface Job {
   id: string;
@@ -19,6 +21,7 @@ interface JobItemProps {
 
 const JobItem = ({ job }: JobItemProps) => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   
   const statusColors = {
     'new': 'bg-blue-100 text-blue-800',
@@ -36,6 +39,10 @@ const JobItem = ({ job }: JobItemProps) => {
     'cancelled': t('jobs.cancelled'),
   };
 
+  const handleViewJob = () => {
+    navigate(`/jobs`, { state: { jobId: job.id } });
+  };
+
   return (
     <div className="flex items-center justify-between p-4 border rounded-lg bg-white">
       <div className="flex items-center gap-4">
@@ -49,7 +56,7 @@ const JobItem = ({ job }: JobItemProps) => {
         <Badge variant="outline" className={`${statusColors[job.status]}`}>
           {statusText[job.status]}
         </Badge>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" onClick={handleViewJob}>
           <ArrowRight size={16} />
         </Button>
       </div>

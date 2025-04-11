@@ -7,6 +7,7 @@ import JobTabs from '@/components/jobs/JobTabs';
 import { useJobsData } from '@/hooks/useJobsData';
 import { useLanguage } from '@/contexts/language';
 import { Job } from '@/components/jobs/JobCard';
+import { useToast } from '@/hooks/use-toast';
 
 const JobManagement = () => {
   const location = useLocation();
@@ -15,12 +16,45 @@ const JobManagement = () => {
   const { jobs: allJobs } = useJobsData();
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const { t } = useLanguage();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (location.state && location.state.activeTab) {
       setActiveTab(location.state.activeTab);
     }
   }, [location.state]);
+
+  useEffect(() => {
+    // Focus on specific job if jobId is provided
+    if (location.state && location.state.jobId) {
+      const jobId = location.state.jobId;
+      const job = allJobs.find(j => j.id === jobId);
+      
+      if (job) {
+        // Determine the appropriate tab based on the job status
+        let tabToSet = 'all';
+        if (job.status === 'new' || job.status === 'quote-sent') {
+          tabToSet = 'new';
+        } else if (job.status === 'accepted' || job.status === 'en-route' || job.status === 'on-site') {
+          tabToSet = 'in-progress';
+        } else if (job.status === 'completed') {
+          tabToSet = 'completed';
+        }
+        
+        if (job.urgent) {
+          tabToSet = 'urgent';
+        }
+        
+        setActiveTab(tabToSet);
+        
+        // Show toast notification
+        toast({
+          title: t('jobs.job_details'),
+          description: `${job.service} - ${job.customerName}`,
+        });
+      }
+    }
+  }, [location.state, allJobs, toast, t]);
 
   useEffect(() => {
     if (searchQuery.trim() === '') {

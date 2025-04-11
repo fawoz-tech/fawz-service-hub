@@ -50,5 +50,9 @@ export const jobsTranslations: Record<string, Translation> = {
   'jobs.urgent': {
     en: 'Urgent',
     ar: 'عاجل'
+  },
+  'jobs.job_details': {
+    en: 'Job Details',
+    ar: 'تفاصيل المهمة'
   }
 };
