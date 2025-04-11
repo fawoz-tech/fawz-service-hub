@@ -1,4 +1,3 @@
-
 import { Translation } from '../types';
 
 /**
@@ -9,7 +8,7 @@ import { Translation } from '../types';
 export const authTranslations: Record<string, Translation> = {
   'auth.welcome': {
     en: 'Welcome to FAWOZ',
-    ar: 'مرحبًا بك في FAWOZ'
+    ar: 'مرحبًا بك في فوز'
   },
   'auth.login': {
     en: 'Login',
