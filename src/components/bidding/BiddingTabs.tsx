@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import OpenMarketplace from './OpenMarketplace';
@@ -19,7 +20,7 @@ const BiddingTabs = ({ activeTab, setActiveTab }: BiddingTabsProps) => {
       <TabsList className="grid grid-cols-4 md:w-[600px]">
         <TabsTrigger value="marketplace">{t('bidding.marketplace')}</TabsTrigger>
         <TabsTrigger value="my-bids">{t('bidding.my_bids')}</TabsTrigger>
-        <TabsTrigger value="post-job">{t('bidding.post')}</TabsTrigger>
+        <TabsTrigger value="post-job">{t('bidding.post_job')}</TabsTrigger>
         <TabsTrigger value="analytics">{t('bidding.analytics')}</TabsTrigger>
       </TabsList>
       

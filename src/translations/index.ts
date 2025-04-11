@@ -1,5 +1,5 @@
 
-import type { Translations } from './types';
+import type { Language, Translation, Translations } from './types';
 import { appTranslations } from './categories/app';
 import { authTranslations } from './categories/auth';
 import { dashboardTranslations } from './categories/dashboard';

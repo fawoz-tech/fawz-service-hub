@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { JobCard, Job } from './JobCard';
 import { useLanguage } from '@/contexts/language';

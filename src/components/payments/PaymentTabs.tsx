@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TransactionsTable from './TransactionsTable';
@@ -17,7 +18,7 @@ const PaymentTabs = ({ activeTab, setActiveTab }: PaymentTabsProps) => {
     <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab} className="w-full">
       <TabsList className="mb-4">
         <TabsTrigger value="transactions">{t('payments.transactions')}</TabsTrigger>
-        <TabsTrigger value="payment-methods">{t('payments.payment_methods')}</TabsTrigger>
+        <TabsTrigger value="payment-methods">{t('payments.methods')}</TabsTrigger>
         <TabsTrigger value="payout-settings">{t('payments.payout_settings')}</TabsTrigger>
       </TabsList>
 

@@ -1,17 +1,19 @@
+
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import JobFilters from '@/components/jobs/JobFilters';
 import JobTabs from '@/components/jobs/JobTabs';
-import JobsList from '@/components/jobs/JobsList';
 import { useJobsData } from '@/hooks/useJobsData';
 import { useLanguage } from '@/contexts/language';
+import { Job } from '@/components/jobs/JobCard';
 
 const JobManagement = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const { jobs } = useJobsData();
+  const { jobs: allJobs } = useJobsData();
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -20,13 +22,29 @@ const JobManagement = () => {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredJobs(allJobs);
+    } else {
+      const query = searchQuery.toLowerCase();
+      const filtered = allJobs.filter(
+        job => 
+          job.customerName.toLowerCase().includes(query) ||
+          job.service.toLowerCase().includes(query) ||
+          job.serviceType.toLowerCase().includes(query) ||
+          job.location.toLowerCase().includes(query)
+      );
+      setFilteredJobs(filtered);
+    }
+  }, [searchQuery, allJobs]);
+
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    console.log(`Search query: ${query}`);
   };
 
   const handleFilter = () => {
     console.log('Filter button clicked');
+    // Advanced filtering functionality would be implemented here
   };
 
   return (
@@ -40,7 +58,7 @@ const JobManagement = () => {
         <JobTabs 
           activeTab={activeTab} 
           setActiveTab={setActiveTab} 
-          jobs={jobs} 
+          jobs={filteredJobs} 
         />
       </div>
     </Layout>

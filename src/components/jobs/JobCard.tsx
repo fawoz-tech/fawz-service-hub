@@ -11,6 +11,7 @@ import {
   Phone,
   MoreHorizontal,
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/language';
 
 export interface Job {
   id: string;
@@ -30,6 +31,8 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ job }: JobCardProps) => {
+  const { t } = useLanguage();
+  
   const statusColors = {
     'new': 'bg-blue-100 text-blue-800',
     'quote-sent': 'bg-purple-100 text-purple-800',
@@ -40,14 +43,17 @@ export const JobCard = ({ job }: JobCardProps) => {
     'cancelled': 'bg-red-100 text-red-800',
   };
 
-  const statusText = {
-    'new': 'New Request',
-    'quote-sent': 'Quote Sent',
-    'accepted': 'Accepted',
-    'en-route': 'En Route',
-    'on-site': 'On Site',
-    'completed': 'Completed',
-    'cancelled': 'Cancelled',
+  const getStatusText = (status: string) => {
+    switch(status) {
+      case 'new': return t('jobs.new');
+      case 'quote-sent': return 'Quote Sent';
+      case 'accepted': return 'Accepted';
+      case 'en-route': return t('jobs.en_route');
+      case 'on-site': return t('jobs.on_site');
+      case 'completed': return t('jobs.completed');
+      case 'cancelled': return t('jobs.cancelled');
+      default: return status;
+    }
   };
 
   return (
@@ -55,7 +61,7 @@ export const JobCard = ({ job }: JobCardProps) => {
       {job.urgent && (
         <div className="bg-accent-50 text-accent-700 px-4 py-1 text-sm font-medium flex items-center justify-between">
           <span className="flex items-center">
-            <Clock className="h-3 w-3 mr-1" /> Urgent Request
+            <Clock className="h-3 w-3 mr-1" /> {t('jobs.urgent')}
           </span>
           <span className="text-xs">Response required ASAP</span>
         </div>
@@ -69,7 +75,7 @@ export const JobCard = ({ job }: JobCardProps) => {
             </div>
           </div>
           <Badge variant="outline" className={`${statusColors[job.status]}`}>
-            {statusText[job.status]}
+            {getStatusText(job.status)}
           </Badge>
         </div>
       </CardHeader>
@@ -102,6 +108,8 @@ interface JobActionsProps {
 }
 
 export const JobActions = ({ status }: JobActionsProps) => {
+  const { t } = useLanguage();
+  
   switch (status) {
     case 'new':
       return (

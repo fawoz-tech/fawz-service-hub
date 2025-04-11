@@ -46,5 +46,9 @@ export const jobsTranslations: Record<string, Translation> = {
   'jobs.search': {
     en: 'Search jobs',
     ar: 'البحث عن وظائف'
+  },
+  'jobs.urgent': {
+    en: 'Urgent',
+    ar: 'عاجل'
   }
 };

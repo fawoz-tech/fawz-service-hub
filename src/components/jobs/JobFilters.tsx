@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Filter, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -11,9 +12,12 @@ interface JobFiltersProps {
 
 const JobFilters = ({ onSearch, onFilter }: JobFiltersProps) => {
   const { t } = useLanguage();
+  const [searchValue, setSearchValue] = useState('');
   
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onSearch(e.target.value);
+    const value = e.target.value;
+    setSearchValue(value);
+    onSearch(value);
   };
 
   return (
@@ -24,6 +28,7 @@ const JobFilters = ({ onSearch, onFilter }: JobFiltersProps) => {
           placeholder={t('jobs.search')}
           className="pl-9 w-full md:w-[250px]"
           onChange={handleSearchChange}
+          value={searchValue}
         />
       </div>
       <Button variant="outline" size="icon" onClick={onFilter}>
