@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { format, addDays, subDays } from 'date-fns';
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { cn } from '@/lib/utils';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 interface WeekViewProps {
   date: Date;

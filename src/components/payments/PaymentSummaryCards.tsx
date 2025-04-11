@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Card, CardHeader, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 const PaymentSummaryCards = () => {
   const { t } = useLanguage();

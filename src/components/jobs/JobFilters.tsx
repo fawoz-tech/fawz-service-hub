@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { Filter, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 interface JobFiltersProps {
   onSearch: (query: string) => void;

@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import LocationsFilter from '@/components/locations/LocationsFilter';
 import LocationsTabs from '@/components/locations/LocationsTabs';
 import CoverageSettings from '@/components/locations/CoverageSettings';
 import { locations } from '@/services/locationService';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 const Locations = () => {
   const [activeTab, setActiveTab] = useState('all');

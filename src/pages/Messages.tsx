@@ -1,10 +1,9 @@
-
 import React from 'react';
 import Layout from '@/components/Layout';
 import ConversationsList from '@/components/messages/ConversationsList';
 import MessageThread from '@/components/messages/MessageThread';
 import { useConversations } from '@/hooks/useConversations';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 const MessagesPage = () => {
   const { 

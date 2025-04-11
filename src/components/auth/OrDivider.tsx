@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Separator } from '@/components/ui/separator';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 const OrDivider = () => {
   const { t } = useLanguage();

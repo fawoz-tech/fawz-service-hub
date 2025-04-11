@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import OpenMarketplace from './OpenMarketplace';
 import MyBids from './MyBids';
 import PostJob from './PostJob';
 import WinAnalytics from './WinAnalytics';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 interface BiddingTabsProps {
   activeTab: string;

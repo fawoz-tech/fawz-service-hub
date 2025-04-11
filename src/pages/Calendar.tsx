@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { format, addDays, subDays, addMonths, subMonths } from 'date-fns';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Layout from '@/components/Layout';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 // Import our new components
 import CalendarNavigation from '@/components/calendar/CalendarNavigation';

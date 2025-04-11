@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { format } from 'date-fns';
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import AppointmentCard from './AppointmentCard';
 import { Appointment } from "@/types/calendar";
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 interface TodaysAppointmentsProps {
   appointments: Appointment[];

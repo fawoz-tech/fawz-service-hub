@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TransactionsTable from './TransactionsTable';
 import PaymentMethods from './PaymentMethods';
 import PayoutSettingsForm from './PayoutSettingsForm';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 interface PaymentTabsProps {
   activeTab: string;

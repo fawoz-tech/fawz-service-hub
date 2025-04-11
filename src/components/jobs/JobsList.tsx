@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { JobCard, Job } from './JobCard';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 interface JobsListProps {
   jobs: Job[];

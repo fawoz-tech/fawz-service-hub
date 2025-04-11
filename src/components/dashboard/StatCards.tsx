@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Clock, CheckCircle, AlertTriangle } from 'lucide-react';
 import DashboardCard from './DashboardCard';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 const StatCards = () => {
   const { t } = useLanguage();

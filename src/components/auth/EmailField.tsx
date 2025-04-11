@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import FormIcon from './FormIcon';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 import { UseFormReturn } from 'react-hook-form';
 import { LoginFormData } from '@/schemas/auth';
 

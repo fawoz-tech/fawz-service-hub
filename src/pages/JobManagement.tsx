@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '@/components/Layout';
@@ -6,7 +5,7 @@ import JobFilters from '@/components/jobs/JobFilters';
 import JobTabs from '@/components/jobs/JobTabs';
 import JobsList from '@/components/jobs/JobsList';
 import { useJobsData } from '@/hooks/useJobsData';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 const JobManagement = () => {
   const location = useLocation();
@@ -15,7 +14,6 @@ const JobManagement = () => {
   const { jobs } = useJobsData();
   const { t } = useLanguage();
 
-  // Set the active tab from navigation state if provided
   useEffect(() => {
     if (location.state && location.state.activeTab) {
       setActiveTab(location.state.activeTab);
@@ -24,12 +22,10 @@ const JobManagement = () => {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    // In a real app, you would use this query to filter jobs
     console.log(`Search query: ${query}`);
   };
 
   const handleFilter = () => {
-    // In a real app, this would open a filter modal or dropdown
     console.log('Filter button clicked');
   };
 

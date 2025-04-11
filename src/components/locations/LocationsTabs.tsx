@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import LocationCard from './LocationCard';
 import { Location } from '@/types/location';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 interface LocationsTabsProps {
   activeTab: string;
