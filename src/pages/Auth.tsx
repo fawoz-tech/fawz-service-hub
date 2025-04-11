@@ -11,6 +11,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Logo from '@/components/Logo';
 import LanguageToggle from '@/components/LanguageToggle';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Loader2 } from 'lucide-react';
 
 const Auth = () => {
   const [email, setEmail] = useState<string>('');
@@ -18,6 +20,7 @@ const Auth = () => {
   const [fullName, setFullName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+  const [registrationMessage, setRegistrationMessage] = useState<string | null>(null);
   
   const { signIn, signUp, user } = useAuth();
   const { toast } = useToast();
@@ -48,6 +51,7 @@ const Auth = () => {
     try {
       setLoading(true);
       await signIn(email, password);
+      // No need to handle redirect here as it will happen via the useEffect
     } catch (error) {
       console.error('Login error:', error);
       // Error message is handled in AuthContext
@@ -70,8 +74,17 @@ const Auth = () => {
     
     try {
       setLoading(true);
-      await signUp(email, password, fullName);
-      setActiveTab('login');
+      setRegistrationMessage(null);
+      const result = await signUp(email, password, fullName);
+      
+      if (result.success) {
+        if (result.message) {
+          setRegistrationMessage(result.message);
+        } else {
+          // If no confirmation is needed, the user will be automatically logged in
+          // and the useEffect will handle the redirect
+        }
+      }
     } catch (error) {
       console.error('Registration error:', error);
       // Error message is handled in AuthContext
@@ -104,6 +117,12 @@ const Auth = () => {
           </div>
           
           <CardContent className="space-y-4 pt-6">
+            {registrationMessage && (
+              <Alert className="bg-green-50 border-green-200">
+                <AlertDescription>{registrationMessage}</AlertDescription>
+              </Alert>
+            )}
+            
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
@@ -143,7 +162,14 @@ const Auth = () => {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? t('auth.signing_in') : t('auth.sign_in')}
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('auth.signing_in')}
+                    </>
+                  ) : (
+                    t('auth.sign_in')
+                  )}
                 </Button>
               </form>
             </TabsContent>
@@ -183,7 +209,14 @@ const Auth = () => {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? t('auth.creating_account') : t('auth.create_account')}
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('auth.creating_account')}
+                    </>
+                  ) : (
+                    t('auth.create_account')
+                  )}
                 </Button>
               </form>
             </TabsContent>
