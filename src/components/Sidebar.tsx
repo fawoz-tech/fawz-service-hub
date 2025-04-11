@@ -15,6 +15,7 @@ import {
   TagIcon
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import Logo from './Logo';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const Sidebar = () => {
     <div className="w-64 bg-white border-r border-secondary-200 p-4 flex flex-col h-screen">
       <div className="flex items-center justify-center mb-8 mt-4">
         <Link to="/">
-          <h1 className="text-xl font-bold text-primary-600">FAWOZ</h1>
+          <Logo size="lg" />
         </Link>
       </div>
 

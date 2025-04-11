@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
+import Logo from './Logo';
 
 interface MobileSidebarProps {
   onClose: () => void;
@@ -33,7 +34,7 @@ const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
       >
         <div className="flex items-center justify-between mb-6">
           <Link to="/" className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-primary-600">FAWOZ</h1>
+            <Logo size="md" />
           </Link>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X size={20} />

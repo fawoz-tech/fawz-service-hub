@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import LanguageToggle from './LanguageToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
+import Logo from './Logo';
 
 const Header = () => {
   const isMobile = useIsMobile();
@@ -57,7 +58,12 @@ const Header = () => {
             {showMobileMenu ? <X size={20} /> : <Menu size={20} />}
           </Button>
         )}
-        <h1 className="font-semibold text-lg text-secondary-800">{t('app.name')}</h1>
+        {isMobile && (
+          <Logo size="sm" className="md:hidden" />
+        )}
+        {!isMobile && (
+          <h1 className="font-semibold text-lg text-secondary-800">{t('app.name')}</h1>
+        )}
       </div>
       
       <div className="flex items-center gap-2">

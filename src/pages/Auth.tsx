@@ -1,278 +1,201 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Loader2 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-// Login form schema
-const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
-
-// Register form schema
-const registerSchema = z.object({
-  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  confirmPassword: z.string().min(6, 'Password must be at least 6 characters'),
-}).refine(data => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
-type RegisterFormValues = z.infer<typeof registerSchema>;
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
+import Logo from '@/components/Logo';
+import LanguageToggle from '@/components/LanguageToggle';
 
 const Auth = () => {
-  const { t } = useLanguage();
-  const { signIn, signUp, user, loading } = useAuth();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [fullName, setFullName] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+  
+  const { signIn, signUp, user } = useAuth();
+  const { toast } = useToast();
   const navigate = useNavigate();
-  const [authLoading, setAuthLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<string>("login");
-
-  // Login form
-  const loginForm = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
-
-  // Register form
-  const registerForm = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      fullName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-  });
-
-  // Redirect if already logged in
+  const { t } = useLanguage();
+  
   useEffect(() => {
+    // If user is logged in, redirect to homepage or saved redirect path
     if (user) {
       const redirectPath = sessionStorage.getItem('redirectAfterLogin') || '/';
       sessionStorage.removeItem('redirectAfterLogin');
       navigate(redirectPath);
     }
   }, [user, navigate]);
-
-  // Handle login submission
-  const onLoginSubmit = async (values: LoginFormValues) => {
-    setAuthLoading(true);
+  
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      toast({
+        variant: "destructive",
+        title: t('auth.error'),
+        description: t('auth.all_fields_required'),
+      });
+      return;
+    }
+    
     try {
-      await signIn(values.email, values.password);
-      // Navigation handled by useEffect above when user state changes
+      setLoading(true);
+      await signIn(email, password);
     } catch (error) {
       console.error('Login error:', error);
-      setAuthLoading(false);
+      // Error message is handled in AuthContext
+    } finally {
+      setLoading(false);
     }
   };
-
-  // Handle register submission
-  const onRegisterSubmit = async (values: RegisterFormValues) => {
-    setAuthLoading(true);
+  
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password || !fullName) {
+      toast({
+        variant: "destructive",
+        title: t('auth.error'),
+        description: t('auth.all_fields_required'),
+      });
+      return;
+    }
+    
     try {
-      await signUp(values.email, values.password, values.fullName);
-      setActiveTab("login");
+      setLoading(true);
+      await signUp(email, password, fullName);
+      setActiveTab('login');
     } catch (error) {
       console.error('Registration error:', error);
+      // Error message is handled in AuthContext
+    } finally {
+      setLoading(false);
     }
-    setAuthLoading(false);
   };
-
-  if (loading) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
+  
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-secondary-50 px-4 py-12">
-      <div className="w-full max-w-md">
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-primary">{t('app.name')}</h1>
-        </div>
-
-        <Card className="w-full shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-center">{t('app.welcome') || 'Welcome'}</CardTitle>
-            <CardDescription className="text-center">
-              {t('app.auth_description') || 'Sign in to your account or create a new one'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-4">
-                <TabsTrigger value="login">{t('app.sign_in') || 'Sign in'}</TabsTrigger>
-                <TabsTrigger value="register">{t('app.sign_up') || 'Sign up'}</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="login">
-                <Form {...loginForm}>
-                  <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-                    <FormField
-                      control={loginForm.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('app.email') || 'Email'}</FormLabel>
-                          <FormControl>
-                            <Input placeholder="you@example.com" type="email" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={loginForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('app.password') || 'Password'}</FormLabel>
-                          <FormControl>
-                            <Input placeholder="••••••" type="password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button type="submit" className="w-full" disabled={authLoading}>
-                      {authLoading ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          {t('app.signing_in') || 'Signing in...'}
-                        </>
-                      ) : (
-                        t('app.sign_in') || 'Sign in'
-                      )}
-                    </Button>
-                  </form>
-                </Form>
-              </TabsContent>
-
-              <TabsContent value="register">
-                <Form {...registerForm}>
-                  <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
-                    <FormField
-                      control={registerForm.control}
-                      name="fullName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('app.full_name') || 'Full name'}</FormLabel>
-                          <FormControl>
-                            <Input placeholder="John Doe" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={registerForm.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('app.email') || 'Email'}</FormLabel>
-                          <FormControl>
-                            <Input placeholder="you@example.com" type="email" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={registerForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('app.password') || 'Password'}</FormLabel>
-                          <FormControl>
-                            <Input placeholder="••••••" type="password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={registerForm.control}
-                      name="confirmPassword"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('app.confirm_password') || 'Confirm password'}</FormLabel>
-                          <FormControl>
-                            <Input placeholder="••••••" type="password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <Button type="submit" className="w-full" disabled={authLoading}>
-                      {authLoading ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          {t('app.signing_up') || 'Signing up...'}
-                        </>
-                      ) : (
-                        t('app.sign_up') || 'Sign up'
-                      )}
-                    </Button>
-                  </form>
-                </Form>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <div className="relative w-full">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-secondary-200" />
-              </div>
-              <div className="relative flex justify-center text-xs">
-                <span className="bg-background px-2 text-muted-foreground">
-                  {t('app.or') || 'OR'}
-                </span>
-              </div>
-            </div>
-            <Button variant="outline" className="w-full" onClick={() => navigate('/')}>
-              {t('app.continue_as_guest') || 'Continue as guest'}
-            </Button>
-          </CardFooter>
-        </Card>
+    <div className="min-h-screen flex items-center justify-center bg-secondary-50 px-4">
+      <div className="absolute top-4 right-4">
+        <LanguageToggle />
       </div>
+      
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1 items-center text-center">
+          <Logo size="lg" className="mb-4" />
+          <CardTitle className="text-2xl">{t('auth.welcome')}</CardTitle>
+          <CardDescription>
+            {activeTab === 'login' ? t('auth.login_subtitle') : t('auth.register_subtitle')}
+          </CardDescription>
+        </CardHeader>
+        
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'login' | 'register')}>
+          <div className="px-6">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
+              <TabsTrigger value="register">{t('auth.register')}</TabsTrigger>
+            </TabsList>
+          </div>
+          
+          <CardContent className="space-y-4 pt-6">
+            <TabsContent value="login">
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">{t('auth.email')}</Label>
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    placeholder="name@example.com" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    autoComplete="email"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password">{t('auth.password')}</Label>
+                    <a 
+                      href="#" 
+                      className="text-sm font-medium text-primary hover:underline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toast({
+                          title: t('auth.password_reset'),
+                          description: t('auth.password_reset_email'),
+                        });
+                      }}
+                    >
+                      {t('auth.forgot_password')}
+                    </a>
+                  </div>
+                  <Input 
+                    id="password" 
+                    type="password" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    autoComplete="current-password"
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? t('auth.signing_in') : t('auth.sign_in')}
+                </Button>
+              </form>
+            </TabsContent>
+            
+            <TabsContent value="register">
+              <form onSubmit={handleRegister} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">{t('auth.full_name')}</Label>
+                  <Input 
+                    id="fullName" 
+                    type="text" 
+                    placeholder={t('auth.full_name_placeholder')} 
+                    value={fullName} 
+                    onChange={(e) => setFullName(e.target.value)} 
+                    autoComplete="name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email-register">{t('auth.email')}</Label>
+                  <Input 
+                    id="email-register" 
+                    type="email" 
+                    placeholder="name@example.com" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    autoComplete="email"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password-register">{t('auth.password')}</Label>
+                  <Input 
+                    id="password-register" 
+                    type="password" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    autoComplete="new-password"
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? t('auth.creating_account') : t('auth.create_account')}
+                </Button>
+              </form>
+            </TabsContent>
+          </CardContent>
+        </Tabs>
+        
+        <CardFooter className="flex flex-col space-y-4">
+          <div className="text-sm text-center text-secondary-500">
+            {t('auth.terms')}
+          </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 };
