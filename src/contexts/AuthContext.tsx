@@ -82,16 +82,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log("Signing up with:", email, "and full name:", fullName || "not provided");
       
-      // Fix: Check for existing users with a safer approach
-      // Use a simple table count approach instead of the RPC function
-      const { count, error: countError } = await supabase
+      // Use a simpler approach to check for existing users
+      const { data: existingProfiles, error: checkError } = await supabase
         .from('profiles')
-        .select('*', { count: 'exact', head: true })
-        .eq('username', email.split('@')[0]);
+        .select('id')
+        .eq('username', email.split('@')[0])
+        .limit(1);
         
-      if (countError) {
-        console.error("Error checking for existing user:", countError);
-      } else if (count && count > 0) {
+      if (checkError) {
+        console.error("Error checking for existing user:", checkError);
+      } else if (existingProfiles && existingProfiles.length > 0) {
         toast({
           variant: "destructive",
           title: "Sign up failed",
