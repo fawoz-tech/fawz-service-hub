@@ -13,24 +13,12 @@ import { loginSchema, LoginFormData } from '@/schemas/auth';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger 
-} from '@/components/ui/dialog';
 
 const LoginForm = () => {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
-  const [resendEmail, setResendEmail] = useState<string>('');
-  const [resendLoading, setResendLoading] = useState<boolean>(false);
-  const [resendDialogOpen, setResendDialogOpen] = useState<boolean>(false);
   
-  const { signIn, signInWithGoogle, resendConfirmationEmail } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
   const { toast } = useToast();
   const { t } = useLanguage();
   
@@ -51,15 +39,7 @@ const LoginForm = () => {
       // No need to handle redirect here as it will happen via the useEffect in the parent
     } catch (error: any) {
       console.error('Login error:', error);
-      
-      // Check if this might be an unverified email issue
-      if (error?.message?.includes('Invalid login') || error?.message?.includes('Email not confirmed')) {
-        setGeneralError(t('auth.email_verification_needed'));
-        // Set the email for potential resend
-        setResendEmail(data.email);
-      } else {
-        setGeneralError(error?.message || t('auth.error_occurred'));
-      }
+      setGeneralError(error?.message || t('auth.error_occurred'));
     }
   };
 
@@ -81,29 +61,6 @@ const LoginForm = () => {
     }
   };
 
-  const handleResendVerification = async () => {
-    if (!resendEmail) {
-      toast({
-        variant: "destructive",
-        title: t('auth.error'),
-        description: t('auth.email_required'),
-      });
-      return;
-    }
-    
-    setResendLoading(true);
-    try {
-      const result = await resendConfirmationEmail(resendEmail);
-      if (result.success) {
-        setResendDialogOpen(false);
-      }
-    } catch (error) {
-      console.error('Error resending verification:', error);
-    } finally {
-      setResendLoading(false);
-    }
-  };
-
   const handleForgotPassword = (e: React.MouseEvent) => {
     e.preventDefault();
     toast({
@@ -117,51 +74,7 @@ const LoginForm = () => {
       {generalError && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
-          <AlertDescription className="flex flex-col gap-2">
-            <span>{generalError}</span>
-            {generalError.includes('verification') && (
-              <Dialog open={resendDialogOpen} onOpenChange={setResendDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    {t('auth.resend_verification')}
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>{t('auth.resend_verification_email')}</DialogTitle>
-                    <DialogDescription>
-                      {t('auth.resend_verification_description')}
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <label htmlFor="resendEmail" className="text-right text-sm font-medium">
-                        {t('auth.email')}
-                      </label>
-                      <Input
-                        id="resendEmail"
-                        value={resendEmail}
-                        onChange={(e) => setResendEmail(e.target.value)}
-                        className="col-span-3"
-                      />
-                    </div>
-                  </div>
-                  <DialogFooter>
-                    <Button onClick={handleResendVerification} disabled={resendLoading}>
-                      {resendLoading ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          {t('auth.sending')}
-                        </>
-                      ) : (
-                        t('auth.resend')
-                      )}
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            )}
-          </AlertDescription>
+          <AlertDescription>{generalError}</AlertDescription>
         </Alert>
       )}
       

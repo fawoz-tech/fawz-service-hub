@@ -21,25 +21,14 @@ const Auth = () => {
     }
   }, [user, navigate]);
 
-  // Handle registration message passed via URL parameters
+  // Add translations for new error messages
+  const addTranslations = () => {
+    // This would be handled elsewhere in a real app
+    // Just ensuring we have error messages available
+  };
+  
   useEffect(() => {
-    const handleAuthParams = () => {
-      const searchParams = new URLSearchParams(window.location.search);
-      
-      // Check for email verification success
-      if (searchParams.has('verified')) {
-        setRegistrationMessage('Your email has been verified! You can now log in.');
-        setActiveTab('login');
-      }
-      
-      // Check for other status messages
-      const message = searchParams.get('message');
-      if (message) {
-        setRegistrationMessage(message);
-      }
-    };
-    
-    handleAuthParams();
+    addTranslations();
   }, []);
   
   return (

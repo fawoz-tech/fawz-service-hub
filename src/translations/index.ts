@@ -1,164 +1,428 @@
-export const enTranslations = {
-  app_name: "Your App Name",
-  hello: "Hello",
-  welcome: "Welcome",
-  sign_in: "Sign In",
-  sign_up: "Sign Up",
-  sign_out: "Sign Out",
-  create_account: "Create Account",
-  creating_account: "Creating Account...",
-  signing_in: "Signing In...",
-  error_occurred: "An error occurred. Please try again.",
-  full_name: "Full Name",
-  full_name_placeholder: "Your Full Name",
-  email: "Email",
-  password: "Password",
-  confirm_password: "Confirm Password",
-  password_reset: "Password Reset",
-  password_reset_email: "A password reset link has been sent to your email address.",
-  forgot_password: "Forgot Password?",
-  or_continue_with: "Or continue with",
-  login: "Login",
-  register: "Register",
-  terms: "By signing up, you agree to our Terms and Conditions.",
-  login_subtitle: "Sign in to your account to continue.",
-  register_subtitle: "Create a new account to get started.",
-  error: "Error",
-  success: "Success",
-  home: {
-    title: "Home",
-    welcome_message: "Welcome to the Home Page!",
+
+type Language = 'en' | 'ar';
+
+export interface Translation {
+  en: string;
+  ar: string;
+}
+
+export interface Translations {
+  [key: string]: Translation;
+}
+
+export const translations: Translations = {
+  'app.name': {
+    en: 'FAWOZ Dashboard',
+    ar: 'لوحة تحكم فوز للخدمات'
   },
-  jobs: {
-    title: "Jobs",
-    description: "Manage your job postings here.",
+  'app.notifications': {
+    en: 'Notifications',
+    ar: 'الإشعارات'
   },
-  services: {
-    title: "Services",
-    description: "Configure the services you offer.",
+  'app.view_all': {
+    en: 'View all',
+    ar: 'عرض الكل'
   },
-  team: {
-    title: "Team",
-    description: "Manage your team members and their roles.",
+  'app.guest': {
+    en: 'Guest',
+    ar: 'زائر'
   },
-  calendar: {
-    title: "Calendar",
-    description: "View and manage your schedule.",
+  'app.account_settings': {
+    en: 'Account settings',
+    ar: 'إعدادات الحساب'
   },
-  messages: {
-    title: "Messages",
-    description: "Communicate with your team and clients.",
+  'app.help_support': {
+    en: 'Help & Support',
+    ar: 'المساعدة والدعم'
   },
-  locations: {
-    title: "Locations",
-    description: "Manage your service locations.",
+  'app.sign_out': {
+    en: 'Sign out',
+    ar: 'تسجيل الخروج'
   },
-  financials: {
-    title: "Financials",
-    description: "Track your financial performance.",
+  'app.sign_in': {
+    en: 'Sign in',
+    ar: 'تسجيل الدخول'
   },
-  payments: {
-    title: "Payments",
-    description: "Manage payment methods and transactions.",
+  
+  // Dashboard translations
+  'dashboard.title': {
+    en: 'Dashboard',
+    ar: 'لوحة التحكم'
   },
-  settings: {
-    title: "Settings",
-    description: "Configure your app settings.",
+  'dashboard.today': {
+    en: 'Today',
+    ar: 'اليوم'
   },
-  bidding: {
-    title: "Open Bidding",
-    description: "Participate in open bidding opportunities.",
+  'dashboard.new_requests': {
+    en: 'New Requests',
+    ar: 'طلبات جديدة'
   },
-  email_verification_needed: "Your email address needs to be verified. Please check your inbox and spam folder.",
-  resend_verification: "Resend verification email",
-  resend_verification_email: "Resend Verification Email",
-  resend_verification_description: "Enter your email to receive a new verification link.",
-  sending: "Sending...",
-  resend: "Resend Email",
-  email_required: "Email address is required",
+  'dashboard.overview': {
+    en: 'Overview',
+    ar: 'نظرة عامة'
+  },
+  'dashboard.active_jobs': {
+    en: 'Active Jobs',
+    ar: 'المهام النشطة'
+  },
+  'dashboard.today_jobs': {
+    en: 'Today\'s Jobs',
+    ar: 'مهام اليوم'
+  },
+  'dashboard.earnings': {
+    en: 'Earnings',
+    ar: 'الأرباح'
+  },
+  
+  // Jobs translations
+  'jobs.title': {
+    en: 'Jobs',
+    ar: 'المهام'
+  },
+  'jobs.all': {
+    en: 'All Jobs',
+    ar: 'جميع المهام'
+  },
+  'jobs.new': {
+    en: 'New',
+    ar: 'جديد'
+  },
+  'jobs.in_progress': {
+    en: 'In Progress',
+    ar: 'قيد التنفيذ'
+  },
+  'jobs.completed': {
+    en: 'Completed',
+    ar: 'مكتمل'
+  },
+  'jobs.cancelled': {
+    en: 'Cancelled',
+    ar: 'ملغي'
+  },
+  
+  // Calendar translations
+  'calendar.title': {
+    en: 'Calendar',
+    ar: 'التقويم'
+  },
+  'calendar.day': {
+    en: 'Day',
+    ar: 'يوم'
+  },
+  'calendar.weekly': {
+    en: 'Weekly View',
+    ar: 'عرض أسبوعي'
+  },
+  'calendar.month': {
+    en: 'Month',
+    ar: 'شهر'
+  },
+  'calendar.today_appointments': {
+    en: 'Today\'s Appointments',
+    ar: 'مواعيد اليوم'
+  },
+  'calendar.no_appointments': {
+    en: 'No appointments for today',
+    ar: 'لا توجد مواعيد لهذا اليوم'
+  },
+  'calendar.appointments': {
+    en: 'Appointments',
+    ar: 'المواعيد'  
+  },
+  
+  // Team translations
+  'team.title': {
+    en: 'Team',
+    ar: 'الفريق'
+  },
+  
+  // Messages translations
+  'messages.title': {
+    en: 'Messages',
+    ar: 'الرسائل'
+  },
+  'messages.all': {
+    en: 'All',
+    ar: 'الكل'
+  },
+  'messages.clients': {
+    en: 'Clients',
+    ar: 'العملاء'
+  },
+  'messages.team': {
+    en: 'Team',
+    ar: 'الفريق'
+  },
+  'messages.no_conversations': {
+    en: 'No conversations yet',
+    ar: 'لا توجد محادثات بعد'
+  },
+  'messages.search': {
+    en: 'Search messages',
+    ar: 'البحث في الرسائل'
+  },
+  
+  // Payments translations
+  'payments.title': {
+    en: 'Payments',
+    ar: 'المدفوعات'
+  },
+  'payments.transactions': {
+    en: 'Transactions',
+    ar: 'المعاملات'
+  },
+  'payments.methods': {
+    en: 'Payment Methods',
+    ar: 'طرق الدفع'
+  },
+  'payments.balance': {
+    en: 'Balance',
+    ar: 'الرصيد'
+  },
+  'payments.pending': {
+    en: 'Pending',
+    ar: 'قيد الانتظار'
+  },
+  'payments.completed': {
+    en: 'Completed',
+    ar: 'مكتمل'
+  },
+  
+  // Services translations
+  'services.title': {
+    en: 'Services',
+    ar: 'الخدمات'
+  },
+  
+  // Locations translations
+  'locations.title': {
+    en: 'Locations',
+    ar: 'المواقع'
+  },
+  'locations.all': {
+    en: 'All Locations',
+    ar: 'جميع المواقع'
+  },
+  'locations.favorite': {
+    en: 'Favorites',
+    ar: 'المفضلة'
+  },
+  'locations.search': {
+    en: 'Search locations',
+    ar: 'البحث في المواقع'
+  },
+  'locations.add': {
+    en: 'Add Location',
+    ar: 'إضافة موقع'
+  },
+  'locations.coverage': {
+    en: 'Coverage Settings',
+    ar: 'إعدادات التغطية'
+  },
+  
+  // Financial translations
+  'financial.title': {
+    en: 'Financial Dashboard',
+    ar: 'لوحة التحكم المالية'
+  },
+  'financial.overview': {
+    en: 'Financial Overview',
+    ar: 'نظرة عامة مالية'
+  },
+  'financial.weekly': {
+    en: 'Weekly',
+    ar: 'أسبوعي'
+  },
+  'financial.monthly': {
+    en: 'Monthly',
+    ar: 'شهري'
+  },
+  'financial.yearly': {
+    en: 'Yearly',
+    ar: 'سنوي'
+  },
+  'financial.service_breakdown': {
+    en: 'Service Breakdown',
+    ar: 'تفصيل الخدمات'
+  },
+  'financial.recent_transactions': {
+    en: 'Recent Transactions',
+    ar: 'المعاملات الأخيرة'
+  },
+  'financial.payout_settings': {
+    en: 'Payout Settings',
+    ar: 'إعدادات الدفع'
+  },
+  
+  // Bidding translations
+  'bidding.title': {
+    en: 'Open Bidding',
+    ar: 'المناقصات المفتوحة'
+  },
+  'bidding.marketplace': {
+    en: 'Marketplace',
+    ar: 'السوق'
+  },
+  'bidding.my_bids': {
+    en: 'My Bids',
+    ar: 'عطاءاتي'
+  },
+  'bidding.post_job': {
+    en: 'Post Job',
+    ar: 'نشر وظيفة'
+  },
+  'bidding.analytics': {
+    en: 'Analytics',
+    ar: 'التحليلات'
+  },
+  
+  // Settings translations
+  'settings.title': {
+    en: 'Settings',
+    ar: 'الإعدادات'
+  },
+  'settings.account': {
+    en: 'Account',
+    ar: 'الحساب'
+  },
+  'settings.language': {
+    en: 'Language',
+    ar: 'اللغة'
+  },
+  'settings.language_description': {
+    en: 'Change your preferred language',
+    ar: 'تغيير لغتك المفضلة'
+  },
+  'settings.language_english': {
+    en: 'English',
+    ar: 'الإنجليزية'
+  },
+  'settings.language_arabic': {
+    en: 'Arabic',
+    ar: 'العربية'
+  },
+  'settings.notifications': {
+    en: 'Notifications',
+    ar: 'الإشعارات'
+  },
+  'settings.security': {
+    en: 'Security',
+    ar: 'الأمان'
+  },
+  'settings.last_updated': {
+    en: 'Last updated:',
+    ar: 'آخر تحديث:'
+  },
+  
+  // Auth translations
+  'auth.welcome': {
+    en: 'Welcome to FAWOZ',
+    ar: 'مرحبًا بك في FAWOZ'
+  },
+  'auth.login': {
+    en: 'Login',
+    ar: 'تسجيل الدخول'
+  },
+  'auth.register': {
+    en: 'Register',
+    ar: 'التسجيل'
+  },
+  'auth.login_subtitle': {
+    en: 'Enter your credentials to access your account',
+    ar: 'أدخل بيانات الاعتماد للوصول إلى حسابك'
+  },
+  'auth.register_subtitle': {
+    en: 'Create an account to get started',
+    ar: 'إنشاء حساب للبدء'
+  },
+  'auth.email': {
+    en: 'Email',
+    ar: 'البريد الإلكتروني'
+  },
+  'auth.password': {
+    en: 'Password',
+    ar: 'كلمة المرور'
+  },
+  'auth.forgot_password': {
+    en: 'Forgot password?',
+    ar: 'نسيت كلمة المرور؟'
+  },
+  'auth.sign_in': {
+    en: 'Sign in',
+    ar: 'تسجيل الدخول'
+  },
+  'auth.sign_up': {
+    en: 'Sign up',
+    ar: 'التسجيل'
+  },
+  'auth.full_name': {
+    en: 'Full Name',
+    ar: 'الاسم الكامل'
+  },
+  'auth.full_name_placeholder': {
+    en: 'John Doe',
+    ar: 'محمد عبدالله'
+  },
+  'auth.create_account': {
+    en: 'Create account',
+    ar: 'إنشاء حساب'
+  },
+  'auth.already_have_account': {
+    en: 'Already have an account?',
+    ar: 'لديك حساب بالفعل؟'
+  },
+  'auth.dont_have_account': {
+    en: "Don't have an account?",
+    ar: 'ليس لديك حساب؟'
+  },
+  'auth.terms': {
+    en: 'By continuing, you agree to our Terms of Service and Privacy Policy',
+    ar: 'بالمتابعة، أنت توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا'
+  },
+  'auth.or_continue_with': {
+    en: 'Or continue with',
+    ar: 'أو تابع باستخدام'
+  },
+  'auth.error': {
+    en: 'Error',
+    ar: 'خطأ'
+  },
+  'auth.all_fields_required': {
+    en: 'All fields are required',
+    ar: 'جميع الحقول مطلوبة'
+  },
+  'auth.password_reset': {
+    en: 'Password Reset',
+    ar: 'إعادة تعيين كلمة المرور'
+  },
+  'auth.password_reset_email': {
+    en: 'If your email exists in our system, you will receive a password reset link shortly.',
+    ar: 'إذا كان بريدك الإلكتروني موجودًا في نظامنا، فستتلقى رابط إعادة تعيين كلمة المرور قريبًا.'
+  },
+  'auth.signing_in': {
+    en: 'Signing in...',
+    ar: 'جاري تسجيل الدخول...'
+  },
+  'auth.creating_account': {
+    en: 'Creating account...',
+    ar: 'جاري إنشاء الحساب...'
+  },
+  // New translations for form validation
+  'auth.error_occurred': {
+    en: 'An error occurred. Please try again.',
+    ar: 'حدث خطأ. يرجى المحاولة مرة أخرى.'
+  },
+  'auth.invalid_email': {
+    en: 'Please enter a valid email address',
+    ar: 'يرجى إدخال عنوان بريد إلكتروني صالح'
+  },
+  'auth.password_min_length': {
+    en: 'Password must be at least 6 characters',
+    ar: 'يجب أن تكون كلمة المرور 6 أحرف على الأقل'
+  },
+  'auth.fullname_required': {
+    en: 'Full name is required',
+    ar: 'الاسم الكامل مطلوب'
+  }
 };
 
-export const esTranslations = {
-  app_name: "Nombre de tu App",
-  hello: "Hola",
-  welcome: "Bienvenido",
-  sign_in: "Iniciar Sesión",
-  sign_up: "Registrarse",
-  sign_out: "Cerrar Sesión",
-  create_account: "Crear Cuenta",
-  creating_account: "Creando Cuenta...",
-  signing_in: "Iniciando Sesión...",
-  error_occurred: "Ocurrió un error. Por favor, inténtalo de nuevo.",
-  full_name: "Nombre Completo",
-  full_name_placeholder: "Tu Nombre Completo",
-  email: "Correo Electrónico",
-  password: "Contraseña",
-  confirm_password: "Confirmar Contraseña",
-  password_reset: "Restablecer Contraseña",
-  password_reset_email: "Se ha enviado un enlace para restablecer tu contraseña a tu dirección de correo electrónico.",
-  forgot_password: "¿Olvidaste tu Contraseña?",
-  or_continue_with: "O continuar con",
-  login: "Iniciar Sesión",
-  register: "Registrarse",
-  terms: "Al registrarte, aceptas nuestros Términos y Condiciones.",
-  login_subtitle: "Inicia sesión en tu cuenta para continuar.",
-  register_subtitle: "Crea una nueva cuenta para empezar.",
-  error: "Error",
-  success: "Éxito",
-  home: {
-    title: "Inicio",
-    welcome_message: "¡Bienvenido a la Página de Inicio!",
-  },
-  jobs: {
-    title: "Trabajos",
-    description: "Administra tus publicaciones de trabajo aquí.",
-  },
-  services: {
-    title: "Servicios",
-    description: "Configura los servicios que ofreces.",
-  },
-  team: {
-    title: "Equipo",
-    description: "Administra los miembros de tu equipo y sus roles.",
-  },
-  calendar: {
-    title: "Calendario",
-    description: "Visualiza y administra tu horario.",
-  },
-  messages: {
-    title: "Mensajes",
-    description: "Comunícate con tu equipo y clientes.",
-  },
-  locations: {
-    title: "Ubicaciones",
-    description: "Administra tus ubicaciones de servicio.",
-  },
-  financials: {
-    title: "Finanzas",
-    description: "Realiza un seguimiento de tu rendimiento financiero.",
-  },
-  payments: {
-    title: "Pagos",
-    description: "Administra los métodos de pago y las transacciones.",
-  },
-  settings: {
-    title: "Configuración",
-    description: "Configura los ajustes de tu aplicación.",
-  },
-  bidding: {
-    title: "Licitación Abierta",
-    description: "Participa en oportunidades de licitación abierta.",
-  },
-  email_verification_needed: "Es necesario verificar tu dirección de correo electrónico. Por favor, revisa tu bandeja de entrada y la carpeta de spam.",
-  resend_verification: "Reenviar correo de verificación",
-  resend_verification_email: "Reenviar Correo de Verificación",
-  resend_verification_description: "Ingresa tu correo electrónico para recibir un nuevo enlace de verificación.",
-  sending: "Enviando...",
-  resend: "Reenviar Correo",
-  email_required: "La dirección de correo electrónico es obligatoria",
-};
-
-export const translations = {
-  en: enTranslations,
-  es: esTranslations,
-};
