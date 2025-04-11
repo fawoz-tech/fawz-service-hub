@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
-import { TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/language';
 import { CalendarClock } from 'lucide-react';
 
@@ -44,35 +44,37 @@ const TeamManagement = () => {
           onAddMember={handleAddMember}
         />
 
-        <TeamFilters 
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-        />
-        
-        <div className="mt-6">
-          <TabsContent value="all" className="space-y-4">
-            <TeamMembers 
-              members={filteredTeam} 
-              emptyMessage={t('team.no_members_found')} 
-            />
-          </TabsContent>
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TeamFilters 
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
           
-          <TabsContent value="available" className="space-y-4">
-            <TeamMembers 
-              members={filteredTeam.filter((member) => member.status === 'available')}
-              emptyMessage={t('team.no_available_members')}
-            />
-          </TabsContent>
-          
-          <TabsContent value="busy" className="space-y-4">
-            <TeamMembers 
-              members={filteredTeam.filter((member) => 
-                member.status === 'on-job' || member.status === 'on-break'
-              )}
-              emptyMessage={t('team.no_busy_members')}
-            />
-          </TabsContent>
-        </div>
+          <div className="mt-6">
+            <TabsContent value="all" className="space-y-4">
+              <TeamMembers 
+                members={filteredTeam} 
+                emptyMessage={t('team.no_members_found')} 
+              />
+            </TabsContent>
+            
+            <TabsContent value="available" className="space-y-4">
+              <TeamMembers 
+                members={filteredTeam.filter((member) => member.status === 'available')}
+                emptyMessage={t('team.no_available_members')}
+              />
+            </TabsContent>
+            
+            <TabsContent value="busy" className="space-y-4">
+              <TeamMembers 
+                members={filteredTeam.filter((member) => 
+                  member.status === 'on-job' || member.status === 'on-break'
+                )}
+                emptyMessage={t('team.no_busy_members')}
+              />
+            </TabsContent>
+          </div>
+        </Tabs>
 
         <div className="mt-8">
           <div className="flex items-center justify-between mb-4">

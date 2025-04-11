@@ -67,11 +67,11 @@ export const teamTranslations: Record<string, Translation> = {
     en: 'Assigned',
     ar: 'تم تعيينه'
   },
-  'team.en_route_status': {
+  'team.en-route_status': {
     en: 'En Route',
     ar: 'في الطريق'
   },
-  'team.on_site_status': {
+  'team.on-site_status': {
     en: 'On Site',
     ar: 'في الموقع'
   },
