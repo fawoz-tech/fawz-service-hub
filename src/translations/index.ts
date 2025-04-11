@@ -15,8 +15,7 @@ import { biddingTranslations } from './categories/bidding';
 import { settingsTranslations } from './categories/settings';
 
 // Re-export types with proper syntax for isolatedModules
-export type { Language, Translation } from './types';
-export { Translations } from './types';
+export type { Language, Translation, Translations } from './types';
 
 // Combine all translation categories
 export const translations: Translations = {
