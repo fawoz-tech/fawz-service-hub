@@ -12,6 +12,7 @@ type AuthContextType = {
   signInWithGoogle: () => Promise<void>;
   signUp: (email: string, password: string, fullName?: string) => Promise<{ success: boolean; message?: string }>;
   signOut: () => Promise<void>;
+  resendConfirmationEmail: (email: string) => Promise<{ success: boolean; message?: string }>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -62,16 +63,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, password: string) => {
     try {
       console.log("Signing in with:", email);
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error, data } = await supabase.auth.signInWithPassword({ email, password });
       
       if (error) {
         console.error("Sign in error:", error);
-        toast({
-          variant: "destructive",
-          title: "Sign in failed",
-          description: error.message,
-        });
+        // Special handling for email confirmation issues
+        if (error.message.includes("Email not confirmed")) {
+          toast({
+            variant: "destructive",
+            title: "Email not confirmed",
+            description: "Please check your inbox and confirm your email before logging in.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Sign in failed",
+            description: error.message,
+          });
+        }
         throw error;
+      }
+
+      // Additional check for email confirmation
+      if (data?.user && !data.user.email_confirmed_at) {
+        toast({
+          variant: "warning",
+          title: "Email not confirmed",
+          description: "Please check your inbox and confirm your email before logging in.",
+        });
       }
     } catch (error) {
       console.error('Error signing in:', error);
@@ -144,19 +163,55 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { success: false, message: error.message };
       } else {
         console.log("Sign up successful:", data);
-        toast({
-          title: "Account created",
-          description: "Please check your email to verify your account.",
-        });
         
         // Check if email confirmation is required
-        if (data?.user && !data.user.confirmed_at) {
-          return { success: true, message: "Please check your email to verify your account." };
+        if (data?.user && !data.user.email_confirmed_at) {
+          toast({
+            title: "Account created",
+            description: "Please check your email to verify your account. You may need to check your spam folder.",
+          });
+          return { 
+            success: true, 
+            message: "Please check your email to verify your account. If you don't see it, check your spam folder." 
+          };
         }
+        
+        toast({
+          title: "Account created",
+          description: "Your account has been successfully created.",
+        });
         return { success: true };
       }
     } catch (error: any) {
       console.error('Error signing up:', error);
+      return { success: false, message: error.message };
+    }
+  };
+
+  const resendConfirmationEmail = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+      });
+      
+      if (error) {
+        console.error("Error resending confirmation email:", error);
+        toast({
+          variant: "destructive",
+          title: "Failed to resend",
+          description: error.message,
+        });
+        return { success: false, message: error.message };
+      }
+      
+      toast({
+        title: "Email sent",
+        description: "Verification email has been resent. Please check your inbox and spam folder.",
+      });
+      return { success: true, message: "Verification email has been resent." };
+    } catch (error: any) {
+      console.error('Error resending confirmation email:', error);
       return { success: false, message: error.message };
     }
   };
@@ -178,6 +233,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInWithGoogle,
     signUp,
     signOut,
+    resendConfirmationEmail,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
