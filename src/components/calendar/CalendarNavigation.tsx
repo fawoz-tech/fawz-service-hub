@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -26,9 +25,8 @@ const CalendarNavigation: React.FC<CalendarNavigationProps> = ({
   const { t, language, isRTL } = useLanguage();
   
   const formatDate = (date: Date, formatStr: string) => {
-    return format(date, formatStr, { 
-      locale: language === 'ar' ? ar : undefined 
-    });
+    // Simple format without locale support
+    return format(date, formatStr);
   };
 
   return (
