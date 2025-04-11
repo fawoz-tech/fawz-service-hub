@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,61 +7,103 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Search, Plus, MapPin, Phone, MessageSquare, CalendarClock, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useLanguage } from '@/contexts/language';
+import { useToast } from '@/hooks/use-toast';
 
 const TeamManagement = () => {
+  const { t, isRTL } = useLanguage();
+  const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const handleAddTeamMember = () => {
+    toast({
+      title: t('team.add_member'),
+      description: "This functionality will be implemented soon",
+      duration: 3000,
+    });
+  };
+
+  const filteredTeam = team.filter((member) => {
+    if (!searchQuery) return true;
+    
+    const query = searchQuery.toLowerCase();
+    return (
+      member.name.toLowerCase().includes(query) ||
+      member.role.toLowerCase().includes(query) ||
+      member.services.some(service => service.toLowerCase().includes(query))
+    );
+  });
+
   return (
     <Layout>
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold text-secondary-900">Team Management</h1>
+          <h1 className="text-2xl font-bold text-secondary-900">{t('team.management')}</h1>
           <div className="flex items-center gap-2 self-stretch md:self-auto w-full md:w-auto">
             <div className="relative flex-1 md:flex-initial">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-secondary-500" />
               <Input
-                placeholder="Search technicians..."
+                placeholder={t('team.search')}
                 className="pl-9 w-full md:w-[250px]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <Button>
+            <Button onClick={handleAddTeamMember}>
               <Plus className="h-4 w-4 mr-2" />
-              Add Team Member
+              {t('team.add_member')}
             </Button>
           </div>
         </div>
 
         <Tabs defaultValue="all">
           <TabsList className="grid grid-cols-3 w-[300px]">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="available">Available</TabsTrigger>
-            <TabsTrigger value="busy">Busy</TabsTrigger>
+            <TabsTrigger value="all">{t('team.all')}</TabsTrigger>
+            <TabsTrigger value="available">{t('team.available')}</TabsTrigger>
+            <TabsTrigger value="busy">{t('team.busy')}</TabsTrigger>
           </TabsList>
           
           <div className="mt-6">
             <TabsContent value="all" className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {team.map((member) => (
+                {filteredTeam.map((member) => (
                   <TeamMemberCard key={member.id} member={member} />
                 ))}
+                {filteredTeam.length === 0 && (
+                  <div className="col-span-full text-center py-8 bg-secondary-50 rounded-lg border border-dashed border-secondary-200">
+                    <p className="text-secondary-500">No team members found</p>
+                  </div>
+                )}
               </div>
             </TabsContent>
             
             <TabsContent value="available" className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {team
+                {filteredTeam
                   .filter((member) => member.status === 'available')
                   .map((member) => (
                     <TeamMemberCard key={member.id} member={member} />
                   ))}
+                {filteredTeam.filter(member => member.status === 'available').length === 0 && (
+                  <div className="col-span-full text-center py-8 bg-secondary-50 rounded-lg border border-dashed border-secondary-200">
+                    <p className="text-secondary-500">No available team members found</p>
+                  </div>
+                )}
               </div>
             </TabsContent>
             
             <TabsContent value="busy" className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {team
+                {filteredTeam
                   .filter((member) => member.status === 'on-job' || member.status === 'on-break')
                   .map((member) => (
                     <TeamMemberCard key={member.id} member={member} />
                   ))}
+                {filteredTeam.filter(member => member.status === 'on-job' || member.status === 'on-break').length === 0 && (
+                  <div className="col-span-full text-center py-8 bg-secondary-50 rounded-lg border border-dashed border-secondary-200">
+                    <p className="text-secondary-500">No busy team members found</p>
+                  </div>
+                )}
               </div>
             </TabsContent>
           </div>
@@ -70,16 +111,16 @@ const TeamManagement = () => {
 
         <div className="mt-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-secondary-900">Today's Assignments</h2>
+            <h2 className="text-lg font-semibold text-secondary-900">{t('team.todays_assignments')}</h2>
             <Button variant="outline" size="sm">
               <CalendarClock className="h-4 w-4 mr-2" />
-              View Schedule
+              {t('team.view_schedule')}
             </Button>
           </div>
           
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Technician Assignments</CardTitle>
+              <CardTitle className="text-lg">{t('team.technician_assignments')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -109,9 +150,7 @@ const TeamManagement = () => {
                         assignment.status === 'en-route' ? 'bg-amber-100 text-amber-800' :
                         assignment.status === 'on-site' ? 'bg-emerald-100 text-emerald-800' : ''
                       }>
-                        {assignment.status === 'assigned' ? 'Assigned' :
-                         assignment.status === 'en-route' ? 'En Route' :
-                         assignment.status === 'on-site' ? 'On Site' : ''}
+                        {t(`team.${assignment.status}_status`)}
                       </Badge>
                     </div>
                   </div>
@@ -142,18 +181,13 @@ interface TeamMemberCardProps {
 }
 
 const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
+  const { t } = useLanguage();
+  
   const statusColors = {
     'available': 'bg-green-100 text-green-800',
     'on-job': 'bg-amber-100 text-amber-800',
     'on-break': 'bg-blue-100 text-blue-800',
     'off-duty': 'bg-secondary-100 text-secondary-800',
-  };
-
-  const statusText = {
-    'available': 'Available',
-    'on-job': 'On Job',
-    'on-break': 'On Break',
-    'off-duty': 'Off Duty',
   };
 
   return (
@@ -172,7 +206,7 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
                 <div className="text-sm text-secondary-600">{member.role}</div>
               </div>
               <Badge variant="outline" className={statusColors[member.status]}>
-                {statusText[member.status]}
+                {t(`team.${member.status}_status`)}
               </Badge>
             </div>
             
@@ -180,7 +214,7 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
               {Array(5).fill(0).map((_, i) => (
                 <Star key={i} fill={i < member.rating ? "currentColor" : "none"} className="h-3.5 w-3.5" />
               ))}
-              <span className="ml-1 text-secondary-600">{member.jobsCompleted} jobs</span>
+              <span className="ml-1 text-secondary-600">{member.jobsCompleted} {t('team.jobs')}</span>
             </div>
             
             <div className="mt-2 flex flex-wrap gap-1">
