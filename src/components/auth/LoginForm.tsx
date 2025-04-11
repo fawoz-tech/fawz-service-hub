@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { AlertCircle, CheckCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
 
 const LoginForm = () => {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
@@ -233,7 +234,7 @@ const LoginForm = () => {
         Google
       </Button>
 
-      {/* Password Reset Dialog */}
+      {/* Password Reset Dialog - Using regular Label instead of FormLabel */}
       <Dialog open={resetPasswordDialogOpen} onOpenChange={setResetPasswordDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -254,7 +255,8 @@ const LoginForm = () => {
             <>
               <div className="space-y-4 py-2">
                 <div className="space-y-2">
-                  <FormLabel htmlFor="reset-email">{t('auth.email')}</FormLabel>
+                  {/* Use regular Label component instead of FormLabel */}
+                  <Label htmlFor="reset-email">{t('auth.email')}</Label>
                   <Input 
                     id="reset-email"
                     type="email" 

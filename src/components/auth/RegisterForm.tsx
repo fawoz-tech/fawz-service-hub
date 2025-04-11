@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, CheckCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
+import { Label } from '@/components/ui/label';
 
 const RegisterForm = () => {
   const [generalError, setGeneralError] = useState<string | null>(null);
@@ -230,7 +231,7 @@ const RegisterForm = () => {
         </form>
       </Form>
 
-      {/* Resend Verification Email Dialog */}
+      {/* Resend Verification Email Dialog - Using regular Label instead of FormLabel */}
       <Dialog open={resendDialogOpen} onOpenChange={setResendDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -251,7 +252,8 @@ const RegisterForm = () => {
             <>
               <div className="space-y-4 py-2">
                 <div className="space-y-2">
-                  <FormLabel htmlFor="verification-email">{t('auth.email')}</FormLabel>
+                  {/* Use regular Label component instead of FormLabel */}
+                  <Label htmlFor="verification-email">{t('auth.email')}</Label>
                   <Input 
                     id="verification-email"
                     type="email" 

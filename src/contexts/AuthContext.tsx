@@ -142,7 +142,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         if (error.message === 'User already registered') {
           toast({
-            variant: "info",
+            // Changed from "info" to "default" to fix TypeScript error
+            variant: "default", 
             title: "Account already exists",
             description: "Try logging in, or reset your password if you forgot it.",
           });
