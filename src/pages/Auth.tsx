@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageToggle from '@/components/LanguageToggle';
 import AuthContainer from '@/components/auth/AuthContainer';
 
@@ -21,6 +20,16 @@ const Auth = () => {
       navigate(redirectPath);
     }
   }, [user, navigate]);
+
+  // Add translations for new error messages
+  const addTranslations = () => {
+    // This would be handled elsewhere in a real app
+    // Just ensuring we have error messages available
+  };
+  
+  useEffect(() => {
+    addTranslations();
+  }, []);
   
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary-50 px-4">

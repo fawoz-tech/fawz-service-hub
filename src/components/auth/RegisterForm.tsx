@@ -2,95 +2,148 @@
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
-import { Loader2 } from 'lucide-react';
+import { Loader2, User, Mail, Lock } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useToast } from '@/hooks/use-toast';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { registerSchema, RegisterFormData } from '@/schemas/auth';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
 
 const RegisterForm = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [fullName, setFullName] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  
+  const [generalError, setGeneralError] = useState<string | null>(null);
   const { signUp } = useAuth();
-  const { toast } = useToast();
   const { t } = useLanguage();
   
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !password || !fullName) {
-      toast({
-        variant: "destructive",
-        title: t('auth.error'),
-        description: t('auth.all_fields_required'),
-      });
-      return;
-    }
+  const form = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      fullName: '',
+      email: '',
+      password: '',
+    },
+  });
+
+  const { isSubmitting, isDirty } = form.formState;
+  
+  const onSubmit = async (data: RegisterFormData) => {
+    setGeneralError(null);
     
     try {
-      setLoading(true);
-      const result = await signUp(email, password, fullName);
+      const result = await signUp(data.email, data.password, data.fullName);
       
-      if (result.success && result.message) {
-        // Message will be displayed by the parent component
-        return result;
+      if (!result.success) {
+        setGeneralError(result.message || t('auth.error_occurred'));
       }
-    } catch (error) {
+      
+      return result;
+    } catch (error: any) {
       console.error('Registration error:', error);
-      // Error message is handled in AuthContext
-    } finally {
-      setLoading(false);
+      setGeneralError(error?.message || t('auth.error_occurred'));
     }
   };
   
   return (
-    <form onSubmit={handleRegister} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="fullName">{t('auth.full_name')}</Label>
-        <Input 
-          id="fullName" 
-          type="text" 
-          placeholder={t('auth.full_name_placeholder')} 
-          value={fullName} 
-          onChange={(e) => setFullName(e.target.value)} 
-          autoComplete="name"
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="email-register">{t('auth.email')}</Label>
-        <Input 
-          id="email-register" 
-          type="email" 
-          placeholder="name@example.com" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          autoComplete="email"
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="password-register">{t('auth.password')}</Label>
-        <Input 
-          id="password-register" 
-          type="password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          autoComplete="new-password"
-        />
-      </div>
-      <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            {t('auth.creating_account')}
-          </>
-        ) : (
-          t('auth.create_account')
-        )}
-      </Button>
-    </form>
+    <>
+      {generalError && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{generalError}</AlertDescription>
+        </Alert>
+      )}
+      
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="fullName">{t('auth.full_name')}</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input 
+                      id="fullName" 
+                      type="text" 
+                      className="pl-9"
+                      placeholder={t('auth.full_name_placeholder')} 
+                      autoComplete="name"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="email-register">{t('auth.email')}</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input 
+                      id="email-register" 
+                      type="email"
+                      className="pl-9"
+                      placeholder="name@example.com" 
+                      autoComplete="email"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="password-register">{t('auth.password')}</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input 
+                      id="password-register" 
+                      type="password"
+                      className="pl-9"
+                      autoComplete="new-password"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <Button 
+            type="submit" 
+            className="w-full" 
+            disabled={isSubmitting || !isDirty}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                {t('auth.creating_account')}
+              </>
+            ) : (
+              t('auth.create_account')
+            )}
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 };
 

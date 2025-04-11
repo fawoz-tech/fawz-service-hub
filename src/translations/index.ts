@@ -406,5 +406,23 @@ export const translations: Translations = {
   'auth.creating_account': {
     en: 'Creating account...',
     ar: 'جاري إنشاء الحساب...'
+  },
+  // New translations for form validation
+  'auth.error_occurred': {
+    en: 'An error occurred. Please try again.',
+    ar: 'حدث خطأ. يرجى المحاولة مرة أخرى.'
+  },
+  'auth.invalid_email': {
+    en: 'Please enter a valid email address',
+    ar: 'يرجى إدخال عنوان بريد إلكتروني صالح'
+  },
+  'auth.password_min_length': {
+    en: 'Password must be at least 6 characters',
+    ar: 'يجب أن تكون كلمة المرور 6 أحرف على الأقل'
+  },
+  'auth.fullname_required': {
+    en: 'Full name is required',
+    ar: 'الاسم الكامل مطلوب'
   }
 };
+

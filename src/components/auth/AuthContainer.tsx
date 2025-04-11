@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Logo from '@/components/Logo';
 import LoginForm from './LoginForm';
@@ -42,6 +43,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
         <CardContent className="space-y-4 pt-6">
           {registrationMessage && (
             <Alert className="bg-green-50 border-green-200">
+              <CheckCircle2 className="h-4 w-4 text-green-500" />
               <AlertDescription>{registrationMessage}</AlertDescription>
             </Alert>
           )}
