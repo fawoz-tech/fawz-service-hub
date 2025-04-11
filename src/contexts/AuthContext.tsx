@@ -66,11 +66,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (error) {
         console.error("Sign in error:", error);
-        toast({
-          variant: "destructive",
-          title: "Sign in failed",
-          description: error.message,
-        });
+        
+        // Handle captcha error specifically
+        if (error.message.includes('captcha verification')) {
+          toast({
+            variant: "destructive",
+            title: "Authentication Error",
+            description: "CAPTCHA verification is required but not properly configured. Please contact support or try again later.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Sign in failed",
+            description: error.message,
+          });
+        }
         throw error;
       }
     } catch (error) {
@@ -136,11 +146,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (error) {
         console.error("Sign up error:", error);
-        toast({
-          variant: "destructive",
-          title: "Sign up failed",
-          description: error.message,
-        });
+        
+        // Handle captcha error specifically
+        if (error.message.includes('captcha verification')) {
+          toast({
+            variant: "destructive",
+            title: "Authentication Error",
+            description: "CAPTCHA verification is required but not properly configured. Please contact support or try again later.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Sign up failed",
+            description: error.message,
+          });
+        }
         return { success: false, message: error.message };
       } else {
         console.log("Sign up successful:", data);

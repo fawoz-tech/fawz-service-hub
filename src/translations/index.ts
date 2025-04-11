@@ -1,4 +1,3 @@
-
 type Language = 'en' | 'ar';
 
 export interface Translation {
@@ -407,7 +406,14 @@ export const translations: Translations = {
     en: 'Creating account...',
     ar: 'جاري إنشاء الحساب...'
   },
-  // New translations for form validation
+  'auth.captcha_error': {
+    en: 'CAPTCHA verification failed. This application requires CAPTCHA to be configured properly.',
+    ar: 'فشل التحقق من CAPTCHA. يتطلب هذا التطبيق تكوين CAPTCHA بشكل صحيح.'
+  },
+  'auth.captcha_admin_note': {
+    en: 'Admin: Please disable CAPTCHA in your Supabase settings or implement a proper CAPTCHA solution.',
+    ar: 'المسؤول: يرجى تعطيل CAPTCHA في إعدادات Supabase أو تنفيذ حل CAPTCHA المناسب.'
+  },
   'auth.error_occurred': {
     en: 'An error occurred. Please try again.',
     ar: 'حدث خطأ. يرجى المحاولة مرة أخرى.'
@@ -425,4 +431,3 @@ export const translations: Translations = {
     ar: 'الاسم الكامل مطلوب'
   }
 };
-

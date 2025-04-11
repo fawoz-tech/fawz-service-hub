@@ -3,20 +3,21 @@ import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { Loader2, Mail, Lock } from 'lucide-react';
+import { Loader2, Mail, Lock, AlertCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginFormData } from '@/schemas/auth';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { AlertCircle } from 'lucide-react';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const LoginForm = () => {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState<boolean>(false);
   
   const { signIn, signInWithGoogle } = useAuth();
   const { toast } = useToast();
@@ -34,28 +35,42 @@ const LoginForm = () => {
   
   const onSubmit = async (data: LoginFormData) => {
     setGeneralError(null);
+    setCaptchaError(false);
     try {
       await signIn(data.email, data.password);
       // No need to handle redirect here as it will happen via the useEffect in the parent
     } catch (error: any) {
       console.error('Login error:', error);
-      setGeneralError(error?.message || t('auth.error_occurred'));
+      
+      // Check if this is a CAPTCHA error
+      if (error?.message?.includes('captcha verification')) {
+        setCaptchaError(true);
+      } else {
+        setGeneralError(error?.message || t('auth.error_occurred'));
+      }
     }
   };
 
   const handleGoogleLogin = async (e: React.MouseEvent) => {
     e.preventDefault();
+    setGeneralError(null);
+    setCaptchaError(false);
     try {
       setGoogleLoading(true);
       await signInWithGoogle();
       // Redirect is handled by Supabase OAuth flow
     } catch (error: any) {
       console.error('Google login error:', error);
-      toast({
-        variant: "destructive",
-        title: t('auth.error'),
-        description: error?.message || t('auth.error_occurred'),
-      });
+      
+      if (error?.message?.includes('captcha verification')) {
+        setCaptchaError(true);
+      } else {
+        toast({
+          variant: "destructive",
+          title: t('auth.error'),
+          description: error?.message || t('auth.error_occurred'),
+        });
+      }
     } finally {
       setGoogleLoading(false);
     }
@@ -78,6 +93,15 @@ const LoginForm = () => {
         </Alert>
       )}
       
+      {captchaError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            {t('auth.captcha_error')}
+          </AlertDescription>
+        </Alert>
+      )}
+      
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -85,7 +109,7 @@ const LoginForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="email">{t('auth.email')}</FormLabel>
+                <Label htmlFor="email">{t('auth.email')}</Label>
                 <FormControl>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -110,7 +134,7 @@ const LoginForm = () => {
             render={({ field }) => (
               <FormItem>
                 <div className="flex items-center justify-between">
-                  <FormLabel htmlFor="password">{t('auth.password')}</FormLabel>
+                  <Label htmlFor="password">{t('auth.password')}</Label>
                   <a 
                     href="#" 
                     className="text-sm font-medium text-primary hover:underline"
@@ -184,6 +208,12 @@ const LoginForm = () => {
         )}
         Google
       </Button>
+      
+      {captchaError && (
+        <div className="text-center text-sm text-destructive mt-2">
+          <p>{t('auth.captcha_admin_note')}</p>
+        </div>
+      )}
     </div>
   );
 };
