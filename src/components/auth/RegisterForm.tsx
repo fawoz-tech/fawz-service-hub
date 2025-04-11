@@ -1,16 +1,20 @@
 
 import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { Loader2, User, Mail, Lock } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, RegisterFormData } from '@/schemas/auth';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle } from 'lucide-react';
+import { Form } from '@/components/ui/form';
+import { User } from 'lucide-react';
+
+import EmailField from './EmailField';
+import PasswordField from './PasswordField';
+import SubmitButton from './SubmitButton';
+import ErrorAlert from './ErrorAlert';
+import FormIcon from './FormIcon';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 const RegisterForm = () => {
   const [generalError, setGeneralError] = useState<string | null>(null);
@@ -47,12 +51,7 @@ const RegisterForm = () => {
   
   return (
     <>
-      {generalError && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{generalError}</AlertDescription>
-        </Alert>
-      )}
+      <ErrorAlert message={generalError || ''} />
       
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -64,7 +63,7 @@ const RegisterForm = () => {
                 <FormLabel htmlFor="fullName">{t('auth.full_name')}</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <FormIcon icon={<User className="h-4 w-4" />} />
                     <Input 
                       id="fullName" 
                       type="text" 
@@ -80,67 +79,16 @@ const RegisterForm = () => {
             )}
           />
           
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel htmlFor="email-register">{t('auth.email')}</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      id="email-register" 
-                      type="email"
-                      className="pl-9"
-                      placeholder="name@example.com" 
-                      autoComplete="email"
-                      {...field}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <EmailField form={form} id="email-register" />
           
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel htmlFor="password-register">{t('auth.password')}</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      id="password-register" 
-                      type="password"
-                      className="pl-9"
-                      autoComplete="new-password"
-                      {...field}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <PasswordField form={form} id="password-register" />
           
-          <Button 
-            type="submit" 
-            className="w-full" 
-            disabled={isSubmitting || !isDirty}
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t('auth.creating_account')}
-              </>
-            ) : (
-              t('auth.create_account')
-            )}
-          </Button>
+          <SubmitButton 
+            isSubmitting={isSubmitting} 
+            isDirty={isDirty}
+            label={t('auth.create_account')}
+            loadingLabel={t('auth.creating_account')}
+          />
         </form>
       </Form>
     </>
