@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import BiddingTabs from '@/components/bidding/BiddingTabs';
 import BiddingHeader from '@/components/bidding/BiddingHeader';
 import { Tabs } from '@/components/ui/tabs';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 
 const OpenBidding = () => {
   const [activeTab, setActiveTab] = useState('marketplace');

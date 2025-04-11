@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/auth';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, RegisterFormData } from '@/schemas/auth';

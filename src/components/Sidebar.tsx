@@ -14,7 +14,7 @@ import {
   MapPin,
   TagIcon
 } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 import Logo from './Logo';
 
 const Sidebar = () => {

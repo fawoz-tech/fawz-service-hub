@@ -16,7 +16,7 @@ import {
   X
 } from 'lucide-react';
 import { Button } from './ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/language';
 import Logo from './Logo';
 
 interface MobileSidebarProps {
