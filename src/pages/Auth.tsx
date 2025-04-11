@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -44,7 +43,6 @@ const Auth = () => {
     }
   };
 
-  // Redirect if user is already logged in
   if (user && !loading) {
     return <Navigate to="/" />;
   }
@@ -57,19 +55,19 @@ const Auth = () => {
             {isLogin ? (
               <div className="flex items-center justify-center gap-2">
                 <LogIn className="h-6 w-6" />
-                <span>{t('auth.login') || 'Sign In'}</span>
+                <span>{t('app.sign_in') || 'Sign In'}</span>
               </div>
             ) : (
               <div className="flex items-center justify-center gap-2">
                 <UserPlus className="h-6 w-6" />
-                <span>{t('auth.register') || 'Create Account'}</span>
+                <span>{t('app.create_account') || 'Create Account'}</span>
               </div>
             )}
           </CardTitle>
           <CardDescription className="text-sm text-muted-foreground">
             {isLogin 
-              ? (t('auth.login_description') || 'Enter your credentials to access your account')
-              : (t('auth.register_description') || 'Fill out the form to create a new account')}
+              ? (t('app.login_description') || 'Enter your credentials to access your account')
+              : (t('app.register_description') || 'Fill out the form to create a new account')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -82,7 +80,7 @@ const Auth = () => {
                   <FormItem>
                     <FormLabel className="flex items-center gap-2">
                       <Mail className="h-4 w-4" /> 
-                      {t('auth.email') || 'Email'}
+                      {t('app.email') || 'Email'}
                     </FormLabel>
                     <FormControl>
                       <Input 
@@ -103,7 +101,7 @@ const Auth = () => {
                   <FormItem>
                     <FormLabel className="flex items-center gap-2">
                       <Lock className="h-4 w-4" />
-                      {t('auth.password') || 'Password'}
+                      {t('app.password') || 'Password'}
                     </FormLabel>
                     <FormControl>
                       <div className="relative">
@@ -140,17 +138,17 @@ const Auth = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    {t('auth.loading') || 'Loading...'}
+                    {t('app.loading') || 'Loading...'}
                   </span>
                 ) : isLogin ? (
                   <span className="flex items-center justify-center gap-2">
                     <LogIn className="h-4 w-4" />
-                    {t('auth.login_button') || 'Sign In'}
+                    {t('app.sign_in') || 'Sign In'}
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">
                     <UserPlus className="h-4 w-4" />
-                    {t('auth.register_button') || 'Create Account'}
+                    {t('app.create_account') || 'Create Account'}
                   </span>
                 )}
               </Button>
@@ -164,8 +162,8 @@ const Auth = () => {
             className="w-full"
           >
             {isLogin 
-              ? (t('auth.need_account') || "Don't have an account? Sign up")
-              : (t('auth.already_have_account') || "Already have an account? Sign in")}
+              ? (t('app.need_account') || "Don't have an account? Sign up")
+              : (t('app.already_have_account') || "Already have an account? Sign in")}
           </Button>
         </CardFooter>
       </Card>
