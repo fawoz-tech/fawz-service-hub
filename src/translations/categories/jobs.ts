@@ -54,5 +54,21 @@ export const jobsTranslations: Record<string, Translation> = {
   'jobs.job_details': {
     en: 'Job Details',
     ar: 'تفاصيل المهمة'
+  },
+  'jobs.action.accepted': {
+    en: 'Job Accepted',
+    ar: 'تم قبول المهمة'
+  },
+  'jobs.action.quote': {
+    en: 'Quote Form',
+    ar: 'نموذج عرض السعر'
+  },
+  'jobs.action.message': {
+    en: 'Message',
+    ar: 'رسالة'
+  },
+  'jobs.action.started': {
+    en: 'Job Started',
+    ar: 'بدأت المهمة'
   }
 };

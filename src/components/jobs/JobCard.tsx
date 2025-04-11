@@ -12,6 +12,7 @@ import {
   MoreHorizontal,
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/language';
+import { useToast } from '@/hooks/use-toast';
 
 export interface Job {
   id: string;
@@ -109,14 +110,106 @@ interface JobActionsProps {
 
 export const JobActions = ({ status }: JobActionsProps) => {
   const { t } = useLanguage();
+  const { toast } = useToast();
+  
+  const handleAcceptRequest = () => {
+    toast({
+      title: "Job Accepted",
+      description: "You have accepted this job request. The customer will be notified."
+    });
+  };
+  
+  const handleSendQuote = () => {
+    toast({
+      title: "Quote Form",
+      description: "Quote form opened. You can now prepare a quote for the customer."
+    });
+  };
+  
+  const handleMessage = () => {
+    toast({
+      title: "Message",
+      description: "Opening message thread with the customer."
+    });
+  };
+  
+  const handleCall = () => {
+    toast({
+      title: "Calling Customer",
+      description: "Initiating call to customer."
+    });
+  };
+  
+  const handleStartJob = () => {
+    toast({
+      title: "Job Started",
+      description: "You're now en route to the job location."
+    });
+  };
+  
+  const handleViewDetails = () => {
+    toast({
+      title: "Job Details",
+      description: "Viewing complete job details."
+    });
+  };
+  
+  const handleOnSite = () => {
+    toast({
+      title: "Arrived On Site",
+      description: "You've marked that you've arrived at the job location."
+    });
+  };
+  
+  const handleViewMap = () => {
+    toast({
+      title: "Map View",
+      description: "Opening map to job location."
+    });
+  };
+  
+  const handleCompleteJob = () => {
+    toast({
+      title: "Job Completed",
+      description: "You've marked this job as completed. Great work!"
+    });
+  };
+  
+  const handleAddMaterials = () => {
+    toast({
+      title: "Materials",
+      description: "Add materials used for this job."
+    });
+  };
+  
+  const handleViewInvoice = () => {
+    toast({
+      title: "Invoice",
+      description: "Viewing invoice for this job."
+    });
+  };
+  
+  const handleJobHistory = () => {
+    toast({
+      title: "Job History",
+      description: "Viewing history for this job."
+    });
+  };
+  
+  const handleMoreOptions = () => {
+    toast({
+      title: "More Options",
+      description: "Additional options for this job."
+    });
+  };
   
   switch (status) {
     case 'new':
       return (
         <>
-          <Button size="sm">Accept Request</Button>
-          <Button variant="outline" size="sm">Send Quote</Button>
-          <Button variant="ghost" size="sm">
+          <Button size="sm" onClick={handleAcceptRequest}>Accept Request</Button>
+          <Button variant="outline" size="sm" onClick={handleSendQuote}>Send Quote</Button>
+          <Button variant="ghost" size="sm" onClick={handleMessage}>
             <MessageSquare className="h-4 w-4 mr-1" /> Message
           </Button>
         </>
@@ -124,11 +217,11 @@ export const JobActions = ({ status }: JobActionsProps) => {
     case 'quote-sent':
       return (
         <>
-          <Button variant="outline" size="sm">Edit Quote</Button>
-          <Button variant="ghost" size="sm">
+          <Button variant="outline" size="sm" onClick={handleSendQuote}>Edit Quote</Button>
+          <Button variant="ghost" size="sm" onClick={handleMessage}>
             <MessageSquare className="h-4 w-4 mr-1" /> Message
           </Button>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" onClick={handleCall}>
             <Phone className="h-4 w-4 mr-1" /> Call
           </Button>
         </>
@@ -136,9 +229,9 @@ export const JobActions = ({ status }: JobActionsProps) => {
     case 'accepted':
       return (
         <>
-          <Button size="sm">Start Job</Button>
-          <Button variant="outline" size="sm">View Details</Button>
-          <Button variant="ghost" size="sm">
+          <Button size="sm" onClick={handleStartJob}>Start Job</Button>
+          <Button variant="outline" size="sm" onClick={handleViewDetails}>View Details</Button>
+          <Button variant="ghost" size="sm" onClick={handleCall}>
             <Phone className="h-4 w-4 mr-1" /> Call
           </Button>
         </>
@@ -146,9 +239,9 @@ export const JobActions = ({ status }: JobActionsProps) => {
     case 'en-route':
       return (
         <>
-          <Button size="sm">Arrived on Site</Button>
-          <Button variant="outline" size="sm">View Map</Button>
-          <Button variant="ghost" size="sm">
+          <Button size="sm" onClick={handleOnSite}>Arrived on Site</Button>
+          <Button variant="outline" size="sm" onClick={handleViewMap}>View Map</Button>
+          <Button variant="ghost" size="sm" onClick={handleMoreOptions}>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </>
@@ -156,9 +249,9 @@ export const JobActions = ({ status }: JobActionsProps) => {
     case 'on-site':
       return (
         <>
-          <Button size="sm">Complete Job</Button>
-          <Button variant="outline" size="sm">Add Materials</Button>
-          <Button variant="ghost" size="sm">
+          <Button size="sm" onClick={handleCompleteJob}>Complete Job</Button>
+          <Button variant="outline" size="sm" onClick={handleAddMaterials}>Add Materials</Button>
+          <Button variant="ghost" size="sm" onClick={handleMoreOptions}>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </>
@@ -166,8 +259,8 @@ export const JobActions = ({ status }: JobActionsProps) => {
     case 'completed':
       return (
         <>
-          <Button variant="outline" size="sm">View Invoice</Button>
-          <Button variant="ghost" size="sm">Job History</Button>
+          <Button variant="outline" size="sm" onClick={handleViewInvoice}>View Invoice</Button>
+          <Button variant="ghost" size="sm" onClick={handleJobHistory}>Job History</Button>
         </>
       );
     default:
