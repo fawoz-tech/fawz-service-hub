@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { JobCard, Job } from './JobCard';
 import { useLanguage } from '@/contexts/language';
 
@@ -10,9 +10,23 @@ interface JobsListProps {
 
 const JobsList = ({ jobs, filter }: JobsListProps) => {
   const { t } = useLanguage();
+  const [jobsState, setJobsState] = useState<Job[]>(jobs);
+  
+  // Effect to update jobs state when props change
+  React.useEffect(() => {
+    setJobsState(jobs);
+  }, [jobs]);
+  
+  const handleStatusChange = (jobId: string, newStatus: Job['status']) => {
+    setJobsState(prev => 
+      prev.map(job => 
+        job.id === jobId ? { ...job, status: newStatus } : job
+      )
+    );
+  };
   
   const filteredJobs = filter 
-    ? jobs.filter(job => {
+    ? jobsState.filter(job => {
         switch(filter) {
           case 'new':
             return job.status === 'new' || job.status === 'quote-sent';
@@ -27,12 +41,16 @@ const JobsList = ({ jobs, filter }: JobsListProps) => {
             return true;
         }
       })
-    : jobs;
+    : jobsState;
 
   return (
     <div className="space-y-4">
       {filteredJobs.map((job) => (
-        <JobCard key={job.id} job={job} />
+        <JobCard 
+          key={job.id} 
+          job={job} 
+          onStatusChange={handleStatusChange} 
+        />
       ))}
       {filteredJobs.length === 0 && (
         <div className="text-center py-8 bg-secondary-50 rounded-lg border border-dashed border-secondary-200">

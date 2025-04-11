@@ -1,96 +1,141 @@
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import Auth from '@/pages/Auth';
+import Index from '@/pages/Index';
+import NotFound from '@/pages/NotFound';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import JobManagement from '@/pages/JobManagement';
+import Messages from '@/pages/Messages';
+import { Toaster } from '@/components/ui/toaster';
+import { useAuth } from '@/contexts/auth';
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LanguageProvider } from "./contexts/language";
-import { AuthProvider } from "./contexts/auth";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Index from "./pages/Index";
-import Auth from "./pages/Auth";
-import JobManagement from "./pages/JobManagement";
-import ServiceManagement from "./pages/ServiceManagement";
-import TeamManagement from "./pages/TeamManagement";
-import Calendar from "./pages/Calendar";
-import Messages from "./pages/Messages";
-import Locations from "./pages/Locations";
-import FinancialDashboard from "./pages/FinancialDashboard";
-import Payments from "./pages/Payments";
-import Settings from "./pages/Settings";
-import NotFound from "./pages/NotFound";
-import OpenBidding from "./pages/OpenBidding";
+function App() {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
 
-const queryClient = new QueryClient();
+  useEffect(() => {
+    // Simulate loading time
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <BrowserRouter>
-        <LanguageProvider>
-          <AuthProvider>
-            <Toaster />
-            <Sonner />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/jobs" element={
-                <ProtectedRoute>
-                  <JobManagement />
-                </ProtectedRoute>
-              } />
-              <Route path="/services" element={
-                <ProtectedRoute>
-                  <ServiceManagement />
-                </ProtectedRoute>
-              } />
-              <Route path="/team" element={
-                <ProtectedRoute>
-                  <TeamManagement />
-                </ProtectedRoute>
-              } />
-              <Route path="/calendar" element={
-                <ProtectedRoute>
-                  <Calendar />
-                </ProtectedRoute>
-              } />
-              <Route path="/messages" element={
-                <ProtectedRoute>
-                  <Messages />
-                </ProtectedRoute>
-              } />
-              <Route path="/locations" element={
-                <ProtectedRoute>
-                  <Locations />
-                </ProtectedRoute>
-              } />
-              <Route path="/financials" element={
-                <ProtectedRoute>
-                  <FinancialDashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/payments" element={
-                <ProtectedRoute>
-                  <Payments />
-                </ProtectedRoute>
-              } />
-              <Route path="/settings" element={
-                <ProtectedRoute>
-                  <Settings />
-                </ProtectedRoute>
-              } />
-              <Route path="/bidding" element={
-                <ProtectedRoute>
-                  <OpenBidding />
-                </ProtectedRoute>
-              } />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AuthProvider>
-        </LanguageProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+    // Redirect to /auth if not authenticated and not already on /auth
+    if (!isAuthenticated && location.pathname !== '/auth') {
+      navigate('/auth');
+    } else if (isAuthenticated && location.pathname === '/auth') {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate, location.pathname]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className="App">
+      <Routes>
+        <Route 
+          path="/auth" 
+          element={<Auth />} 
+        />
+        <Route 
+          path="/" 
+          element={
+            <ProtectedRoute>
+              <Index />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/jobs/*" 
+          element={
+            <ProtectedRoute>
+              <JobManagement />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/messages/*" 
+          element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/team" 
+          element={
+            <ProtectedRoute>
+              <div>Team Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/calendar" 
+          element={
+            <ProtectedRoute>
+              <div>Calendar Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/payments" 
+          element={
+            <ProtectedRoute>
+              <div>Payments Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/services" 
+          element={
+            <ProtectedRoute>
+              <div>Services Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/locations" 
+          element={
+            <ProtectedRoute>
+              <div>Locations Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/financial" 
+          element={
+            <ProtectedRoute>
+              <div>Financial Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/bidding" 
+          element={
+            <ProtectedRoute>
+              <div>Bidding Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/settings" 
+          element={
+            <ProtectedRoute>
+              <div>Settings Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="*" 
+          element={<NotFound />} 
+        />
+      </Routes>
+      <Toaster />
+    </div>
+  );
+}
 
 export default App;

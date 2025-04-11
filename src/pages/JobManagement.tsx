@@ -1,15 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Route, Routes, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import JobFilters from '@/components/jobs/JobFilters';
 import JobTabs from '@/components/jobs/JobTabs';
+import QuoteForm from '@/components/jobs/QuoteForm';
 import { useJobsData } from '@/hooks/useJobsData';
 import { useLanguage } from '@/contexts/language';
 import { Job } from '@/components/jobs/JobCard';
 import { useToast } from '@/hooks/use-toast';
 
-const JobManagement = () => {
+const JobsList = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -82,19 +83,31 @@ const JobManagement = () => {
   };
 
   return (
-    <Layout>
-      <div className="space-y-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold text-secondary-900">{t('jobs.title')}</h1>
-          <JobFilters onSearch={handleSearch} onFilter={handleFilter} />
-        </div>
-
-        <JobTabs 
-          activeTab={activeTab} 
-          setActiveTab={setActiveTab} 
-          jobs={filteredJobs} 
-        />
+    <div className="space-y-6">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold text-secondary-900">{t('jobs.title')}</h1>
+        <JobFilters onSearch={handleSearch} onFilter={handleFilter} />
       </div>
+
+      <JobTabs 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        jobs={filteredJobs} 
+      />
+    </div>
+  );
+};
+
+const JobManagement = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  return (
+    <Layout>
+      <Routes>
+        <Route path="/" element={<JobsList />} />
+        <Route path="/quote/:jobId" element={<QuoteForm />} />
+      </Routes>
     </Layout>
   );
 };

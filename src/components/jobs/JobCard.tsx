@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,9 +9,12 @@ import {
   MessageSquare,
   Phone,
   MoreHorizontal,
+  FileText,
+  CheckCircle
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/language';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 export interface Job {
   id: string;
@@ -29,9 +31,10 @@ export interface Job {
 
 interface JobCardProps {
   job: Job;
+  onStatusChange?: (jobId: string, newStatus: Job['status']) => void;
 }
 
-export const JobCard = ({ job }: JobCardProps) => {
+export const JobCard = ({ job, onStatusChange }: JobCardProps) => {
   const { t } = useLanguage();
   
   const statusColors = {
@@ -47,8 +50,8 @@ export const JobCard = ({ job }: JobCardProps) => {
   const getStatusText = (status: string) => {
     switch(status) {
       case 'new': return t('jobs.new');
-      case 'quote-sent': return 'Quote Sent';
-      case 'accepted': return 'Accepted';
+      case 'quote-sent': return t('jobs.quote_sent');
+      case 'accepted': return t('jobs.accepted');
       case 'en-route': return t('jobs.en_route');
       case 'on-site': return t('jobs.on_site');
       case 'completed': return t('jobs.completed');
@@ -97,7 +100,11 @@ export const JobCard = ({ job }: JobCardProps) => {
         </div>
         
         <div className="flex flex-wrap gap-2">
-          <JobActions status={job.status} />
+          <JobActions 
+            status={job.status} 
+            jobId={job.id} 
+            onStatusChange={onStatusChange}
+          />
         </div>
       </CardContent>
     </Card>
@@ -106,100 +113,132 @@ export const JobCard = ({ job }: JobCardProps) => {
 
 interface JobActionsProps {
   status: string;
+  jobId: string;
+  onStatusChange?: (jobId: string, newStatus: Job['status']) => void;
 }
 
-export const JobActions = ({ status }: JobActionsProps) => {
+export const JobActions = ({ status, jobId, onStatusChange }: JobActionsProps) => {
   const { t } = useLanguage();
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const handleAcceptRequest = () => {
+    // Update job status
+    if (onStatusChange) {
+      onStatusChange(jobId, 'accepted');
+    }
+    
     toast({
-      title: "Job Accepted",
-      description: "You have accepted this job request. The customer will be notified."
+      title: t('jobs.action.accepted'),
+      description: t('jobs.toast.accepted_description')
     });
   };
   
   const handleSendQuote = () => {
+    // Navigate to quote form
+    navigate(`/jobs/quote/${jobId}`);
+    
     toast({
-      title: "Quote Form",
-      description: "Quote form opened. You can now prepare a quote for the customer."
+      title: t('jobs.action.quote'),
+      description: t('jobs.toast.quote_description')
     });
   };
   
   const handleMessage = () => {
+    // Navigate to message thread
+    navigate(`/messages?jobId=${jobId}`);
+    
     toast({
-      title: "Message",
-      description: "Opening message thread with the customer."
+      title: t('jobs.action.message'),
+      description: t('jobs.toast.message_description')
     });
   };
   
   const handleCall = () => {
     toast({
-      title: "Calling Customer",
-      description: "Initiating call to customer."
+      title: t('jobs.action.call'),
+      description: t('jobs.toast.call_description')
     });
   };
   
   const handleStartJob = () => {
+    // Update job status
+    if (onStatusChange) {
+      onStatusChange(jobId, 'en-route');
+    }
+    
     toast({
-      title: "Job Started",
-      description: "You're now en route to the job location."
+      title: t('jobs.action.started'),
+      description: t('jobs.toast.started_description')
     });
   };
   
   const handleViewDetails = () => {
+    // Navigate to job details
+    navigate(`/jobs/details/${jobId}`);
+    
     toast({
-      title: "Job Details",
-      description: "Viewing complete job details."
+      title: t('jobs.job_details'),
+      description: t('jobs.toast.details_description')
     });
   };
   
   const handleOnSite = () => {
+    // Update job status
+    if (onStatusChange) {
+      onStatusChange(jobId, 'on-site');
+    }
+    
     toast({
-      title: "Arrived On Site",
-      description: "You've marked that you've arrived at the job location."
+      title: t('jobs.action.on_site'),
+      description: t('jobs.toast.on_site_description')
     });
   };
   
   const handleViewMap = () => {
     toast({
-      title: "Map View",
-      description: "Opening map to job location."
+      title: t('jobs.action.map'),
+      description: t('jobs.toast.map_description')
     });
   };
   
   const handleCompleteJob = () => {
+    // Update job status
+    if (onStatusChange) {
+      onStatusChange(jobId, 'completed');
+    }
+    
     toast({
-      title: "Job Completed",
-      description: "You've marked this job as completed. Great work!"
+      title: t('jobs.action.completed'),
+      description: t('jobs.toast.completed_description')
     });
   };
   
   const handleAddMaterials = () => {
     toast({
-      title: "Materials",
-      description: "Add materials used for this job."
+      title: t('jobs.action.materials'),
+      description: t('jobs.toast.materials_description')
     });
   };
   
   const handleViewInvoice = () => {
     toast({
-      title: "Invoice",
-      description: "Viewing invoice for this job."
+      title: t('jobs.action.invoice'),
+      description: t('jobs.toast.invoice_description')
     });
   };
   
   const handleJobHistory = () => {
     toast({
-      title: "Job History",
-      description: "Viewing history for this job."
+      title: t('jobs.action.history'),
+      description: t('jobs.toast.history_description')
     });
   };
   
   const handleMoreOptions = () => {
     toast({
-      title: "More Options",
-      description: "Additional options for this job."
+      title: t('jobs.action.more'),
+      description: t('jobs.toast.more_description')
     });
   };
   
@@ -207,22 +246,34 @@ export const JobActions = ({ status }: JobActionsProps) => {
     case 'new':
       return (
         <>
-          <Button size="sm" onClick={handleAcceptRequest}>Accept Request</Button>
-          <Button variant="outline" size="sm" onClick={handleSendQuote}>Send Quote</Button>
+          <Button size="sm" onClick={handleAcceptRequest}>
+            <CheckCircle className="h-4 w-4 mr-1" />
+            {t('jobs.button.accept')}
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleSendQuote}>
+            <FileText className="h-4 w-4 mr-1" />
+            {t('jobs.button.quote')}
+          </Button>
           <Button variant="ghost" size="sm" onClick={handleMessage}>
-            <MessageSquare className="h-4 w-4 mr-1" /> Message
+            <MessageSquare className="h-4 w-4 mr-1" /> 
+            {t('jobs.button.message')}
           </Button>
         </>
       );
     case 'quote-sent':
       return (
         <>
-          <Button variant="outline" size="sm" onClick={handleSendQuote}>Edit Quote</Button>
+          <Button variant="outline" size="sm" onClick={handleSendQuote}>
+            <FileText className="h-4 w-4 mr-1" />
+            {t('jobs.button.edit_quote')}
+          </Button>
           <Button variant="ghost" size="sm" onClick={handleMessage}>
-            <MessageSquare className="h-4 w-4 mr-1" /> Message
+            <MessageSquare className="h-4 w-4 mr-1" />
+            {t('jobs.button.message')}
           </Button>
           <Button variant="ghost" size="sm" onClick={handleCall}>
-            <Phone className="h-4 w-4 mr-1" /> Call
+            <Phone className="h-4 w-4 mr-1" />
+            {t('jobs.button.call')}
           </Button>
         </>
       );

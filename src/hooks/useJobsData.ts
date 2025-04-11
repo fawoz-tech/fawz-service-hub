@@ -4,13 +4,18 @@ import { mockJobs } from '@/data/mockJobs';
 import { Job } from '@/components/jobs/JobCard';
 
 export const useJobsData = () => {
-  const [jobs] = useState<Job[]>(mockJobs);
+  const [jobs, setJobs] = useState<Job[]>(mockJobs);
   
-  // In a real app, you might add more functionality here:
-  // - Fetching jobs from an API
-  // - Filtering, sorting, pagination
-  // - Loading state management
-  // - Error handling
-
-  return { jobs };
+  const updateJobStatus = (jobId: string, newStatus: Job['status']) => {
+    setJobs(prev => 
+      prev.map(job => 
+        job.id === jobId ? { ...job, status: newStatus } : job
+      )
+    );
+  };
+  
+  return { 
+    jobs,
+    updateJobStatus
+  };
 };
