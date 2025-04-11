@@ -5,7 +5,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Index from "./pages/Index";
+import Auth from "./pages/Auth";
 import JobManagement from "./pages/JobManagement";
 import ServiceManagement from "./pages/ServiceManagement";
 import TeamManagement from "./pages/TeamManagement";
@@ -25,22 +28,65 @@ const App = () => (
     <TooltipProvider>
       <BrowserRouter>
         <LanguageProvider>
-          <Toaster />
-          <Sonner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/jobs" element={<JobManagement />} />
-            <Route path="/services" element={<ServiceManagement />} />
-            <Route path="/team" element={<TeamManagement />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/locations" element={<Locations />} />
-            <Route path="/financials" element={<FinancialDashboard />} />
-            <Route path="/payments" element={<Payments />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/bidding" element={<OpenBidding />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AuthProvider>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/jobs" element={
+                <ProtectedRoute>
+                  <JobManagement />
+                </ProtectedRoute>
+              } />
+              <Route path="/services" element={
+                <ProtectedRoute>
+                  <ServiceManagement />
+                </ProtectedRoute>
+              } />
+              <Route path="/team" element={
+                <ProtectedRoute>
+                  <TeamManagement />
+                </ProtectedRoute>
+              } />
+              <Route path="/calendar" element={
+                <ProtectedRoute>
+                  <Calendar />
+                </ProtectedRoute>
+              } />
+              <Route path="/messages" element={
+                <ProtectedRoute>
+                  <Messages />
+                </ProtectedRoute>
+              } />
+              <Route path="/locations" element={
+                <ProtectedRoute>
+                  <Locations />
+                </ProtectedRoute>
+              } />
+              <Route path="/financials" element={
+                <ProtectedRoute>
+                  <FinancialDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/payments" element={
+                <ProtectedRoute>
+                  <Payments />
+                </ProtectedRoute>
+              } />
+              <Route path="/settings" element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
+              } />
+              <Route path="/bidding" element={
+                <ProtectedRoute>
+                  <OpenBidding />
+                </ProtectedRoute>
+              } />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthProvider>
         </LanguageProvider>
       </BrowserRouter>
     </TooltipProvider>

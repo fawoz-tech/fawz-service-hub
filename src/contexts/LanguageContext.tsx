@@ -1,3 +1,4 @@
+
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Define available languages
@@ -33,6 +34,19 @@ export const translations = {
     'app.search': 'Search',
     'app.loading': 'Loading...',
     'app.no_data': 'No data available',
+    'app.guest': 'Guest',
+    'app.sign_in': 'Sign in',
+    'app.sign_up': 'Sign up',
+    'app.signing_in': 'Signing in...',
+    'app.signing_up': 'Signing up...',
+    'app.email': 'Email',
+    'app.password': 'Password',
+    'app.confirm_password': 'Confirm password',
+    'app.full_name': 'Full name',
+    'app.welcome': 'Welcome',
+    'app.auth_description': 'Sign in to your account or create a new one',
+    'app.continue_as_guest': 'Continue as guest',
+    'app.or': 'OR',
     
     // Settings
     'settings.title': 'Settings',
@@ -144,6 +158,19 @@ export const translations = {
     'app.search': 'بحث',
     'app.loading': 'جاري التحميل...',
     'app.no_data': 'لا توجد بيانات متاحة',
+    'app.guest': 'زائر',
+    'app.sign_in': 'تسجيل الدخول',
+    'app.sign_up': 'إنشاء حساب',
+    'app.signing_in': 'جاري تسجيل الدخول...',
+    'app.signing_up': 'جاري إنشاء الحساب...',
+    'app.email': 'البريد الإلكتروني',
+    'app.password': 'كلمة المرور',
+    'app.confirm_password': 'تأكيد كلمة المرور',
+    'app.full_name': 'الاسم الكامل',
+    'app.welcome': 'مرحباً',
+    'app.auth_description': 'سجل الدخول إلى حسابك أو أنشئ حساباً جديداً',
+    'app.continue_as_guest': 'المتابعة كزائر',
+    'app.or': 'أو',
     
     // Settings
     'settings.title': 'الإعدادات',
