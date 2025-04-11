@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Bell, MessageSquare, Menu, X, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,7 @@ import {
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import LanguageToggle from './LanguageToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth';
 import Logo from './Logo';
 
 const Header = () => {
