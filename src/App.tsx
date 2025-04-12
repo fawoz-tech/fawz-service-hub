@@ -7,6 +7,8 @@ import NotFound from '@/pages/NotFound';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import JobManagement from '@/pages/JobManagement';
 import Messages from '@/pages/Messages';
+import Locations from '@/pages/Locations';
+import OpenBidding from '@/pages/OpenBidding';
 import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/contexts/auth';
 
@@ -101,7 +103,7 @@ function App() {
           path="/locations" 
           element={
             <ProtectedRoute>
-              <div>Locations Page</div>
+              <Locations />
             </ProtectedRoute>
           } 
         />
@@ -117,7 +119,7 @@ function App() {
           path="/bidding" 
           element={
             <ProtectedRoute>
-              <div>Bidding Page</div>
+              <OpenBidding />
             </ProtectedRoute>
           } 
         />
