@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Auth from '@/pages/Auth';
@@ -9,6 +8,7 @@ import JobManagement from '@/pages/JobManagement';
 import Messages from '@/pages/Messages';
 import Locations from '@/pages/Locations';
 import OpenBidding from '@/pages/OpenBidding';
+import FinancialDashboard from '@/pages/FinancialDashboard';
 import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/contexts/auth';
 
@@ -19,12 +19,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
 
-    // Redirect to /auth if not authenticated and not already on /auth
     if (!user && location.pathname !== '/auth') {
       navigate('/auth');
     } else if (user && location.pathname === '/auth') {
@@ -108,10 +106,18 @@ function App() {
           } 
         />
         <Route 
+          path="/financials" 
+          element={
+            <ProtectedRoute>
+              <FinancialDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
           path="/financial" 
           element={
             <ProtectedRoute>
-              <div>Financial Page</div>
+              <FinancialDashboard />
             </ProtectedRoute>
           } 
         />
