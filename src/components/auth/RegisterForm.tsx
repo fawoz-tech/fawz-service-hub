@@ -16,7 +16,11 @@ import FormIcon from './FormIcon';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-const RegisterForm = () => {
+type RegisterFormProps = {
+  userRole: 'customer' | 'provider';
+};
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ userRole }) => {
   const [generalError, setGeneralError] = useState<string | null>(null);
   const { signUp } = useAuth();
   const { t } = useLanguage();
@@ -36,7 +40,8 @@ const RegisterForm = () => {
     setGeneralError(null);
     
     try {
-      const result = await signUp(data.email, data.password, data.fullName);
+      // Pass the user role as additional user metadata
+      const result = await signUp(data.email, data.password, data.fullName, userRole);
       
       if (!result.success) {
         setGeneralError(result.message || t('auth.error_occurred'));

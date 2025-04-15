@@ -1,3 +1,4 @@
+
 import { Translation } from '../types';
 
 /**
@@ -121,5 +122,17 @@ export const authTranslations: Record<string, Translation> = {
   'auth.fullname_required': {
     en: 'Full name is required',
     ar: 'الاسم الكامل مطلوب'
+  },
+  'auth.select_role': {
+    en: 'I am registering as a:',
+    ar: 'أنا أسجل كـ:'
+  },
+  'auth.customer_role': {
+    en: 'Customer',
+    ar: 'عميل'
+  },
+  'auth.provider_role': {
+    en: 'Service Provider',
+    ar: 'مزود خدمة'
   }
 };

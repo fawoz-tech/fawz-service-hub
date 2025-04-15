@@ -3,22 +3,27 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, User, Briefcase } from 'lucide-react';
 import { useLanguage } from '@/contexts/language';
 import Logo from '@/components/Logo';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 type AuthContainerProps = {
   activeTab: 'login' | 'register';
   setActiveTab: (tab: 'login' | 'register') => void;
   registrationMessage: string | null;
+  userRole: 'customer' | 'provider';
+  setUserRole: (role: 'customer' | 'provider') => void;
 };
 
 const AuthContainer: React.FC<AuthContainerProps> = ({
   activeTab,
   setActiveTab,
   registrationMessage,
+  userRole,
+  setUserRole,
 }) => {
   const { t } = useLanguage();
 
@@ -28,7 +33,9 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
         <Logo size="lg" className="mb-4" />
         <CardTitle className="text-2xl">{t('auth.welcome')}</CardTitle>
         <CardDescription>
-          {activeTab === 'login' ? t('auth.login_subtitle') : t('auth.register_subtitle')}
+          {activeTab === 'login' 
+            ? t('auth.login_subtitle') 
+            : t('auth.register_subtitle')}
         </CardDescription>
       </CardHeader>
       
@@ -48,12 +55,37 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
             </Alert>
           )}
           
+          {activeTab === 'register' && (
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">
+                {t('auth.select_role', 'I am registering as a:')}
+              </label>
+              <ToggleGroup 
+                type="single" 
+                value={userRole} 
+                onValueChange={(value) => {
+                  if (value) setUserRole(value as 'customer' | 'provider');
+                }}
+                className="justify-start"
+              >
+                <ToggleGroupItem value="customer" aria-label="Customer" className="flex items-center gap-2 px-4">
+                  <User className="h-4 w-4" />
+                  {t('auth.customer_role', 'Customer')}
+                </ToggleGroupItem>
+                <ToggleGroupItem value="provider" aria-label="Service Provider" className="flex items-center gap-2 px-4">
+                  <Briefcase className="h-4 w-4" />
+                  {t('auth.provider_role', 'Service Provider')}
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+          )}
+          
           <TabsContent value="login">
             <LoginForm />
           </TabsContent>
           
           <TabsContent value="register">
-            <RegisterForm />
+            <RegisterForm userRole={userRole} />
           </TabsContent>
         </CardContent>
       </Tabs>

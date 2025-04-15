@@ -102,9 +102,14 @@ export const useAuthProvider = () => {
     }
   };
 
-  const signUp = async (email: string, password: string, fullName?: string): Promise<AuthResult> => {
+  const signUp = async (
+    email: string, 
+    password: string, 
+    fullName?: string, 
+    userRole: 'customer' | 'provider' = 'customer'
+  ): Promise<AuthResult> => {
     try {
-      console.log("Signing up with:", email, "and full name:", fullName || "not provided");
+      console.log("Signing up with:", email, "full name:", fullName || "not provided", "role:", userRole);
       
       // Check if user already exists with this email
       const { count, error: countError } = await supabase
@@ -129,6 +134,7 @@ export const useAuthProvider = () => {
         options: {
           data: {
             full_name: fullName,
+            user_role: userRole, // Store the user role
           }
         }
       });

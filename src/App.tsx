@@ -12,7 +12,8 @@ import OpenBidding from '@/pages/OpenBidding';
 import FinancialDashboard from '@/pages/FinancialDashboard';
 import ServiceManagement from '@/pages/ServiceManagement';
 import TeamManagement from '@/pages/TeamManagement';
-import Payments from '@/pages/Payments';  // Import the Payments page
+import Payments from '@/pages/Payments';
+import LandingPage from '@/pages/LandingPage';
 import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/contexts/auth';
 
@@ -27,10 +28,10 @@ function App() {
       setIsLoading(false);
     }, 500);
 
-    if (!user && location.pathname !== '/auth') {
-      navigate('/auth');
-    } else if (user && location.pathname === '/auth') {
+    if (!user && location.pathname !== '/auth' && location.pathname !== '/') {
       navigate('/');
+    } else if (user && location.pathname === '/auth') {
+      navigate('/dashboard');
     }
   }, [user, navigate, location.pathname]);
 
@@ -41,12 +42,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/auth" element={<Auth />} />
         <Route 
-          path="/auth" 
-          element={<Auth />} 
-        />
-        <Route 
-          path="/" 
+          path="/dashboard" 
           element={
             <ProtectedRoute>
               <Index />

@@ -1,35 +1,37 @@
 
-import type { Language, Translation, Translations } from './types';
+import { Translation } from './types';
 import { appTranslations } from './categories/app';
 import { authTranslations } from './categories/auth';
 import { dashboardTranslations } from './categories/dashboard';
 import { jobsTranslations } from './categories/jobs';
-import { calendarTranslations } from './categories/calendar';
-import { teamTranslations } from './categories/team';
 import { messagesTranslations } from './categories/messages';
-import { paymentsTranslations } from './categories/payments';
+import { teamTranslations } from './categories/team';
 import { servicesTranslations } from './categories/services';
 import { locationsTranslations } from './categories/locations';
 import { financialTranslations } from './categories/financial';
-import { biddingTranslations } from './categories/bidding';
 import { settingsTranslations } from './categories/settings';
+import { calendarTranslations } from './categories/calendar';
+import { biddingTranslations } from './categories/bidding';
+import { paymentsTranslations } from './categories/payments';
+import { landingTranslations } from './categories/landing';
 
-// Re-export types with proper syntax for isolatedModules
-export type { Language, Translation, Translations } from './types';
-
-// Combine all translation categories
-export const translations: Translations = {
+/**
+ * Combined translations from all categories
+ * @type {Record<string, Translation>}
+ */
+export const translations: Record<string, Translation> = {
   ...appTranslations,
   ...authTranslations,
   ...dashboardTranslations,
   ...jobsTranslations,
-  ...calendarTranslations,
-  ...teamTranslations,
   ...messagesTranslations,
-  ...paymentsTranslations,
+  ...teamTranslations,
   ...servicesTranslations,
   ...locationsTranslations,
   ...financialTranslations,
+  ...settingsTranslations,
+  ...calendarTranslations,
   ...biddingTranslations,
-  ...settingsTranslations
+  ...paymentsTranslations,
+  ...landingTranslations
 };
