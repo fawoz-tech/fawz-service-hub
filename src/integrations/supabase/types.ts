@@ -53,6 +53,69 @@ export type Database = {
           },
         ]
       }
+      appointments: {
+        Row: {
+          appointment_date: string
+          created_at: string
+          customer_id: string
+          customer_name: string
+          id: string
+          notes: string | null
+          price: number
+          provider_id: string
+          request_id: string
+          service_id: string
+          service_name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          appointment_date: string
+          created_at?: string
+          customer_id: string
+          customer_name: string
+          id?: string
+          notes?: string | null
+          price?: number
+          provider_id: string
+          request_id: string
+          service_id: string
+          service_name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          appointment_date?: string
+          created_at?: string
+          customer_id?: string
+          customer_name?: string
+          id?: string
+          notes?: string | null
+          price?: number
+          provider_id?: string
+          request_id?: string
+          service_id?: string
+          service_name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "service_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_members: {
         Row: {
           age: number | null
@@ -140,6 +203,295 @@ export type Database = {
           updated_at?: string
           username?: string | null
           weight?: number | null
+        }
+        Relationships: []
+      }
+      provider_certifications: {
+        Row: {
+          created_at: string | null
+          date_received: string
+          expiry_date: string | null
+          file_url: string | null
+          id: string
+          issuing_authority: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          date_received: string
+          expiry_date?: string | null
+          file_url?: string | null
+          id?: string
+          issuing_authority: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          date_received?: string
+          expiry_date?: string | null
+          file_url?: string | null
+          id?: string
+          issuing_authority?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      provider_locations: {
+        Row: {
+          address_line1: string
+          address_line2: string | null
+          city: string
+          created_at: string | null
+          id: string
+          is_primary: boolean | null
+          name: string
+          state: string
+          user_id: string
+          zip_code: string
+        }
+        Insert: {
+          address_line1: string
+          address_line2?: string | null
+          city: string
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          name: string
+          state: string
+          user_id: string
+          zip_code: string
+        }
+        Update: {
+          address_line1?: string
+          address_line2?: string | null
+          city?: string
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          name?: string
+          state?: string
+          user_id?: string
+          zip_code?: string
+        }
+        Relationships: []
+      }
+      provider_profiles: {
+        Row: {
+          business_name: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          logo_url: string | null
+          setup_completed: boolean | null
+          updated_at: string | null
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          business_name?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          setup_completed?: boolean | null
+          updated_at?: string | null
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          business_name?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          setup_completed?: boolean | null
+          updated_at?: string | null
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      provider_services: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_available: boolean
+          note: string | null
+          price_per_hour: number
+          service_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_available?: boolean
+          note?: string | null
+          price_per_hour?: number
+          service_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_available?: boolean
+          note?: string | null
+          price_per_hour?: number
+          service_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_services_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      provider_team_members: {
+        Row: {
+          bio: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          photo_url: string | null
+          role: string
+          user_id: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          photo_url?: string | null
+          role: string
+          user_id: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          photo_url?: string | null
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      service_requests: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          customer_email: string
+          customer_id: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          notes: string | null
+          price: number
+          provider_id: string | null
+          request_date: string
+          requested_date: string
+          service_id: string
+          service_name: string
+          state: string
+          status: string
+          updated_at: string
+          zip_code: string
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string
+          customer_email: string
+          customer_id: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          notes?: string | null
+          price?: number
+          provider_id?: string | null
+          request_date?: string
+          requested_date: string
+          service_id: string
+          service_name: string
+          state: string
+          status?: string
+          updated_at?: string
+          zip_code: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          customer_email?: string
+          customer_id?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          notes?: string | null
+          price?: number
+          provider_id?: string | null
+          request_date?: string
+          requested_date?: string
+          service_id?: string
+          service_name?: string
+          state?: string
+          status?: string
+          updated_at?: string
+          zip_code?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_requests_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string
+          id: string
+          name: string
+          type: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description: string
+          id?: string
+          name: string
+          type: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string
+          id?: string
+          name?: string
+          type?: string
         }
         Relationships: []
       }

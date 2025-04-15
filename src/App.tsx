@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Auth from '@/pages/Auth';
@@ -9,6 +10,7 @@ import Messages from '@/pages/Messages';
 import Locations from '@/pages/Locations';
 import OpenBidding from '@/pages/OpenBidding';
 import FinancialDashboard from '@/pages/FinancialDashboard';
+import ServiceManagement from '@/pages/ServiceManagement';
 import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/contexts/auth';
 
@@ -93,7 +95,7 @@ function App() {
           path="/services" 
           element={
             <ProtectedRoute>
-              <div>Services Page</div>
+              <ServiceManagement />
             </ProtectedRoute>
           } 
         />
