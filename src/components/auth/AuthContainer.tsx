@@ -58,7 +58,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
           {activeTab === 'register' && (
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">
-                {t('auth.select_role', 'I am registering as a:')}
+                {t('auth.select_role')}
               </label>
               <ToggleGroup 
                 type="single" 
@@ -70,11 +70,11 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
               >
                 <ToggleGroupItem value="customer" aria-label="Customer" className="flex items-center gap-2 px-4">
                   <User className="h-4 w-4" />
-                  {t('auth.customer_role', 'Customer')}
+                  {t('auth.customer_role')}
                 </ToggleGroupItem>
                 <ToggleGroupItem value="provider" aria-label="Service Provider" className="flex items-center gap-2 px-4">
                   <Briefcase className="h-4 w-4" />
-                  {t('auth.provider_role', 'Service Provider')}
+                  {t('auth.provider_role')}
                 </ToggleGroupItem>
               </ToggleGroup>
             </div>
