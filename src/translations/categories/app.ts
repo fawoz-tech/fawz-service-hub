@@ -10,6 +10,10 @@ export const appTranslations: Record<string, Translation> = {
     en: 'FAWOZ Dashboard',
     ar: 'لوحة تحكم فوز للخدمات'
   },
+  'app.customer_name': {
+    en: 'FAWOZ Customer',
+    ar: 'عميل فوز للخدمات'
+  },
   'app.notifications': {
     en: 'Notifications',
     ar: 'الإشعارات'

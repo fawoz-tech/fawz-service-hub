@@ -16,14 +16,14 @@ const CustomerDashboard = () => {
     <Layout>
       <div className="space-y-6">
         <header className="mb-8">
-          <h1 className="text-3xl font-bold">{t('dashboard.welcome')}, {userName}</h1>
+          <h1 className="text-3xl font-bold text-primary-600">{t('dashboard.welcome')}, {userName}</h1>
           <p className="text-secondary-500">{t('dashboard.customer_subtitle')}</p>
         </header>
 
         {/* Search Section */}
-        <Card className="bg-primary-50 border-primary-100">
+        <Card className="bg-primary-50 border-primary-100 shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle>{t('dashboard.find_service')}</CardTitle>
+            <CardTitle className="text-primary-700">{t('dashboard.find_service')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -43,7 +43,7 @@ const CustomerDashboard = () => {
                   className="w-full pl-10 py-2 border rounded-md"
                 />
               </div>
-              <Button className="whitespace-nowrap">
+              <Button className="whitespace-nowrap bg-primary hover:bg-primary-700">
                 {t('dashboard.search')}
               </Button>
             </div>
@@ -51,10 +51,10 @@ const CustomerDashboard = () => {
         </Card>
 
         {/* Service Categories */}
-        <h2 className="text-xl font-semibold mt-8">{t('dashboard.popular_services')}</h2>
+        <h2 className="text-xl font-semibold mt-8 text-primary-700">{t('dashboard.popular_services')}</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {['AC Repair', 'Plumbing', 'Electrical', 'Cleaning', 'Moving', 'Towing'].map((service) => (
-            <Card key={service} className="text-center cursor-pointer hover:shadow-md transition-shadow">
+            <Card key={service} className="text-center cursor-pointer hover:shadow-md transition-shadow border-primary-100">
               <CardContent className="p-4">
                 <div className="bg-primary-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">
                   <Calendar className="h-6 w-6 text-primary" />
@@ -66,10 +66,10 @@ const CustomerDashboard = () => {
         </div>
 
         {/* Recent Bookings */}
-        <h2 className="text-xl font-semibold mt-8">{t('dashboard.recent_bookings')}</h2>
+        <h2 className="text-xl font-semibold mt-8 text-primary-700">{t('dashboard.recent_bookings')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2].map((_, i) => (
-            <Card key={i}>
+            <Card key={i} className="border-primary-100 shadow-sm">
               <CardContent className="p-4">
                 <div className="flex justify-between items-start">
                   <div>
@@ -90,7 +90,7 @@ const CustomerDashboard = () => {
                       </div>
                     )}
                   </div>
-                  <Button variant={i === 0 ? "outline" : "default"} size="sm">
+                  <Button variant={i === 0 ? "outline" : "default"} size="sm" className={i !== 0 ? "bg-primary hover:bg-primary-700" : ""}>
                     {i === 0 ? t('dashboard.view_details') : t('dashboard.track_service')}
                   </Button>
                 </div>
@@ -100,12 +100,12 @@ const CustomerDashboard = () => {
         </div>
 
         {/* Service Recommendations */}
-        <h2 className="text-xl font-semibold mt-8">{t('dashboard.recommended')}</h2>
+        <h2 className="text-xl font-semibold mt-8 text-primary-700">{t('dashboard.recommended')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[1, 2, 3].map((_, i) => (
-            <Card key={i} className="overflow-hidden">
-              <div className="h-32 bg-secondary-100 flex items-center justify-center">
-                <BarChart4 className="h-12 w-12 text-secondary-300" />
+            <Card key={i} className="overflow-hidden border-primary-100 shadow-sm">
+              <div className="h-32 bg-primary-50 flex items-center justify-center">
+                <BarChart4 className="h-12 w-12 text-primary-300" />
               </div>
               <CardContent className="p-4">
                 <h3 className="font-semibold">{['Home Cleaning', 'Handyman Services', 'Furniture Assembly'][i]}</h3>
@@ -117,7 +117,7 @@ const CustomerDashboard = () => {
                   <Star className="h-3 w-3 text-yellow-500 fill-current" />
                   <span className="text-xs text-secondary-500 ml-1">(120+ reviews)</span>
                 </div>
-                <Button className="w-full mt-3" size="sm">Book Now</Button>
+                <Button className="w-full mt-3 bg-primary hover:bg-primary-700" size="sm">Book Now</Button>
               </CardContent>
             </Card>
           ))}

@@ -23,6 +23,10 @@ const Header = () => {
   const { user, signOut } = useAuth();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  
+  // Determine if user is a customer
+  const userRole = user?.user_metadata?.user_role || 'customer';
+  const isCustomer = userRole === 'customer';
 
   const toggleMobileMenu = () => {
     setShowMobileMenu(!showMobileMenu);
@@ -51,7 +55,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white border-b border-secondary-200 py-4 px-6 flex items-center justify-between sticky top-0 z-40">
+    <header className={`bg-white border-b border-secondary-200 py-4 px-6 flex items-center justify-between sticky top-0 z-40 ${isCustomer ? 'shadow-sm' : ''}`}>
       <div className="flex items-center gap-4">
         {isMobile && (
           <Button variant="ghost" size="icon" onClick={toggleMobileMenu} className="md:hidden">
@@ -62,7 +66,9 @@ const Header = () => {
           <Logo size="sm" className="md:hidden" />
         )}
         {!isMobile && (
-          <h1 className="font-semibold text-lg text-secondary-800">{t('app.name')}</h1>
+          <h1 className={`font-semibold text-lg ${isCustomer ? 'text-primary-600' : 'text-secondary-800'}`}>
+            {isCustomer ? t('app.customer_name') : t('app.name')}
+          </h1>
         )}
       </div>
       
@@ -83,19 +89,36 @@ const Header = () => {
                   <h3 className="font-medium">{t('app.notifications')}</h3>
                 </div>
                 <div className="max-h-96 overflow-auto">
-                  <div className="p-4 border-b border-secondary-100 hover:bg-secondary-50">
-                    <p className="font-medium">New job request</p>
-                    <p className="text-sm text-secondary-500">AC repair in Al Olaya district</p>
-                    <p className="text-xs text-secondary-400 mt-1">10 minutes ago</p>
-                  </div>
-                  <div className="p-4 border-b border-secondary-100 hover:bg-secondary-50">
-                    <p className="font-medium">Quote accepted</p>
-                    <p className="text-sm text-secondary-500">Ahmed Al-Saeed accepted your quote</p>
-                    <p className="text-xs text-secondary-400 mt-1">2 hours ago</p>
-                  </div>
+                  {isCustomer ? (
+                    <>
+                      <div className="p-4 border-b border-secondary-100 hover:bg-secondary-50">
+                        <p className="font-medium">Service Scheduled</p>
+                        <p className="text-sm text-secondary-500">Your AC repair has been scheduled for tomorrow</p>
+                        <p className="text-xs text-secondary-400 mt-1">10 minutes ago</p>
+                      </div>
+                      <div className="p-4 border-b border-secondary-100 hover:bg-secondary-50">
+                        <p className="font-medium">Quote Received</p>
+                        <p className="text-sm text-secondary-500">You received a new quote for plumbing service</p>
+                        <p className="text-xs text-secondary-400 mt-1">2 hours ago</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="p-4 border-b border-secondary-100 hover:bg-secondary-50">
+                        <p className="font-medium">New job request</p>
+                        <p className="text-sm text-secondary-500">AC repair in Al Olaya district</p>
+                        <p className="text-xs text-secondary-400 mt-1">10 minutes ago</p>
+                      </div>
+                      <div className="p-4 border-b border-secondary-100 hover:bg-secondary-50">
+                        <p className="font-medium">Quote accepted</p>
+                        <p className="text-sm text-secondary-500">Ahmed Al-Saeed accepted your quote</p>
+                        <p className="text-xs text-secondary-400 mt-1">2 hours ago</p>
+                      </div>
+                    </>
+                  )}
                   <div className="p-4 hover:bg-secondary-50">
-                    <p className="font-medium">Payment received</p>
-                    <p className="text-sm text-secondary-500">SAR 450 from job #JOB-2458</p>
+                    <p className="font-medium">{isCustomer ? 'Payment confirmed' : 'Payment received'}</p>
+                    <p className="text-sm text-secondary-500">SAR 450 {isCustomer ? 'for your recent service' : 'from job #JOB-2458'}</p>
                     <p className="text-xs text-secondary-400 mt-1">Yesterday</p>
                   </div>
                 </div>
@@ -119,15 +142,16 @@ const Header = () => {
         
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="rounded-full h-8 w-8 p-0">
+            <Button variant={isCustomer ? "default" : "outline"} className="rounded-full h-8 w-8 p-0">
               <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary/10 text-primary">{getUserInitials()}</AvatarFallback>
+                <AvatarFallback className={`${isCustomer ? 'bg-primary text-white' : 'bg-primary/10 text-primary'}`}>{getUserInitials()}</AvatarFallback>
               </Avatar>
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-56 p-0" align={isRTL ? "start" : "end"}>
             <div className="px-4 py-3 border-b border-secondary-100">
               <p className="font-medium">{user ? user.email : t('app.guest')}</p>
+              {isCustomer && user && <p className="text-xs text-secondary-500">Customer Account</p>}
             </div>
             <div className="py-2">
               {user ? (
