@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AuthResult } from './types';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export const useAuthProvider = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -179,8 +179,21 @@ export const useAuthProvider = () => {
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
+      
+      // Optional: Use browser's history to navigate to landing page
+      window.location.href = '/';
+      
+      toast({
+        title: "Signed Out",
+        description: "You have been successfully signed out and redirected to the home page.",
+      });
     } catch (error) {
       console.error('Error signing out:', error);
+      toast({
+        variant: "destructive",
+        title: "Sign Out Error",
+        description: "There was a problem signing you out. Please try again.",
+      });
       throw error;
     }
   };
