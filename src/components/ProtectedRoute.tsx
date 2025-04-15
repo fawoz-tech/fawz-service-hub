@@ -45,6 +45,20 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return <Navigate to="/dashboard" replace />;
   }
 
+  // Customer-restricted routes - redirect customers trying to access these routes
+  const customerRestrictedRoutes = [
+    '/calendar', 
+    '/team', 
+    '/services', 
+    '/locations', 
+    '/financials', 
+    '/financial'
+  ];
+  
+  if (!isProvider && customerRestrictedRoutes.some(route => location.pathname.startsWith(route))) {
+    return <Navigate to="/customer-dashboard" replace />;
+  }
+
   return <>{children}</>;
 };
 
