@@ -35,12 +35,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const userRole = user.user_metadata?.user_role || 'customer';
   const isProvider = userRole === 'provider';
   
-  // If user is a customer trying to access provider routes, redirect them
+  // If user is a customer trying to access provider routes, redirect them to customer dashboard
   if (!isProvider && location.pathname === '/dashboard') {
     return <Navigate to="/customer-dashboard" replace />;
   }
   
-  // If user is a provider trying to access customer routes, redirect them
+  // If user is a provider trying to access customer routes, redirect them to provider dashboard
   if (isProvider && location.pathname === '/customer-dashboard') {
     return <Navigate to="/dashboard" replace />;
   }
