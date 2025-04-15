@@ -11,6 +11,7 @@ import Locations from '@/pages/Locations';
 import OpenBidding from '@/pages/OpenBidding';
 import FinancialDashboard from '@/pages/FinancialDashboard';
 import ServiceManagement from '@/pages/ServiceManagement';
+import TeamManagement from '@/pages/TeamManagement';
 import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/contexts/auth';
 
@@ -71,7 +72,7 @@ function App() {
           path="/team" 
           element={
             <ProtectedRoute>
-              <div>Team Page</div>
+              <TeamManagement />
             </ProtectedRoute>
           } 
         />
