@@ -90,5 +90,46 @@ export const dashboardTranslations: Record<string, Translation> = {
   'dashboard.no_jobs': {
     en: 'No jobs scheduled for today',
     ar: 'لا توجد مهام مجدولة لهذا اليوم'
+  },
+  // Customer Dashboard Translations
+  'dashboard.welcome': {
+    en: 'Welcome',
+    ar: 'مرحباً'
+  },
+  'dashboard.customer_subtitle': {
+    en: 'Find and book services for your home or business',
+    ar: 'ابحث واحجز الخدمات لمنزلك أو عملك'
+  },
+  'dashboard.find_service': {
+    en: 'Find a Service',
+    ar: 'ابحث عن خدمة'
+  },
+  'dashboard.search_services': {
+    en: 'Search for services...',
+    ar: 'ابحث عن الخدمات...'
+  },
+  'dashboard.your_location': {
+    en: 'Your location',
+    ar: 'موقعك'
+  },
+  'dashboard.search': {
+    en: 'Search',
+    ar: 'بحث'
+  },
+  'dashboard.popular_services': {
+    en: 'Popular Services',
+    ar: 'الخدمات الشائعة'
+  },
+  'dashboard.recent_bookings': {
+    en: 'Recent Bookings',
+    ar: 'الحجوزات الأخيرة'
+  },
+  'dashboard.track_service': {
+    en: 'Track Service',
+    ar: 'تتبع الخدمة'
+  },
+  'dashboard.recommended': {
+    en: 'Recommended Services',
+    ar: 'الخدمات الموصى بها'
   }
 };
