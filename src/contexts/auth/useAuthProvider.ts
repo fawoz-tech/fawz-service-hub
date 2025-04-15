@@ -3,7 +3,7 @@ import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AuthResult } from './types';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 export const useAuthProvider = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -12,7 +12,6 @@ export const useAuthProvider = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Set up the authentication state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
         console.log("Auth state changed:", event, currentSession?.user?.email);
@@ -35,7 +34,6 @@ export const useAuthProvider = () => {
       }
     );
 
-    // Check for existing session
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
       console.log("Initial session check:", currentSession?.user?.email || "No session");
       setSession(currentSession);
@@ -48,6 +46,22 @@ export const useAuthProvider = () => {
     };
   }, [toast]);
 
+  const showAuthToast = (
+    success: boolean,
+    title: string,
+    description: string
+  ) => {
+    toast({
+      variant: success ? "default" : "destructive",
+      title,
+      description,
+    });
+  };
+
+  const navigateAfterSignOut = () => {
+    window.location.href = '/';
+  };
+
   const signIn = async (email: string, password: string) => {
     try {
       console.log("Signing in with:", email);
@@ -56,7 +70,6 @@ export const useAuthProvider = () => {
       if (error) {
         console.error("Sign in error:", error);
         
-        // Handle captcha error specifically
         if (error.message.includes('captcha verification')) {
           toast({
             variant: "destructive",
@@ -111,7 +124,6 @@ export const useAuthProvider = () => {
     try {
       console.log("Signing up with:", email, "full name:", fullName || "not provided", "role:", userRole);
       
-      // Check if user already exists with this email
       const { count, error: countError } = await supabase
         .from('profiles')
         .select('*', { count: 'exact', head: true })
@@ -134,7 +146,7 @@ export const useAuthProvider = () => {
         options: {
           data: {
             full_name: fullName,
-            user_role: userRole, // Store the user role
+            user_role: userRole,
           }
         }
       });
@@ -142,7 +154,6 @@ export const useAuthProvider = () => {
       if (error) {
         console.error("Sign up error:", error);
         
-        // Handle captcha error specifically
         if (error.message.includes('captcha verification')) {
           toast({
             variant: "destructive",
@@ -164,7 +175,6 @@ export const useAuthProvider = () => {
           description: "Please check your email to verify your account.",
         });
         
-        // Check if email confirmation is required
         if (data?.user && !data.user.confirmed_at) {
           return { success: true, message: "Please check your email to verify your account." };
         }
@@ -176,25 +186,33 @@ export const useAuthProvider = () => {
     }
   };
 
-  const signOut = async () => {
+  const performSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      
-      // Optional: Use browser's history to navigate to landing page
-      window.location.href = '/';
-      
-      toast({
-        title: "Signed Out",
-        description: "You have been successfully signed out and redirected to the home page.",
-      });
+      return { success: true };
     } catch (error) {
       console.error('Error signing out:', error);
-      toast({
-        variant: "destructive",
-        title: "Sign Out Error",
-        description: "There was a problem signing you out. Please try again.",
-      });
-      throw error;
+      return { success: false, error };
+    }
+  };
+
+  const signOut = async () => {
+    const result = await performSignOut();
+    
+    if (result.success) {
+      showAuthToast(
+        true,
+        "Signed Out",
+        "You have been successfully signed out and redirected to the home page."
+      );
+      navigateAfterSignOut();
+    } else {
+      showAuthToast(
+        false,
+        "Sign Out Error",
+        "There was a problem signing you out. Please try again."
+      );
+      throw result.error;
     }
   };
 
