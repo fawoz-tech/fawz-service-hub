@@ -31,6 +31,20 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return <Navigate to="/auth" replace />;
   }
 
+  // Check if user is accessing the correct route based on role
+  const userRole = user.user_metadata?.user_role || 'customer';
+  const isProvider = userRole === 'provider';
+  
+  // If user is a customer trying to access provider routes, redirect them
+  if (!isProvider && location.pathname === '/dashboard') {
+    return <Navigate to="/customer-dashboard" replace />;
+  }
+  
+  // If user is a provider trying to access customer routes, redirect them
+  if (isProvider && location.pathname === '/customer-dashboard') {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return <>{children}</>;
 };
 

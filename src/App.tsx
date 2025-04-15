@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Auth from '@/pages/Auth';
@@ -14,6 +13,7 @@ import ServiceManagement from '@/pages/ServiceManagement';
 import TeamManagement from '@/pages/TeamManagement';
 import Payments from '@/pages/Payments';
 import LandingPage from '@/pages/LandingPage';
+import CustomerDashboard from '@/pages/CustomerDashboard';
 import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/contexts/auth';
 
@@ -31,7 +31,9 @@ function App() {
     if (!user && location.pathname !== '/auth' && location.pathname !== '/') {
       navigate('/');
     } else if (user && location.pathname === '/auth') {
-      navigate('/dashboard');
+      const userRole = user.user_metadata?.user_role || 'customer';
+      const redirectPath = userRole === 'provider' ? '/dashboard' : '/customer-dashboard';
+      navigate(redirectPath);
     }
   }, [user, navigate, location.pathname]);
 
@@ -49,6 +51,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Index />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/customer-dashboard" 
+          element={
+            <ProtectedRoute>
+              <CustomerDashboard />
             </ProtectedRoute>
           } 
         />

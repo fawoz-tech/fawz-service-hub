@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/auth';
 import { useLanguage } from '@/contexts/language';
@@ -44,7 +43,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ userRole }) => {
     try {
       // Pass the user role in the login flow
       await signIn(data.email, data.password);
-      // No need to handle redirect here as it will happen via the useEffect in the parent
+      // The role redirect will happen in Auth.tsx via useEffect
     } catch (error: any) {
       console.error('Login error:', error);
       
@@ -103,7 +102,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ userRole }) => {
           <PasswordField 
             form={form} 
             showForgotPassword={true}
-            onForgotPassword={handleForgotPassword}
+            onForgotPassword={(e) => {
+              e.preventDefault();
+              toast({
+                title: t('auth.password_reset'),
+                description: t('auth.password_reset_email'),
+              });
+            }}
           />
 
           <SubmitButton 
