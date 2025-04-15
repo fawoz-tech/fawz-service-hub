@@ -56,10 +56,15 @@ export type Database = {
       appointments: {
         Row: {
           appointment_date: string
+          assigned_team_member_id: string | null
+          assigned_team_member_name: string | null
           created_at: string
+          customer_email: string | null
           customer_id: string
           customer_name: string
+          customer_phone: string | null
           id: string
+          location: Json | null
           notes: string | null
           price: number
           provider_id: string
@@ -71,10 +76,15 @@ export type Database = {
         }
         Insert: {
           appointment_date: string
+          assigned_team_member_id?: string | null
+          assigned_team_member_name?: string | null
           created_at?: string
+          customer_email?: string | null
           customer_id: string
           customer_name: string
+          customer_phone?: string | null
           id?: string
+          location?: Json | null
           notes?: string | null
           price?: number
           provider_id: string
@@ -86,10 +96,15 @@ export type Database = {
         }
         Update: {
           appointment_date?: string
+          assigned_team_member_id?: string | null
+          assigned_team_member_name?: string | null
           created_at?: string
+          customer_email?: string | null
           customer_id?: string
           customer_name?: string
+          customer_phone?: string | null
           id?: string
+          location?: Json | null
           notes?: string | null
           price?: number
           provider_id?: string
@@ -115,6 +130,57 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      clients: {
+        Row: {
+          address: string | null
+          city: string | null
+          created_at: string
+          email: string | null
+          id: string
+          last_service_date: string | null
+          name: string
+          notes: string | null
+          phone: string | null
+          provider_id: string
+          state: string | null
+          status: string
+          updated_at: string
+          zip_code: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          last_service_date?: string | null
+          name: string
+          notes?: string | null
+          phone?: string | null
+          provider_id: string
+          state?: string | null
+          status?: string
+          updated_at?: string
+          zip_code?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          last_service_date?: string | null
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          provider_id?: string
+          state?: string | null
+          status?: string
+          updated_at?: string
+          zip_code?: string | null
+        }
+        Relationships: []
       }
       family_members: {
         Row: {
@@ -280,43 +346,61 @@ export type Database = {
       }
       provider_profiles: {
         Row: {
+          address: string | null
           business_name: string | null
+          city: string | null
           contact_email: string | null
           contact_phone: string | null
           created_at: string | null
           description: string | null
           id: string
           logo_url: string | null
+          service_type: string | null
+          services_offered: string[] | null
           setup_completed: boolean | null
+          state: string | null
           updated_at: string | null
           user_id: string
           website: string | null
+          zip_code: string | null
         }
         Insert: {
+          address?: string | null
           business_name?: string | null
+          city?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string | null
           description?: string | null
           id?: string
           logo_url?: string | null
+          service_type?: string | null
+          services_offered?: string[] | null
           setup_completed?: boolean | null
+          state?: string | null
           updated_at?: string | null
           user_id: string
           website?: string | null
+          zip_code?: string | null
         }
         Update: {
+          address?: string | null
           business_name?: string | null
+          city?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string | null
           description?: string | null
           id?: string
           logo_url?: string | null
+          service_type?: string | null
+          services_offered?: string[] | null
           setup_completed?: boolean | null
+          state?: string | null
           updated_at?: string | null
           user_id?: string
           website?: string | null
+          zip_code?: string | null
         }
         Relationships: []
       }
@@ -358,6 +442,39 @@ export type Database = {
           },
         ]
       }
+      provider_supported_services: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          is_available: boolean | null
+          parent_service: string
+          price_per_hour: number
+          service_name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_available?: boolean | null
+          parent_service: string
+          price_per_hour?: number
+          service_name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_available?: boolean | null
+          parent_service?: string
+          price_per_hour?: number
+          service_name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       provider_team_members: {
         Row: {
           bio: string | null
@@ -367,7 +484,11 @@ export type Database = {
           name: string
           phone: string | null
           photo_url: string | null
+          provider_id: string | null
+          rate_per_hour: number | null
           role: string
+          skills: string[] | null
+          status: string
           user_id: string
         }
         Insert: {
@@ -378,7 +499,11 @@ export type Database = {
           name: string
           phone?: string | null
           photo_url?: string | null
+          provider_id?: string | null
+          rate_per_hour?: number | null
           role: string
+          skills?: string[] | null
+          status?: string
           user_id: string
         }
         Update: {
@@ -389,7 +514,11 @@ export type Database = {
           name?: string
           phone?: string | null
           photo_url?: string | null
+          provider_id?: string | null
+          rate_per_hour?: number | null
           role?: string
+          skills?: string[] | null
+          status?: string
           user_id?: string
         }
         Relationships: []
@@ -500,7 +629,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_table_columns: {
+        Args: { table_name: string }
+        Returns: string[]
+      }
     }
     Enums: {
       [_ in never]: never

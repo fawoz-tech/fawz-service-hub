@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Auth from '@/pages/Auth';
@@ -81,14 +82,6 @@ function App() {
           element={
             <ProtectedRoute>
               <div>Calendar Page</div>
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path="/payments" 
-          element={
-            <ProtectedRoute>
-              <div>Payments Page</div>
             </ProtectedRoute>
           } 
         />
