@@ -15,7 +15,11 @@ import OrDivider from './OrDivider';
 import GoogleSignInButton from './GoogleSignInButton';
 import ErrorAlert from './ErrorAlert';
 
-const LoginForm = () => {
+type LoginFormProps = {
+  userRole: 'customer' | 'provider';
+};
+
+const LoginForm: React.FC<LoginFormProps> = ({ userRole }) => {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState<boolean>(false);
@@ -38,6 +42,7 @@ const LoginForm = () => {
     setGeneralError(null);
     setCaptchaError(false);
     try {
+      // Pass the user role in the login flow
       await signIn(data.email, data.password);
       // No need to handle redirect here as it will happen via the useEffect in the parent
     } catch (error: any) {

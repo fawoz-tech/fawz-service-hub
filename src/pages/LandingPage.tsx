@@ -16,7 +16,7 @@ const LandingPage: React.FC = () => {
   const handleGetStarted = (role: 'customer' | 'provider') => {
     // Store the selected role in session storage for the auth page to use
     sessionStorage.setItem('selectedUserRole', role);
-    navigate('/auth');
+    navigate('/auth', { state: { activeTab: 'register' } });
   };
   
   return (
@@ -29,8 +29,11 @@ const LandingPage: React.FC = () => {
         </div>
         <div className="flex items-center space-x-4">
           <LanguageToggle />
-          <Button variant="outline" onClick={() => navigate('/auth')}>
+          <Button variant="outline" onClick={() => navigate('/auth', { state: { activeTab: 'login' } })}>
             {t('auth.login')}
+          </Button>
+          <Button variant="default" onClick={() => navigate('/auth', { state: { activeTab: 'register' } })}>
+            {t('auth.register')}
           </Button>
         </div>
       </header>

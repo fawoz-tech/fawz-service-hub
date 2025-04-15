@@ -34,7 +34,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
         <CardTitle className="text-2xl">{t('auth.welcome')}</CardTitle>
         <CardDescription>
           {activeTab === 'login' 
-            ? t('auth.login_subtitle') 
+            ? t('auth.login_subtitle')
             : t('auth.register_subtitle')}
         </CardDescription>
       </CardHeader>
@@ -55,33 +55,32 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
             </Alert>
           )}
           
-          {activeTab === 'register' && (
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
-                {t('auth.select_role')}
-              </label>
-              <ToggleGroup 
-                type="single" 
-                value={userRole} 
-                onValueChange={(value) => {
-                  if (value) setUserRole(value as 'customer' | 'provider');
-                }}
-                className="justify-start"
-              >
-                <ToggleGroupItem value="customer" aria-label="Customer" className="flex items-center gap-2 px-4">
-                  <User className="h-4 w-4" />
-                  {t('auth.customer_role')}
-                </ToggleGroupItem>
-                <ToggleGroupItem value="provider" aria-label="Service Provider" className="flex items-center gap-2 px-4">
-                  <Briefcase className="h-4 w-4" />
-                  {t('auth.provider_role')}
-                </ToggleGroupItem>
-              </ToggleGroup>
-            </div>
-          )}
+          {/* Always show the role selector in login and register tabs */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">
+              {t('auth.select_role')}
+            </label>
+            <ToggleGroup 
+              type="single" 
+              value={userRole} 
+              onValueChange={(value) => {
+                if (value) setUserRole(value as 'customer' | 'provider');
+              }}
+              className="justify-start"
+            >
+              <ToggleGroupItem value="customer" aria-label="Customer" className="flex items-center gap-2 px-4">
+                <User className="h-4 w-4" />
+                {t('auth.customer_role')}
+              </ToggleGroupItem>
+              <ToggleGroupItem value="provider" aria-label="Service Provider" className="flex items-center gap-2 px-4">
+                <Briefcase className="h-4 w-4" />
+                {t('auth.provider_role')}
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
           
           <TabsContent value="login">
-            <LoginForm />
+            <LoginForm userRole={userRole} />
           </TabsContent>
           
           <TabsContent value="register">
