@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Auth from '@/pages/Auth';
@@ -12,6 +11,7 @@ import OpenBidding from '@/pages/OpenBidding';
 import FinancialDashboard from '@/pages/FinancialDashboard';
 import ServiceManagement from '@/pages/ServiceManagement';
 import TeamManagement from '@/pages/TeamManagement';
+import Payments from '@/pages/Payments';  // Import the Payments page
 import { Toaster } from '@/components/ui/toaster';
 import { useAuth } from '@/contexts/auth';
 
@@ -137,6 +137,14 @@ function App() {
           element={
             <ProtectedRoute>
               <div>Settings Page</div>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/payments" 
+          element={
+            <ProtectedRoute>
+              <Payments />
             </ProtectedRoute>
           } 
         />
