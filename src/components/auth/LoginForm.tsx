@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/auth';
 import { useLanguage } from '@/contexts/language';
@@ -114,7 +115,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ userRole }) => {
           <SubmitButton 
             isSubmitting={isSubmitting} 
             isDirty={isDirty}
-            label={t('auth.sign_in')}
+            label={t('app.sign_in')}
             loadingLabel={t('auth.signing_in')}
           />
         </form>
